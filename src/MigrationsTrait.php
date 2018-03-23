@@ -153,6 +153,7 @@ trait MigrationsTrait
      * Rollback all migrations.
      *
      * @throws \Exception
+     *
      * @return null|false
      *
      * @author Donii Sergii <doniysa@gmail.com>
@@ -194,6 +195,7 @@ trait MigrationsTrait
     public function setBinDir($binDir)
     {
         $this->binDir = $binDir;
+
         return $this;
     }
 
@@ -221,6 +223,7 @@ trait MigrationsTrait
     public function setPhpExecutor($phpExecutor)
     {
         $this->phpExecutor = $phpExecutor;
+
         return $this;
     }
 
@@ -248,6 +251,7 @@ trait MigrationsTrait
     public function setConsoleCommand($consoleCommand)
     {
         $this->consoleCommand = $consoleCommand;
+
         return $this;
     }
 
@@ -275,6 +279,7 @@ trait MigrationsTrait
     public function setSeedNamespace($seedNamespace)
     {
         $this->seedNamespace = $seedNamespace;
+
         return $this;
     }
 
@@ -302,6 +307,7 @@ trait MigrationsTrait
     public function setSeedClassEnding($seedClassEnding)
     {
         $this->seedClassEnding = $seedClassEnding;
+
         return $this;
     }
 
@@ -329,11 +335,12 @@ trait MigrationsTrait
     public function setMigrationTable($migrationTable)
     {
         $this->migrationTable = $migrationTable;
+
         return $this;
     }
 
     /**
-     * Get migration command name. By default is `migrations:migrate --no-interaction`
+     * Get migration command name. By default is `migrations:migrate --no-interaction`.
      *
      * @return string
      *
@@ -345,7 +352,7 @@ trait MigrationsTrait
     }
 
     /**
-     * Set migration command name. By default is `migrations:migrate --no-interaction`
+     * Set migration command name. By default is `migrations:migrate --no-interaction`.
      *
      * @param string $migrationCommand
      *
@@ -356,11 +363,12 @@ trait MigrationsTrait
     public function setMigrationCommand($migrationCommand)
     {
         $this->migrationCommand = $migrationCommand;
+
         return $this;
     }
 
     /**
-     * Get rollback migration command name. By default is `migrations:execute --down --no-interaction`
+     * Get rollback migration command name. By default is `migrations:execute --down --no-interaction`.
      *
      * @return string
      *
@@ -372,7 +380,7 @@ trait MigrationsTrait
     }
 
     /**
-     * Set rollback migration command name. By default is `migrations:execute --down --no-interaction`
+     * Set rollback migration command name. By default is `migrations:execute --down --no-interaction`.
      *
      * @param string $rollbackMigrationCommand
      *
@@ -383,6 +391,7 @@ trait MigrationsTrait
     public function setRollbackMigrationCommand($rollbackMigrationCommand)
     {
         $this->rollbackMigrationCommand = $rollbackMigrationCommand;
+
         return $this;
     }
 
@@ -410,6 +419,7 @@ trait MigrationsTrait
     public function setPreCommand($preCommand)
     {
         $this->preCommand = $preCommand;
+
         return $this;
     }
 
@@ -437,6 +447,7 @@ trait MigrationsTrait
     public function setContinueOnFailure($continueOnFailure)
     {
         $this->continueOnFailure = $continueOnFailure;
+
         return $this;
     }
 
@@ -464,19 +475,21 @@ trait MigrationsTrait
     public function setSeedCommand($seedCommand)
     {
         $this->seedCommand = $seedCommand;
+
         return $this;
     }
 
     /**
-     * Fetch migrations list for rollback
+     * Fetch migrations list for rollback.
      *
      * @return bool|array
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected function getMigrationsList() {
+    protected function getMigrationsList()
+    {
         /**
-         * @var \Doctrine\DBAL\Query\QueryBuilder $builder
+         * @var \Doctrine\DBAL\Query\QueryBuilder
          */
         $builder = $this->app['db']->createQueryBuilder();
 
@@ -502,7 +515,7 @@ trait MigrationsTrait
         exec($command, $out, $code);
         ob_end_clean();
 
-        if ((int)$code !== 0 && !$this->continueOnFailure) {
+        if ((int) $code !== 0 && !$this->continueOnFailure) {
             throw new \Exception(
                 "Command \n {$command} \n run with code {$code} with out: \n ".
                 implode(PHP_EOL, $out)
