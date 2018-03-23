@@ -15,7 +15,8 @@ use sonrac\FCoverage\BootTraits;
  */
 class BootTraitsTest extends TestCase
 {
-    public function testBoot() {
+    public function testBoot()
+    {
         $class = new FirstBoot();
 
         $this->assertEquals($class->var2, 333);
@@ -23,23 +24,28 @@ class BootTraitsTest extends TestCase
     }
 }
 
-trait TFirst {
+trait TFirst
+{
     public $var;
 
-    protected function bootTFirst() {
+    protected function bootTFirst()
+    {
         $this->var = 123;
     }
 }
 
-trait TSecond {
+trait TSecond
+{
     public $var2;
 
-    protected function bootTSecond() {
+    protected function bootTSecond()
+    {
         $this->var2 = 333;
     }
 }
 
-class FirstBoot {
+class FirstBoot
+{
     use TSecond, TFirst, BootTraits;
 
     public function __construct()

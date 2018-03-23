@@ -148,7 +148,7 @@ trait ControllersTestTrait
         static::assertInternalType('array', $data);
         foreach ($struct as $name => $value) {
             $withValue = !is_numeric($name);
-            $_name     = $withValue ? $name : $value;
+            $_name = $withValue ? $name : $value;
 
             static::assertArrayHasKey($_name, $data);
 
@@ -177,7 +177,7 @@ trait ControllersTestTrait
         /** @var \Symfony\Component\HttpFoundation\ResponseHeaderBag $headers */
         $headers = $this->response->headers->all();
 
-        static::assertArrayHasKey(strtolower($header), $headers, 'Header ' . $header . 'is missing');
+        static::assertArrayHasKey(strtolower($header), $headers, 'Header '.$header.'is missing');
         if ($value !== null) {
             static::assertEquals(strtolower($value), strtolower($headers[strtolower($header)][0]), 'Header value not match');
         }
