@@ -10,13 +10,14 @@ use sonrac\FCoverage\BootTraits;
 use sonrac\FCoverage\MigrationsTrait;
 
 /**
- * Class MigrationTraitTest
+ * Class MigrationTraitTest.
  *
  * @author Donii Sergii <doniysa@gmail.com>
  */
 class MigrationTraitTest extends TestCase
 {
-    public function testBoot() {
+    public function testBoot()
+    {
         $migration = new Migration();
 
         static::assertFileExists('/tmp/1.txt');
@@ -35,7 +36,8 @@ class MigrationTraitTest extends TestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function testRollback() {
+    public function testRollback()
+    {
         $migration = new MigrationWithSeeds();
         $migration = $migration
             ->setRollbackMigrationCommand('123 > ')
@@ -51,13 +53,13 @@ class MigrationTraitTest extends TestCase
 
         $migration = new Migration();
         $this->assertFalse($migration->rollback());
-
     }
 
-    public function testBootWithSeeds() {
+    public function testBootWithSeeds()
+    {
         $migration = new MigrationWithSeeds();
 
-        foreach ([1,2,3] as $item) {
+        foreach ([1, 2, 3] as $item) {
             $this->assertFileExists(__DIR__.'/'.$item);
             $this->assertEquals("123\n", file_get_contents(__DIR__.'/'.$item));
             unlink(__DIR__.'/'.$item);
@@ -65,7 +67,8 @@ class MigrationTraitTest extends TestCase
     }
 }
 
-class Migration {
+class Migration
+{
     use MigrationsTrait, BootTraits;
 
     /**
@@ -81,35 +84,35 @@ class Migration {
         $this->_boot();
     }
 
-    protected function bootTrait() {
+    protected function bootTrait()
+    {
         $this->setBinDir('/bin')
             ->setPhpExecutor('')
             ->setConsoleCommand('echo')
             ->setMigrationCommand('123 > /tmp/1.txt')
-            ->setRollbackMigrationCommand(' > /tmp/2.txt')
-        ;
+            ->setRollbackMigrationCommand(' > /tmp/2.txt');
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     protected function getMigrationsList()
     {
         var_dump(123);
-        return null;
     }
 }
 
-class MigrationWithSeeds extends Migration {
-
+class MigrationWithSeeds extends Migration
+{
     use MigrationsTrait, BootTraits;
 
-    protected $seeds = [1,2,3];
+    protected $seeds = [1, 2, 3];
 
     /**
      * MigrationWithSeeds constructor.
      *
      * @throws \ReflectionException
+     *
      * @author Donii Sergii <doniysa@gmail.com>
      */
     public function __construct()
@@ -125,7 +128,7 @@ class MigrationWithSeeds extends Migration {
     protected function getMigrationsList()
     {
         return [
-            '1', '2', '3'
+            '1', '2', '3',
         ];
     }
 }

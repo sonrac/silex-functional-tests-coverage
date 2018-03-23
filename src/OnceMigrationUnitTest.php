@@ -8,7 +8,7 @@ namespace sonrac\FCoverage;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class OnceMigrationUnitTest
+ * Class OnceMigrationUnitTest.
  *
  * @author Donii Sergii <doniysa@gmail.com>
  */
