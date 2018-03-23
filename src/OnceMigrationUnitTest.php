@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class OnceMigrationUnitTest
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 abstract class OnceMigrationUnitTest extends TestCase
 {
@@ -19,7 +19,7 @@ abstract class OnceMigrationUnitTest extends TestCase
      *
      * @var \sonrac\FCoverage\OnceRunMigration
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected static $migration;
 
@@ -28,7 +28,7 @@ abstract class OnceMigrationUnitTest extends TestCase
      *
      * @var bool
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected static $runMigration = true;
 
@@ -37,7 +37,7 @@ abstract class OnceMigrationUnitTest extends TestCase
      *
      * @var array
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected static $seeds = [];
 

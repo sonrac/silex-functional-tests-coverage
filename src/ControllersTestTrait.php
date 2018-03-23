@@ -9,7 +9,7 @@ namespace sonrac\FCoverage;
  * Trait ControllersTestTrait
  * Controllers test trait.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 trait ControllersTestTrait
 {

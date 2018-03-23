@@ -12,7 +12,7 @@ use sonrac\FCoverage\MigrationsTrait;
 /**
  * Class MigrationTraitTest
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class MigrationTraitTest extends TestCase
 {
@@ -33,7 +33,7 @@ class MigrationTraitTest extends TestCase
      * @throws \ReflectionException
      * @throws \Exception
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function testRollback() {
         $migration = new MigrationWithSeeds();
@@ -73,7 +73,7 @@ class Migration {
      *
      * @throws \ReflectionException
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function __construct()
     {
@@ -110,7 +110,7 @@ class MigrationWithSeeds extends Migration {
      * MigrationWithSeeds constructor.
      *
      * @throws \ReflectionException
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function __construct()
     {

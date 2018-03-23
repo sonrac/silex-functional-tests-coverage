@@ -37,7 +37,7 @@ trait MigrationsTrait
      *
      * @var string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $binDir;
 
@@ -46,7 +46,7 @@ trait MigrationsTrait
      *
      * @var string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $phpExecutor = 'php';
 
@@ -55,7 +55,7 @@ trait MigrationsTrait
      *
      * @var string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $consoleCommand = 'console';
 
@@ -64,7 +64,7 @@ trait MigrationsTrait
      *
      * @var null|string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $seedNamespace;
 
@@ -73,7 +73,7 @@ trait MigrationsTrait
      *
      * @var string|null
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $seedClassEnding;
 
@@ -82,7 +82,7 @@ trait MigrationsTrait
      *
      * @var string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $migrationTable = 'migration_versions';
 
@@ -91,7 +91,7 @@ trait MigrationsTrait
      *
      * @var string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $migrationCommand = 'migrations:migrate --no-interaction';
 
@@ -100,7 +100,7 @@ trait MigrationsTrait
      *
      * @var string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $rollbackMigrationCommand = 'migrations:execute --down --no-interaction';
 
@@ -109,7 +109,7 @@ trait MigrationsTrait
      *
      * @var string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $preCommand = 'export APP_ENV=testing';
 
@@ -118,7 +118,7 @@ trait MigrationsTrait
      *
      * @var bool
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $continueOnFailure = false;
 
@@ -127,7 +127,7 @@ trait MigrationsTrait
      *
      * @var string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $seedCommand = 'seed:run --class=';
 
@@ -155,7 +155,7 @@ trait MigrationsTrait
      * @throws \Exception
      * @return null|false
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function rollback()
     {
@@ -175,7 +175,7 @@ trait MigrationsTrait
      *
      * @return string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getBinDir()
     {
@@ -189,7 +189,7 @@ trait MigrationsTrait
      *
      * @return $this
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setBinDir($binDir)
     {
@@ -202,7 +202,7 @@ trait MigrationsTrait
      *
      * @return string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getPhpExecutor()
     {
@@ -216,7 +216,7 @@ trait MigrationsTrait
      *
      * @return $this
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setPhpExecutor($phpExecutor)
     {
@@ -229,7 +229,7 @@ trait MigrationsTrait
      *
      * @return string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getConsoleCommand()
     {
@@ -243,7 +243,7 @@ trait MigrationsTrait
      *
      * @return MigrationsTrait
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setConsoleCommand($consoleCommand)
     {
@@ -256,7 +256,7 @@ trait MigrationsTrait
      *
      * @return null|string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getSeedNamespace()
     {
@@ -270,7 +270,7 @@ trait MigrationsTrait
      *
      * @return MigrationsTrait
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setSeedNamespace($seedNamespace)
     {
@@ -283,7 +283,7 @@ trait MigrationsTrait
      *
      * @return null|string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getSeedClassEnding()
     {
@@ -297,7 +297,7 @@ trait MigrationsTrait
      *
      * @return MigrationsTrait
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setSeedClassEnding($seedClassEnding)
     {
@@ -310,7 +310,7 @@ trait MigrationsTrait
      *
      * @return string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getMigrationTable()
     {
@@ -324,7 +324,7 @@ trait MigrationsTrait
      *
      * @return MigrationsTrait
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setMigrationTable($migrationTable)
     {
@@ -337,7 +337,7 @@ trait MigrationsTrait
      *
      * @return string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getMigrationCommand()
     {
@@ -351,7 +351,7 @@ trait MigrationsTrait
      *
      * @return MigrationsTrait
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setMigrationCommand($migrationCommand)
     {
@@ -364,7 +364,7 @@ trait MigrationsTrait
      *
      * @return string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getRollbackMigrationCommand()
     {
@@ -378,7 +378,7 @@ trait MigrationsTrait
      *
      * @return MigrationsTrait
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setRollbackMigrationCommand($rollbackMigrationCommand)
     {
@@ -391,7 +391,7 @@ trait MigrationsTrait
      *
      * @return string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getPreCommand()
     {
@@ -405,7 +405,7 @@ trait MigrationsTrait
      *
      * @return MigrationsTrait
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setPreCommand($preCommand)
     {
@@ -418,7 +418,7 @@ trait MigrationsTrait
      *
      * @return bool
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function isContinueOnFailure()
     {
@@ -432,7 +432,7 @@ trait MigrationsTrait
      *
      * @return MigrationsTrait
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setContinueOnFailure($continueOnFailure)
     {
@@ -445,7 +445,7 @@ trait MigrationsTrait
      *
      * @return string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getSeedCommand()
     {
@@ -459,7 +459,7 @@ trait MigrationsTrait
      *
      * @return MigrationsTrait
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setSeedCommand($seedCommand)
     {
@@ -472,7 +472,7 @@ trait MigrationsTrait
      *
      * @return bool|array
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function getMigrationsList() {
         /**

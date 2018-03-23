@@ -9,7 +9,7 @@ namespace sonrac\FCoverage;
  * Class OnceRunMigration
  * TestCase with migration running.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class OnceRunMigration
 {
@@ -20,7 +20,7 @@ class OnceRunMigration
      *
      * @var object
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected $app;
 
@@ -29,7 +29,7 @@ class OnceRunMigration
      *
      * @var array
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected $seeds = [];
 
@@ -39,7 +39,7 @@ class OnceRunMigration
      * @param object $application Application instance
      * @param array  $seeds       Seeds list
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function __construct($application, $seeds = [])
     {

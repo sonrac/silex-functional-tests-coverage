@@ -11,7 +11,7 @@ use sonrac\FCoverage\BootTraits;
 /**
  * Class BootTraitsTest.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class BootTraitsTest extends TestCase
 {

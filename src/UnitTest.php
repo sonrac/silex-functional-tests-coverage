@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
  * Class UnitTest
  * Unit test with auto boot traits and rollback migrations (if trait are included in test).
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 abstract class UnitTest extends TestCase
 {

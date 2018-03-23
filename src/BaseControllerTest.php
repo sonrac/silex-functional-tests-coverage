@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 /**
  * Class BaseControllerTest
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 abstract class BaseControllerTest extends OnceMigrationUnitTest
 {
@@ -31,7 +31,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @var \Symfony\Component\HttpFoundation\Request
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected $request;
 
@@ -40,7 +40,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @var \Silex\Application
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected $application;
 
@@ -49,7 +49,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @var bool
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected $isAdminController = false;
 
@@ -58,14 +58,14 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @var \Symfony\Component\HttpFoundation\Response
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected $response;
 
     /**
      * {@inheritdoc}
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setUp()
     {
@@ -134,7 +134,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @return string|null
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function prepareParams($method, $data, $query)
     {
@@ -175,7 +175,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @return mixed|\Symfony\Component\HttpFoundation\Response
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function getResponse($callback, $allowRedirect = false)
     {
@@ -224,7 +224,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @return string|\Closure
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function getController($method, $uri)
     {
@@ -282,7 +282,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function returnResponseFromHttpException(HttpException $httpException)
     {
@@ -306,7 +306,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @return null|Response
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function triggerKernelEvent($eventName, $class = null)
     {
@@ -337,7 +337,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @param array $options
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function prepareServerVariables($options)
     {
@@ -365,7 +365,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @return string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private function shackCase($input)
     {

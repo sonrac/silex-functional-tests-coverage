@@ -32,7 +32,7 @@ use ReflectionClass;
  * }
  * </code>
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 trait BootTraits
 {
