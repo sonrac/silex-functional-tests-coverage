@@ -49,7 +49,7 @@ trait BootTraits
 
         foreach ($traits as $trait) {
             $parts = explode('\\', $trait);
-            $name  = $parts[count($parts) - 1];
+            $name = $parts[count($parts) - 1];
             if (method_exists($this, 'boot'.$name)) {
                 $this->{'boot'.$name}();
             }
