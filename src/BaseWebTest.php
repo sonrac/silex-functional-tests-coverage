@@ -2,12 +2,10 @@
 
 namespace sonrac\FCoverage;
 
-use Silex\WebTestCase;
-
 /**
  * Class BaseWebTest.
  */
-abstract class BaseWebTest extends WebTestCase
+abstract class BaseWebTest extends OnceMigrationWebTest
 {
     use BootTraits, ControllersTestTrait;
 

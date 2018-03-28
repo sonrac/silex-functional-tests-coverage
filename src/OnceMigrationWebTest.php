@@ -5,16 +5,25 @@
 
 namespace sonrac\FCoverage;
 
-use PHPUnit\Framework\TestCase;
+use Silex\WebTestCase;
 
 /**
- * Class OnceMigrationUnitTest.
+ * Class OnceMigrationWebTest.
  *
  * @author Donii Sergii <doniysa@gmail.com>
  */
-abstract class OnceMigrationUnitTest extends TestCase
+abstract class OnceMigrationWebTest extends WebTestCase
 {
     use InitMigrationAppTrait;
+
+    /**
+     * Run migration if true or does not run otherwise.
+     *
+     * @var bool
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected static $runMigration = true;
 
     /**
      * Seeds list.
@@ -36,7 +45,26 @@ abstract class OnceMigrationUnitTest extends TestCase
         parent::setUpBeforeClass();
 
         static::initInitMigrationAppTrait();
+
     }
+
+    /**
+     * Get application instance.
+     *
+     * @return \Silex\Application
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    abstract public static function getApplication();
+
+    /**
+     * Setup migration class.
+     *
+     * @return void
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    abstract public static function setUpMigration();
 
     /**
      * {@inheritdoc}

@@ -489,7 +489,7 @@ trait MigrationsTrait
     protected function getMigrationsList()
     {
         /**
-         * @var \Doctrine\DBAL\Query\QueryBuilder
+         * @var \Doctrine\DBAL\Query\QueryBuilder $builder
          */
         $builder = $this->app['db']->createQueryBuilder();
 

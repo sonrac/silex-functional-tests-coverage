@@ -25,6 +25,8 @@
                 <file>./src/OnceMigrationUnitTest.php</file>
                 <file>./src/BaseWebTest.php</file>
                 <file>./src/MaxRedirectException.php</file>
+                <file>./src/OnceMigrationWebTest.php</file>
+                <file>./src/InitMigrationAppTrait.php</file>
             </exclude>
         </whitelist>
     </filter>
