@@ -16,6 +16,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Symfony\Component\Routing\RouteCompiler;
 
 /**
  * Class BaseControllerTest.
@@ -45,15 +46,6 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     protected $application;
 
     /**
-     * Is admin controller. Used for application detect.
-     *
-     * @var bool
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected $isAdminController = false;
-
-    /**
      * Response object.
      *
      * @var \Symfony\Component\HttpFoundation\Response
@@ -63,18 +55,52 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     protected $response;
 
     /**
+     * Origin server vars.
+     *
+     * @var array
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    private $originServerVars;
+
+    public function __construct($name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+
+        $this->originServerVars = $_SERVER;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setUp()
     {
-        $this->application = $this->isAdminController ?
-            require __DIR__.'/../../../bootstrap/app.php'
-            : require __DIR__.'/../../../bootstrap/api.php';
-
+        $this->application = $this->createApplication();
         parent::setUp();
     }
+
+    /**
+     * Get response object.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|null
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getResponseObject()
+    {
+        return $this->response;
+    }
+
+    /**
+     * Create application.
+     *
+     * @return \Silex\Application
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    abstract protected function createApplication();
 
     /**
      * {@inheritdoc}
@@ -88,6 +114,10 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         $content = null,
         $changeHistory = true
     ) {
+        if ($this->isClearCountRedirects()) {
+            $this->setCountRedirects(0);
+        }
+
         // Clear previous request
         $this->request = null;
 
@@ -97,6 +127,11 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
 
         // Set server variables and fill $_POST/$_GET
         $body = $this->prepareParams($method, $parameters, $query);
+
+        if (!$content && $body) {
+            $content = $body;
+        }
+
         $this->prepareServerVariables([
             'server'        => $server,
             'uri'           => $uri,
@@ -104,11 +139,11 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             'files'         => $files,
             'parameters'    => $parameters,
             'method'        => $method,
-            'body'          => $body ?: '',
+            'body'          => $content,
         ]);
 
         // Get controller
-        $controller = $this->getController($method, $routeURL['path']);
+        $controller = $this->getControllerActionFromRouteConfig($method, $routeURL['path']);
 
         if ($controller instanceof Response) {
             $this->response = $controller;
@@ -161,13 +196,14 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
                 return http_build_query($data);
                 break;
         }
+
+        return null;
     }
 
     /**
      * Get response from closure callback.
      *
-     * @param \Closure $callback      Closure for run
-     * @param bool     $allowRedirect Allow redirects
+     * @param \Closure $callback Closure for run
      *
      * @throws \InvalidArgumentException
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
@@ -177,8 +213,9 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected function getResponse($callback, $allowRedirect = false)
+    protected function getResponse($callback)
     {
+        $this->setClearCountRedirects(false);
         /* Resolve arguments and run controller action. */
         $controllerResolver = new ControllerResolver();
         /* Resolve controller name */
@@ -195,27 +232,69 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             return $this->returnResponseFromHttpException($httpException);
         }
 
-        if ($response instanceof RedirectResponse && $allowRedirect) {
-            /* Disable redirect response */
-            throw new \InvalidArgumentException('Not implement redirects yet');
+        /* Allow redirect in unit tests */
+        if ($response instanceof RedirectResponse && $this->getAllowRedirect() !== false) {
+            $this->incrementCountRedirects();
+
+            if ($this->getCountRedirects() > $this->getAllowRedirect()) {
+
+                if ($this->isThrowExceptionOnRedirect() && ((int)$this->getAllowRedirect() !== 0)) {
+                    $exception = new MaxRedirectException();
+                    $exception->setCountRedirects($this->__countRedirects);
+
+                    throw $exception;
+                }
+
+                $this->response = $response;
+            } else {
+                $url = $response->getTargetUrl();
+                $headers = $response->headers->all();
+                $_SERVER = array_merge($this->originServerVars, $this->getPredefinedServerVars());
+
+                $_SERVER['REQUEST_URI'] = $url;
+
+                foreach ($headers as $header => $value) {
+                    $_SERVER['HTTP_'.strtoupper($header)] = $value;
+                }
+
+                $this->request('GET', $url, [], [], $_SERVER, $response->getContent(), true);
+                $response = $this->getResponseObject();
+            }
         }
 
-        /* Trigger after middleware */
-        $this->triggerKernelEvent(
-            KernelEvents::RESPONSE,
-            new FilterResponseEvent(
-                $this->application,
-                $this->request,
-                HttpKernelInterface::MASTER_REQUEST,
-                $response
-            )
-        );
+        if ($response) {
+            /* Trigger after middleware */
+            $this->triggerKernelEvent(
+                KernelEvents::RESPONSE,
+                new FilterResponseEvent(
+                    $this->application,
+                    $this->request,
+                    HttpKernelInterface::MASTER_REQUEST,
+                    $response
+                )
+            );
+        }
 
         return $response;
     }
 
     /**
+     * Get predefined server vars.
+     *
+     * @return array
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected function getPredefinedServerVars()
+    {
+        return [];
+    }
+
+    /**
      * Get controller instance from request URI.
+     *
+     * @param string $method
+     * @param string $uri
      *
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
@@ -226,7 +305,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected function getController($method, $uri)
+    protected function getControllerActionFromRouteConfig($method, $uri)
     {
         $method = strtoupper($method);
         $index = $method.'_'.$this->shackCase($uri);
@@ -259,8 +338,15 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
 
         if (!$route) {
             foreach ($this->application['routes'] as $_route) { // Find by path. Index not found
-                /** @var $_route \Silex\Route */
-                if ($_route->getPath() === $uri) {
+                /** @var \Silex\Route $_route */
+                $compileRoute = RouteCompiler::compile($_route);
+
+                $matched = preg_match($compileRoute->getRegex(), $uri) &&
+                           in_array(
+                               $this->request->getMethod(),
+                               $_route->getMethods()
+                           );
+                if ($_route->getPath() === $uri || $matched) {
                     $route = $_route;
                     break;
                 }
@@ -332,6 +418,8 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             throw $throwable;
         }
         ob_end_clean();
+
+        return null;
     }
 
     /**
@@ -372,11 +460,11 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     private function shackCase($input)
     {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
-        $ret = $matches[0];
-        foreach ($ret as &$match) {
+        $parts = $matches[0];
+        foreach ($parts as &$match) {
             $match = $match === strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
 
-        return implode('_', $ret);
+        return implode('_', $parts);
     }
 }

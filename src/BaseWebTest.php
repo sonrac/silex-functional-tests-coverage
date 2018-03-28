@@ -14,15 +14,15 @@ abstract class BaseWebTest extends WebTestCase
     /**
      * @var null|\Symfony\Component\HttpKernel\Client
      */
-    protected $client = null;
+    protected $client;
     /**
      * @var null|\Symfony\Component\HttpFoundation\Response
      */
-    protected $response = null;
+    protected $response;
     /**
      * @var null|\Symfony\Component\DomCrawler\Crawler
      */
-    protected $crawler = null;
+    protected $crawler;
 
     public function createApplication()
     {
@@ -56,7 +56,7 @@ abstract class BaseWebTest extends WebTestCase
      * @param bool   $changeHistory Whether to update the history or not (only used internally for back(), forward(),
      *                              and reload())
      *
-     * @return \Tests\Functional\BaseWebTest
+     * @return $this
      */
     protected function request(
         $method,
@@ -68,13 +68,24 @@ abstract class BaseWebTest extends WebTestCase
         $changeHistory = true
     ) {
         $this->client = $this->client ?: $this->createClient();
-        $this->crawler = $this->client->request($method, $uri);
+        $this->crawler = $this->client->request(
+            $method,
+            $uri,
+            $parameters,
+            $files,
+            $server,
+            $content,
+            $changeHistory
+        );
 
         $this->response = $this->client->getResponse();
 
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function tearDown()/* The :void return type declaration that should be here would cause a BC issue */
     {
         parent::tearDown();

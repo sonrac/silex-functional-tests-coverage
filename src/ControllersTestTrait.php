@@ -14,6 +14,148 @@ namespace sonrac\FCoverage;
 trait ControllersTestTrait
 {
     /**
+     * If false - disable redirects. If number - max enabled redirects count.
+     *
+     * @var bool|int
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    private $allowRedirect = false;
+
+    /**
+     * If true generate exception when count redirects more than `allowRedirect` value.
+     *
+     * @var bool
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    private $throwExceptionOnRedirect = true;
+
+    /**
+     * Clear redirects count.
+     *
+     * @var bool
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    private $__clearCountRedirects = false;
+
+    /**
+     * Current count redirects.
+     *
+     * @var int
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    private $__countRedirects = 0;
+
+    /**
+     * Get is need clear count redirects.
+     *
+     * @return bool
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function isClearCountRedirects()
+    {
+        return $this->__clearCountRedirects;
+    }
+
+    /**
+     * @return bool|int
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getAllowRedirect()
+    {
+        return $this->allowRedirect;
+    }
+
+    /**
+     * @param bool|int $allowRedirect
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setAllowRedirect($allowRedirect)
+    {
+        $this->allowRedirect = $allowRedirect;
+    }
+
+    /**
+     * Check is thrown exception on redirect.
+     *
+     * @return bool
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function isThrowExceptionOnRedirect()
+    {
+        return $this->throwExceptionOnRedirect;
+    }
+
+    /**
+     * Set thrown exception on redirect.
+     *
+     * @param bool $throwExceptionOnRedirect
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setThrowExceptionOnRedirect($throwExceptionOnRedirect)
+    {
+        $this->throwExceptionOnRedirect = $throwExceptionOnRedirect;
+    }
+
+    /**
+     * Get count redirects.
+     *
+     * @return int
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getCountRedirects()
+    {
+        return $this->__countRedirects;
+    }
+
+    /**
+     * Set count redirects.
+     *
+     * @param int $_countRedirects
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setCountRedirects($_countRedirects)
+    {
+        $this->__countRedirects = $_countRedirects;
+    }
+
+    /**
+     * Increment count redirects.
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function incrementCountRedirects()
+    {
+        $this->__countRedirects++;
+    }
+
+    /**
+     * Get is need clear count redirects.
+     *
+     * @param bool $clear
+     *
+     * @return $this
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setClearCountRedirects($clear)
+    {
+        $this->__clearCountRedirects = $clear;
+
+        return $this;
+    }
+
+    /**
      * Calls a GET URI.
      *
      * @param string $uri           The URI to fetch
@@ -34,6 +176,7 @@ trait ControllersTestTrait
         $content = null,
         $changeHistory = true
     ) {
+        $this->setClearCountRedirects(true);
         return $this->request('GET', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
@@ -58,7 +201,8 @@ trait ControllersTestTrait
         $content = null,
         $changeHistory = true
     ) {
-        return $this->request('GET', $uri, $parameters, $files, $server, $content, $changeHistory);
+        $this->setClearCountRedirects(true);
+        return $this->request('PUT', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
     /**
@@ -82,6 +226,7 @@ trait ControllersTestTrait
         $content = null,
         $changeHistory = true
     ) {
+        $this->setClearCountRedirects(true);
         return $this->request('POST', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
@@ -106,6 +251,7 @@ trait ControllersTestTrait
         $content = null,
         $changeHistory = true
     ) {
+        $this->setClearCountRedirects(true);
         return $this->request('DELETE', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
@@ -130,6 +276,7 @@ trait ControllersTestTrait
         $content = null,
         $changeHistory = true
     ) {
+        $this->setClearCountRedirects(true);
         return $this->request('PATCH', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
@@ -179,7 +326,8 @@ trait ControllersTestTrait
 
         static::assertArrayHasKey(strtolower($header), $headers, 'Header '.$header.'is missing');
         if ($value !== null) {
-            static::assertEquals(strtolower($value), strtolower($headers[strtolower($header)][0]), 'Header value not match');
+            static::assertEquals(strtolower($value), strtolower($headers[strtolower($header)][0]),
+                'Header value not match');
         }
 
         return $this;
@@ -190,6 +338,8 @@ trait ControllersTestTrait
      *
      * @param int $statusCode
      *
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     *
      * @return $this
      */
     protected function seeStatusCode($statusCode)
@@ -197,6 +347,43 @@ trait ControllersTestTrait
         static::assertEquals($statusCode, $this->response->getStatusCode());
 
         return $this;
+    }
+
+    /**
+     * See in database.
+     *
+     * @param string       $table     Table name.
+     * @param array|string $condition Where condition.
+     *
+     * @throws \PHPUnit\Framework\AssertionFailedError
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected function seeInDatabase($table, $condition)
+    {
+        /** @var \Doctrine\DBAL\Connection $db */
+        $db = $this->application['db'];
+
+        $query = $db->createQueryBuilder()
+            ->select('count(*)')
+            ->from($table);
+
+        $where = '';
+
+        if (is_array($condition)) {
+            foreach ($condition as $name => $value) {
+                $where .= (strlen($where) > 0 ? ' AND ' : '') . " `{$name}` = :{$name} ";
+                $query->setParameter($name, $value);
+            }
+        } else {
+            $where = $condition;
+        }
+
+        $query->where($where);
+
+        $results = (int) $query->execute()->fetchColumn();
+
+        static::assertTrue($results > 0);
     }
 
     /**
