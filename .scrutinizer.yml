@@ -4,7 +4,7 @@ build:
             version: 7.1
   dependencies:
           before:
-              - composer install --prefer-source
+              - composer require doctrine/migrations --prefer-dist --no-interaction
   tests:
     override:
       -

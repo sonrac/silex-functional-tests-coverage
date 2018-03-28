@@ -1,0 +1,20 @@
+version: "3.0"
+services:
+  fpm5:
+    image: sonrac/infomir-php:php-fpm-5.5.9
+    volumes:
+      - "./:/home/infomir/site"
+    environment:
+      - PROJECT_DIR_ROOT=/home/infomir/site
+    working_dir: /home/infomir/site
+  fpm:
+    image: sonrac/infomir-php:php-fpm-7.1
+    volumes:
+      - "./:/home/infomir/site"
+    environment:
+      - PROJECT_DIR_ROOT=/home/infomir/site
+    working_dir: /home/infomir/site
+networks:
+  default:
+    external:
+      name: nginx-net

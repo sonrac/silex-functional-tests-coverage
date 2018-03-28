@@ -30,7 +30,7 @@ class BaseControllerTestTest extends TestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    private $dbFile = __DIR__.'/out/db.sqlite';
+    private $dbFile = 'out/db.sqlite';
 
     /**
      * Test controller instance.
@@ -48,8 +48,8 @@ class BaseControllerTestTest extends TestCase
     {
         parent::setUp();
 
-        if (!is_file($this->dbFile)) {
-            file_put_contents($this->dbFile, '');
+        if (!is_file(__DIR__.'/'.$this->dbFile)) {
+            file_put_contents(__DIR__.'/'.$this->dbFile, '');
         }
 
         $this->controller = new ControllerTest();
@@ -258,8 +258,8 @@ class BaseControllerTestTest extends TestCase
     {
         parent::tearDown();
 
-        if (is_file($this->dbFile)) {
-            unlink($this->dbFile);
+        if (is_file(__DIR__.'/'.$this->dbFile)) {
+            unlink(__DIR__.'/'.$this->dbFile);
         }
     }
 }

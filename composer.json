@@ -3,17 +3,18 @@
     "description": "Add unit tests for functional tests for best coverage",
     "type": "library",
     "require": {
-        "silex/silex": "^2.0",
-        "phpunit/phpunit": "^6.0",
-        "phpunit/php-invoker": "^2.0"
+        "silex/silex": "^2.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.7",
+        "phpunit/phpunit": ">=4.0",
+    },
+    "license": "MIT",
+    "suggest": {
         "sonrac/symfony-seed-command": "^0.6",
         "symfony/browser-kit": "~2.8|^3.0",
         "doctrine/migrations": "^1.0"
     },
-    "license": "MIT",
     "authors": [
         {
             "name": "Donii Sergii",
