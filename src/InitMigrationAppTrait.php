@@ -5,8 +5,8 @@
 
 namespace sonrac\FCoverage;
 
-trait InitMigrationAppTrait {
-
+trait InitMigrationAppTrait
+{
     /**
      * Migration runner class.
      *
@@ -23,8 +23,8 @@ trait InitMigrationAppTrait {
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    public static function getClientApplication() {
-        return null;
+    public static function getClientApplication()
+    {
     }
 
     /**
@@ -34,8 +34,8 @@ trait InitMigrationAppTrait {
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    public static function setUpMigration() {
-
+    public static function setUpMigration()
+    {
     }
 
     /**
@@ -45,7 +45,8 @@ trait InitMigrationAppTrait {
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    protected static function initInitMigrationAppTrait() {
+    protected static function initInitMigrationAppTrait()
+    {
         if (true === static::$runMigration) {
             $app = static::getApplication();
             static::$migration = new OnceRunMigration($app, static::$seeds);
@@ -61,7 +62,8 @@ trait InitMigrationAppTrait {
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    protected static function downMigrationTrait() {
+    protected static function downMigrationTrait()
+    {
         if (true === static::$runMigration && static::$migration) {
             static::$migration->rollback();
         }
