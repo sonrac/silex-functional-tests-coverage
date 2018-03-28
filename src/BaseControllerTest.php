@@ -195,8 +195,6 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             default:
                 return http_build_query($data);
         }
-
-        return null;
     }
 
     /**
