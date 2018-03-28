@@ -5,8 +5,6 @@
 
 namespace sonrac\FCoverage;
 
-use Throwable;
-
 /**
  * Class MaxRedirectException
  * Maximum redirect exception.
@@ -36,7 +34,7 @@ class MaxRedirectException extends \Exception
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function __construct($message = "", $code = 0, \Throwable $previous = null, $countRedirects = 0)
+    public function __construct($message = '', $code = 0, \Throwable $previous = null, $countRedirects = 0)
     {
         parent::__construct($message, $code, $previous);
 
@@ -50,7 +48,8 @@ class MaxRedirectException extends \Exception
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function getCountRedirects() {
+    public function getCountRedirects()
+    {
         return $this->countRedirects;
     }
 
@@ -61,7 +60,8 @@ class MaxRedirectException extends \Exception
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function setCountRedirects($count) {
+    public function setCountRedirects($count)
+    {
         $this->countRedirects = $count;
     }
 
@@ -72,7 +72,8 @@ class MaxRedirectException extends \Exception
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function getMessageSummary() {
+    public function getMessageSummary()
+    {
         return $this->getMessage()." Count redirects: {$this->countRedirects}";
     }
 }

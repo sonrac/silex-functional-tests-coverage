@@ -98,7 +98,6 @@ class Migration
      */
     protected function getMigrationsList()
     {
-        return null;
     }
 }
 

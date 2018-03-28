@@ -196,8 +196,6 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
                 return http_build_query($data);
                 break;
         }
-
-        return null;
     }
 
     /**
@@ -237,8 +235,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             $this->incrementCountRedirects();
 
             if ($this->getCountRedirects() > $this->getAllowRedirect()) {
-
-                if ($this->isThrowExceptionOnRedirect() && ((int)$this->getAllowRedirect() !== 0)) {
+                if ($this->isThrowExceptionOnRedirect() && ((int) $this->getAllowRedirect() !== 0)) {
                     $exception = new MaxRedirectException();
                     $exception->setCountRedirects($this->__countRedirects);
 
@@ -418,8 +415,6 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             throw $throwable;
         }
         ob_end_clean();
-
-        return null;
     }
 
     /**

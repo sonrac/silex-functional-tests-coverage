@@ -177,6 +177,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+
         return $this->request('GET', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
@@ -202,6 +203,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+
         return $this->request('PUT', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
@@ -227,6 +229,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+
         return $this->request('POST', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
@@ -252,6 +255,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+
         return $this->request('DELETE', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
@@ -277,6 +281,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+
         return $this->request('PATCH', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
 
@@ -372,7 +377,7 @@ trait ControllersTestTrait
 
         if (is_array($condition)) {
             foreach ($condition as $name => $value) {
-                $where .= (strlen($where) > 0 ? ' AND ' : '') . " `{$name}` = :{$name} ";
+                $where .= (strlen($where) > 0 ? ' AND ' : '')." `{$name}` = :{$name} ";
                 $query->setParameter($name, $value);
             }
         } else {
