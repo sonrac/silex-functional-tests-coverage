@@ -45,7 +45,6 @@ abstract class OnceMigrationWebTest extends WebTestCase
         parent::setUpBeforeClass();
 
         static::initInitMigrationAppTrait();
-
     }
 
     /**
