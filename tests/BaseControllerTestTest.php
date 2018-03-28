@@ -232,7 +232,12 @@ class BaseControllerTestTest extends TestCase
     {
         $this->controller->getApplication();
         $this->controller->enableRedirect(2);
-        $this->expectException(MaxRedirectException::class);
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(MaxRedirectException::class);
+        } else {
+            $this->setExpectedException(MaxRedirectException::class);
+        }
         $this->controller->get('/circle-redirect');
     }
 

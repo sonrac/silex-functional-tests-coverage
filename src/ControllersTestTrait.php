@@ -326,7 +326,7 @@ trait ControllersTestTrait
      */
     protected function seeHeader($header, $value = null)
     {
-        /** @var \Symfony\Component\HttpFoundation\ResponseHeaderBag $headers */
+        /** @var array $headers */
         $headers = $this->response->headers->all();
 
         static::assertArrayHasKey(strtolower($header), $headers, 'Header '.$header.'is missing');

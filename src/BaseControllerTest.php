@@ -194,8 +194,9 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
                 break;
             default:
                 return http_build_query($data);
-                break;
         }
+
+        return null;
     }
 
     /**
@@ -298,7 +299,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      * @throws \Throwable
      * @throws \Exception
      *
-     * @return string|\Closure
+     * @return string|\Closure|\Symfony\Component\HttpFoundation\Response
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
