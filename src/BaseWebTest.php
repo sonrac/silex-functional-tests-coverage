@@ -22,11 +22,6 @@ abstract class BaseWebTest extends OnceMigrationWebTest
      */
     protected $crawler;
 
-    public function createApplication()
-    {
-        return require __DIR__.'/../../bootstrap/api.php';
-    }
-
     /**
      * {@inheritdoc}
      *
