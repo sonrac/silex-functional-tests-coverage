@@ -38,7 +38,7 @@ class MaxRedirectException extends \Exception
     {
         parent::__construct($message, $code, $previous);
 
-        $this->countRedirects = 0;
+        $this->countRedirects = $countRedirects;
     }
 
     /**
