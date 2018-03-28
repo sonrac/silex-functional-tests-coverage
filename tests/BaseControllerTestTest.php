@@ -44,7 +44,8 @@ class BaseControllerTestTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp() {
+    protected function setUp()
+    {
         parent::setUp();
 
         if (!is_file($this->dbFile)) {
@@ -76,7 +77,7 @@ class BaseControllerTestTest extends TestCase
         $response->setContent(json_encode(['status' => 'OK', 'result' => ['data' => 123, 'test' => 234]]));
         $response->headers->add([
             'test-header' => 'test-header',
-            'bearer'      => 'token'
+            'bearer'      => 'token',
         ]);
         $this->controller->setResponse($response);
 
@@ -100,7 +101,7 @@ class BaseControllerTestTest extends TestCase
         $this->controller->getApplication();
         $this->controller->post('/create-user/123/123')
             ->seeInDatabase('users', [
-                'username' => 123
+                'username' => 123,
             ]);
         $this->controller->post('/create-user/222/222')
             ->seeInDatabase('users', 'username = \'222\'');
@@ -175,13 +176,13 @@ class BaseControllerTestTest extends TestCase
     {
         $this->controller->getApplication();
         $this->controller->patch('/item/5', [
-            'model' => 'model'
+            'model' => 'model',
         ]);
         $this->assertEquals('{"status":"OK_PATCH5"}', $this->controller->getResponseObject()->getContent());
     }
 
     /**
-     * Test route not found
+     * Test route not found.
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
@@ -200,7 +201,8 @@ class BaseControllerTestTest extends TestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function testRedirectResponseWithDisableRedirects() {
+    public function testRedirectResponseWithDisableRedirects()
+    {
         $this->controller->getApplication();
         $this->assertInstanceOf(
             RedirectResponse::class,
@@ -213,7 +215,8 @@ class BaseControllerTestTest extends TestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function testRedirectResponseWithEnableRedirect() {
+    public function testRedirectResponseWithEnableRedirect()
+    {
         $this->controller->getApplication();
         $this->controller->enableRedirect(2);
         $this->controller->get('/redirect');
@@ -225,7 +228,8 @@ class BaseControllerTestTest extends TestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function testExceptionWithEnableRedirect() {
+    public function testExceptionWithEnableRedirect()
+    {
         $this->controller->getApplication();
         $this->controller->enableRedirect(2);
         $this->expectException(MaxRedirectException::class);
@@ -237,7 +241,8 @@ class BaseControllerTestTest extends TestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function testDisableRedirectResponse() {
+    public function testDisableRedirectResponse()
+    {
         $this->controller->getApplication();
         $this->controller->setThrowExceptionOnRedirect(false);
         $this->controller->enableRedirect(2);
@@ -262,7 +267,7 @@ class BaseControllerTestTest extends TestCase
 class ControllerTest extends BaseControllerTest
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function createApplication()
     {
@@ -301,9 +306,9 @@ class ControllerTest extends BaseControllerTest
 
         $app->register(new DoctrineServiceProvider(), [
             'db.options' => [
-                'path' => __DIR__.'/out/db.sqlite',
-                'driver' => 'pdo_sqlite'
-            ]
+                'path'   => __DIR__.'/out/db.sqlite',
+                'driver' => 'pdo_sqlite',
+            ],
         ]);
 
         $app->post('/create-user/{username}/{password}', function (Application $app, $username, $password) {
@@ -312,7 +317,7 @@ class ControllerTest extends BaseControllerTest
             $db->insert('users', [
                 'id'       => mt_rand(0, 99999),
                 'username' => $username,
-                'password' => $password
+                'password' => $password,
             ]);
         });
 
@@ -363,7 +368,8 @@ class ControllerTest extends BaseControllerTest
         return $this->{$name}($arguments);
     }
 
-    public function enableRedirect($count = 1) {
+    public function enableRedirect($count = 1)
+    {
         $this->setAllowRedirect($count);
     }
 }
