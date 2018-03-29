@@ -32,7 +32,7 @@ abstract class OnceMigrationWebTest extends WebTestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected static $seeds = [];
+    protected static $staticSeeds = [];
 
     /**
      * {@inheritdoc}
@@ -55,6 +55,17 @@ abstract class OnceMigrationWebTest extends WebTestCase
      * @author Donii Sergii <s.donii@infomir.com>
      */
     abstract public static function getApplication();
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createApplication()
+    {
+        if (method_exists(static::class, 'getApplication')) {
+            return static::getApplication();
+        }
+    }
 
     /**
      * Setup migration class.

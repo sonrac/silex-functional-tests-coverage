@@ -11,7 +11,7 @@ namespace sonrac\FCoverage;
  * Property is list seed classes.
  *
  * @example
- * All seeds located by namespace `Tests\Seeds` and ending with TableSeeder
+ * All staticSeeds located by namespace `Tests\Seeds` and ending with TableSeeder
  * Seeds List are:
  * - Tests\Seeds\UsersTableSeeder
  * - Tests\Seeds\RolesTableSeeder
@@ -22,6 +22,7 @@ namespace sonrac\FCoverage;
  *      use BootTraits, MigrationsTrait;
  *      protected function setUp() {
  *          parent::setUp();
+ *          $this->setSeedsNamespace('Tests\\Seeds')
  *          $this->setSeedClassEnding('TableSeeder')->_boot();
  *      }
  *      protected $seeds = ['users', 'roles']
@@ -140,13 +141,32 @@ trait MigrationsTrait
     {
         $this->runCommand($this->getMigrationCommand());
 
-        if (property_exists($this, 'seeds')) {
-            foreach ($this->seeds as $seed) {
-                $class = class_exists($seed) ? $seed : $this->getSeedNamespace().ucfirst($seed).
-                                                       ($this->seedClassEnding ?: '');
-                $this->runCommand($this->getSeedCommand().$class);
+        if (property_exists(static::class, 'staticSeeds')) {
+            foreach (static::$staticSeeds as $seed) {
+                $this->runSeed($seed);
             }
         }
+
+        if (property_exists($this, 'seeds')) {
+            foreach ($this->seeds as $seed) {
+                $this->runSeed($seed);
+            }
+        }
+    }
+
+    /**
+     * Run seed.
+     *
+     * @param string $seed
+     *
+     * @throws \Exception
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    protected function runSeed($seed) {
+        $class = class_exists($seed) ? $seed : $this->getSeedNamespace().ucfirst($seed).
+                                               ($this->seedClassEnding ?: '');
+        $this->runCommand($this->getSeedCommand().$class);
     }
 
     /**
@@ -256,7 +276,7 @@ trait MigrationsTrait
     }
 
     /**
-     * Get seeds classes namespace.
+     * Get staticSeeds classes namespace.
      *
      * @return null|string
      *
