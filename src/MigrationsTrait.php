@@ -163,7 +163,8 @@ trait MigrationsTrait
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    protected function runSeed($seed) {
+    protected function runSeed($seed)
+    {
         $class = class_exists($seed) ? $seed : $this->getSeedNamespace().ucfirst($seed).
                                                ($this->seedClassEnding ?: '');
         $this->runCommand($this->getSeedCommand().$class);

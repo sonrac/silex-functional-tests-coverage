@@ -56,7 +56,6 @@ abstract class OnceMigrationWebTest extends WebTestCase
      */
     abstract public static function getApplication();
 
-
     /**
      * {@inheritdoc}
      */
