@@ -21,18 +21,16 @@ trait InitMigrationAppTrait
      *
      * @return \Silex\Application
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
-    public static function getClientApplication()
-    {
-    }
+    abstract public static function getClientApplication();
 
     /**
      * Setup migration class.
      *
      * @return void
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public static function setUpMigration()
     {
@@ -43,7 +41,7 @@ trait InitMigrationAppTrait
      *
      * @throws \Exception
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected static function initInitMigrationAppTrait()
     {
@@ -60,7 +58,7 @@ trait InitMigrationAppTrait
      *
      * @throws \Exception
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected static function downMigrationTrait()
     {

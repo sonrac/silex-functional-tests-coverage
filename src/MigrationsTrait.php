@@ -161,7 +161,7 @@ trait MigrationsTrait
      *
      * @throws \Exception
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function runSeed($seed)
     {

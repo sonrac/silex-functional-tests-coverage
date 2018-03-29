@@ -52,7 +52,7 @@ abstract class OnceMigrationWebTest extends WebTestCase
      *
      * @return \Silex\Application
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     abstract public static function getApplication();
 
@@ -71,7 +71,7 @@ abstract class OnceMigrationWebTest extends WebTestCase
      *
      * @return void
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     abstract public static function setUpMigration();
 
