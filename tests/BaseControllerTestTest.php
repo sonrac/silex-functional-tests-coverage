@@ -276,6 +276,23 @@ class ControllerTest extends BaseControllerTest
      */
     protected function createApplication()
     {
+       return $this->application = $this->getApplication();
+    }
+
+    public function getApplication()
+    {
+        if (!$this->application) {
+            return $this->application = static::getClientApplication();
+        }
+
+        return $this->application;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getClientApplication()
+    {
         $app = new Application();
         $app->get('/', function () use ($app) {
             return $app->json(['status' => 'OK']);
@@ -326,8 +343,6 @@ class ControllerTest extends BaseControllerTest
             ]);
         });
 
-        $app->boot();
-
         /** @var \Doctrine\DBAL\Connection $db */
         $db = $app['db'];
         $user = new Table('users');
@@ -341,13 +356,11 @@ class ControllerTest extends BaseControllerTest
             ->setNotnull(true);
         $db->getSchemaManager()->createTable($user);
 
-        return $this->application = $app;
+        $app->boot();
+
+        return $app;
     }
 
-    public function getApplication()
-    {
-        return $this->createApplication();
-    }
 
     public function setResponse(Response $response)
     {
