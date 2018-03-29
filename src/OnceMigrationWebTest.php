@@ -17,15 +17,6 @@ abstract class OnceMigrationWebTest extends WebTestCase
     use InitMigrationAppTrait;
 
     /**
-     * Run migration if true or does not run otherwise.
-     *
-     * @var bool
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected static $runMigration = true;
-
-    /**
      * Seeds list.
      *
      * @var array
