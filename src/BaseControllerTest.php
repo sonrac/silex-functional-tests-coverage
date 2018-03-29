@@ -100,7 +100,8 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected function createApplication() {
+    protected function createApplication()
+    {
         if (method_exists(static::class, 'getApplication')) {
             return static::getApplication();
         }
