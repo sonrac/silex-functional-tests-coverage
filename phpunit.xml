@@ -19,14 +19,14 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src/</directory>
             <exclude>
-                <file>./src/UnitTest.php</file>
-                <file>./src/OnceRunMigration.php</file>
-                <file>./src/OnceRunMigrationUnitTest.php</file>
-                <file>./src/OnceMigrationUnitTest.php</file>
-                <file>./src/BaseWebTest.php</file>
-                <file>./src/MaxRedirectException.php</file>
-                <file>./src/OnceMigrationWebTest.php</file>
-                <file>./src/InitMigrationAppTrait.php</file>
+                <!--<file>./src/UnitTest.php</file>-->
+                <!--<file>./src/OnceRunMigration.php</file>-->
+                <!--<file>./src/OnceRunMigrationUnitTest.php</file>-->
+                <!--<file>./src/OnceMigrationUnitTest.php</file>-->
+                <!--<file>./src/BaseWebTest.php</file>-->
+                <!--<file>./src/MaxRedirectException.php</file>-->
+                <!--<file>./src/OnceMigrationWebTest.php</file>-->
+                <!--<file>./src/InitMigrationAppTrait.php</file>-->
             </exclude>
         </whitelist>
     </filter>

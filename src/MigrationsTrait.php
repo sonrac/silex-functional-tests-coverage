@@ -183,7 +183,7 @@ trait MigrationsTrait
     {
         $migrations = $this->getMigrationsList();
 
-        if (empty($migrations)) {
+        if (empty($migrations) || !is_iterable($migrations)) {
             return false;
         }
 

@@ -1,0 +1,48 @@
+#!/usr/bin/env php
+<?php
+require_once __DIR__.'/../../../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+$cli = new Application();
+
+$app = require __DIR__.'/../app.php';
+
+$db = $app['db'];
+$db->getDatabasePlatform()
+    ->registerDoctrineTypeMapping('enum', 'string');
+
+$helperSet = new Symfony\Component\Console\Helper\HelperSet([
+    'connection' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($app['db']),
+//    'dialog' => new \Symfony\Component\Console\Helper\QuestionHelper(),
+]);
+//
+$cli->setHelperSet($helperSet);
+
+$app->register(
+    new \Kurl\Silex\Provider\DoctrineMigrationsProvider($cli),
+    array(
+        'migrations.directory' => __DIR__ . '/../resources/migrations',
+        'migrations.name' => 'Tests Migrations',
+        'migrations.namespace' => 'Migrations',
+        'migrations.table_name' => 'test_migrations',
+    )
+);
+
+var_dump($app['migrations.configuration']);
+
+$app['migrations.configuration'];
+var_dump($app['migrations.command_names']);
+
+//$cli->addCommands(array(
+//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand(),
+//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand(),
+//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand(),
+//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
+//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
+//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand()
+//));
+
+$app->boot();
+
+$cli->run();
