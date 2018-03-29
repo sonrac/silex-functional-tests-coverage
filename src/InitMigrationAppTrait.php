@@ -38,7 +38,7 @@ trait InitMigrationAppTrait
     {
         if (true === static::$runMigration) {
             $app = static::getApplication();
-            static::$migration = new OnceRunMigration($app, static::$seeds);
+            static::$migration = new OnceRunMigration($app, static::$staticSeeds);
             static::setUpMigration();
             static::$migration->bootMigrationsTrait();
         }
