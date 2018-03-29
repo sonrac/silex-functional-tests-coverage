@@ -62,7 +62,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testCreateApplication()
     {
-        $this->assertInstanceOf(Application::class, $this->controller->getApplication());
+        $this->assertInstanceOf(Application::class, $this->controller->getClientApplication());
     }
 
     /**
@@ -98,7 +98,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testDatabaseMethods()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->post('/create-user/123/123')
             ->seeInDatabase('users', [
                 'username' => 123,
@@ -114,7 +114,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testGetRequest()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->get('/?id=1');
         $this->assertEquals('{"status":"OK"}', $this->controller->getResponseObject()->getContent());
     }
@@ -126,7 +126,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testPostRequest()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->post('/?id=1');
         $this->assertEquals('{"status":"OK_POST"}', $this->controller->getResponseObject()->getContent());
     }
@@ -138,7 +138,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testPutRequest()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->put('/item/2');
         $this->assertEquals('{"status":"OK_PUT2"}', $this->controller->getResponseObject()->getContent());
     }
@@ -150,7 +150,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testDeleteRequest()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->delete('/item/1');
         $this->assertEquals('{"status":"OK_DELETE1"}', $this->controller->getResponseObject()->getContent());
     }
@@ -162,7 +162,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testPatchRequest()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->patch('/item/5');
         $this->assertEquals('{"status":"OK_PATCH5"}', $this->controller->getResponseObject()->getContent());
     }
@@ -174,7 +174,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testPatchWithBodyRequest()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->patch('/item/5', [
             'model' => 'model',
         ]);
@@ -188,7 +188,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testRouteNotFound()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->assertEquals(
             'No route found for "GET /not_found"',
             $this->controller->get('/not_found')->getResponseObject()->getContent()
@@ -203,7 +203,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testRedirectResponseWithDisableRedirects()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->assertInstanceOf(
             RedirectResponse::class,
             $this->controller->get('/redirect')->getResponseObject()
@@ -217,7 +217,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testRedirectResponseWithEnableRedirect()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->enableRedirect(2);
         $this->controller->get('/redirect');
         $this->assertEquals('{"status":"OK"}', $this->controller->getResponseObject()->getContent());
@@ -230,7 +230,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testExceptionWithEnableRedirect()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->enableRedirect(2);
 
         if (method_exists($this, 'expectException')) {
@@ -248,7 +248,7 @@ class BaseControllerTestTest extends TestCase
      */
     public function testDisableRedirectResponse()
     {
-        $this->controller->getApplication();
+        $this->controller->getClientApplication();
         $this->controller->setThrowExceptionOnRedirect(false);
         $this->controller->enableRedirect(2);
         $this->controller->get('/circle-redirect');
@@ -276,89 +276,91 @@ class ControllerTest extends BaseControllerTest
      */
     protected function createApplication()
     {
-        return $this->application = $this->getApplication();
+        return $this->application = static::getApplication();
     }
 
-    public function getApplication()
+    public static function getApplication()
     {
-        if (!$this->application) {
-            return $this->application = static::getClientApplication();
-        }
 
-        return $this->application;
+        {
+            $app = new Application();
+            $app->get('/', function () use ($app) {
+                return $app->json(['status' => 'OK']);
+            });
+
+            $app->post('/', function (Application $app) {
+                return $app->json(['status' => 'OK_POST']);
+            });
+
+            $app->delete('/item/{id}', function (Application $app, $id) {
+                return $app->json(['status' => 'OK_DELETE'.$id]);
+            });
+
+            $app->put('/item/{id}', function (Application $app, $id) {
+                return $app->json(['status' => 'OK_PUT'.$id]);
+            });
+
+            $app->patch('/item/{id}', function (Application $app, $id) {
+                return $app->json(['status' => 'OK_PATCH'.$id]);
+            });
+
+            $app->get('/redirect', function (Application $app) {
+                return $app->redirect('/');
+            });
+
+            $app->get('/redirect-redirect', function (Application $app) {
+                return $app->redirect('/redirect');
+            });
+
+            $app->get('/circle-redirect', function (Application $app) {
+                return $app->redirect('/circle-redirect');
+            });
+
+            $app->register(new DoctrineServiceProvider(), [
+                'db.options' => [
+                    'path'   => __DIR__.'/out/db.sqlite',
+                    'driver' => 'pdo_sqlite',
+                ],
+            ]);
+
+            $app->post('/create-user/{username}/{password}', function (Application $app, $username, $password) {
+                /** @var \Doctrine\DBAL\Connection $db */
+                $db = $app['db'];
+                $db->insert('users', [
+                    'id'       => mt_rand(0, 99999),
+                    'username' => $username,
+                    'password' => $password,
+                ]);
+            });
+
+            /** @var \Doctrine\DBAL\Connection $db */
+            $db = $app['db'];
+            $user = new Table('users');
+            $user->addColumn('id', Type::INTEGER)
+                ->setAutoincrement(true);
+            $user->addColumn('username', Type::STRING)
+                ->setLength(255)
+                ->setNotnull(true);
+            $user->addColumn('password', Type::STRING)
+                ->setLength(255)
+                ->setNotnull(true);
+            $db->getSchemaManager()->createTable($user);
+
+            $app->boot();
+
+            return $app;
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getClientApplication()
-    {
-        $app = new Application();
-        $app->get('/', function () use ($app) {
-            return $app->json(['status' => 'OK']);
-        });
+    public function getClientApplication() {
+        if (!$this->application) {
+            return $this->application = static::getApplication();
+        }
 
-        $app->post('/', function (Application $app) {
-            return $app->json(['status' => 'OK_POST']);
-        });
-
-        $app->delete('/item/{id}', function (Application $app, $id) {
-            return $app->json(['status' => 'OK_DELETE'.$id]);
-        });
-
-        $app->put('/item/{id}', function (Application $app, $id) {
-            return $app->json(['status' => 'OK_PUT'.$id]);
-        });
-
-        $app->patch('/item/{id}', function (Application $app, $id) {
-            return $app->json(['status' => 'OK_PATCH'.$id]);
-        });
-
-        $app->get('/redirect', function (Application $app) {
-            return $app->redirect('/');
-        });
-
-        $app->get('/redirect-redirect', function (Application $app) {
-            return $app->redirect('/redirect');
-        });
-
-        $app->get('/circle-redirect', function (Application $app) {
-            return $app->redirect('/circle-redirect');
-        });
-
-        $app->register(new DoctrineServiceProvider(), [
-            'db.options' => [
-                'path'   => __DIR__.'/out/db.sqlite',
-                'driver' => 'pdo_sqlite',
-            ],
-        ]);
-
-        $app->post('/create-user/{username}/{password}', function (Application $app, $username, $password) {
-            /** @var \Doctrine\DBAL\Connection $db */
-            $db = $app['db'];
-            $db->insert('users', [
-                'id'       => mt_rand(0, 99999),
-                'username' => $username,
-                'password' => $password,
-            ]);
-        });
-
-        /** @var \Doctrine\DBAL\Connection $db */
-        $db = $app['db'];
-        $user = new Table('users');
-        $user->addColumn('id', Type::INTEGER)
-            ->setAutoincrement(true);
-        $user->addColumn('username', Type::STRING)
-            ->setLength(255)
-            ->setNotnull(true);
-        $user->addColumn('password', Type::STRING)
-            ->setLength(255)
-            ->setNotnull(true);
-        $db->getSchemaManager()->createTable($user);
-
-        $app->boot();
-
-        return $app;
+        return $this->application;
     }
 
     public function setResponse(Response $response)
