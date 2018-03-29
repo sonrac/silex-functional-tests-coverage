@@ -276,7 +276,7 @@ class ControllerTest extends BaseControllerTest
      */
     protected function createApplication()
     {
-       return $this->application = $this->getApplication();
+        return $this->application = $this->getApplication();
     }
 
     public function getApplication()
@@ -289,7 +289,7 @@ class ControllerTest extends BaseControllerTest
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function getClientApplication()
     {
@@ -360,7 +360,6 @@ class ControllerTest extends BaseControllerTest
 
         return $app;
     }
-
 
     public function setResponse(Response $response)
     {
