@@ -5,16 +5,8 @@
 
 namespace sonrac\FCoverage\Tests;
 
-use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
-use Silex\Application;
-use Silex\Provider\DoctrineServiceProvider;
-use sonrac\FCoverage\BaseControllerTest;
-use sonrac\FCoverage\MaxRedirectException;
 use sonrac\FCoverage\OnceMigrationUnitTest;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class OnceMigrationWebTest
@@ -46,11 +38,10 @@ class OnceMigrationWebTest extends TestCase
 class OnceMigrationTests extends OnceMigrationUnitTest
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function getApplication()
     {
         // TODO: Implement getApplication() method.
     }
-
 }

@@ -9,13 +9,14 @@ use PHPUnit\Framework\TestCase;
 use sonrac\FCoverage\UnitTest;
 
 /**
- * Class TestUnitTest
+ * Class TestUnitTest.
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
 class TestUnitTest extends TestCase
 {
-    public function testBootTraits() {
+    public function testBootTraits()
+    {
         $controller = new UnitTester();
         $this->assertNull($controller->a);
 
@@ -27,27 +28,32 @@ class TestUnitTest extends TestCase
     }
 }
 
-class UnitTester extends UnitTest {
+class UnitTester extends UnitTest
+{
     use Tester;
 
-    public function setupRun() {
+    public function setupRun()
+    {
         $this->setUp();
     }
 
-    public function downRun() {
+    public function downRun()
+    {
         $this->tearDown();
     }
 }
 
-trait Tester {
+trait Tester
+{
+    public $a;
 
-    public  $a;
-
-    protected function rollback() {
+    protected function rollback()
+    {
         $this->a = null;
     }
 
-    protected function bootTester() {
+    protected function bootTester()
+    {
         $this->a = 123;
     }
 }

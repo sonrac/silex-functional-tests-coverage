@@ -5,11 +5,8 @@
 
 namespace sonrac\FCoverage\Tests;
 
-use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
-use Silex\Provider\DoctrineServiceProvider;
 use sonrac\FCoverage\BaseControllerTest;
 use sonrac\FCoverage\MaxRedirectException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
