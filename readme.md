@@ -17,5 +17,24 @@
 
 ## Idea
 
-Functional tests mechanism concatenaion with emulation is called in unit tests. All function tests located in trait and include in functional and unit as trait
+Functional tests mechanism concatenation with emulation is called in unit tests. All function tests located in trait and include in functional and unit as trait
 
+## Class description
+
+| Class | Description |
+| ----- | ----------- |
+| BaseControllerTest | Base controllers test for unit testing |
+| BaseWebTest | Base functional test controller |
+| OnceMigrationUnitTest | Run functional test with running migration on test beginning and rollback after test finished |
+| OnceMigrationUnitTest | Run functional test with running migration on test beginning and rollback after test finished |
+| UnitTest | Base unit test with bases traits (BootTraits, MigrationTrait) |   
+
+## Traits description
+
+| Trait | Description |
+| ----- | ----------- |
+| BootTraits | Boot trait in class |
+| InitMigrationTestTrait | Using for once run migration in unit or functional tests |
+| MigrationsTrait | Trait for run migrations |
+
+## Class api
