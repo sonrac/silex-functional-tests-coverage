@@ -17,15 +17,6 @@ trait InitMigrationAppTrait
     protected static $migration;
 
     /**
-     * Get application instance.
-     *
-     * @return \Silex\Application
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    abstract public static function getClientApplication();
-
-    /**
      * Setup migration class.
      *
      * @return void
