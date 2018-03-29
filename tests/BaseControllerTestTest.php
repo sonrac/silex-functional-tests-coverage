@@ -281,7 +281,6 @@ class ControllerTest extends BaseControllerTest
 
     public static function getApplication()
     {
-
         {
             $app = new Application();
             $app->get('/', function () use ($app) {
@@ -355,7 +354,8 @@ class ControllerTest extends BaseControllerTest
     /**
      * {@inheritdoc}
      */
-    public function getClientApplication() {
+    public function getClientApplication()
+    {
         if (!$this->application) {
             return $this->application = static::getApplication();
         }
