@@ -17,15 +17,6 @@ abstract class OnceMigrationWebTest extends WebTestCase
     use InitMigrationAppTrait;
 
     /**
-     * Seeds list.
-     *
-     * @var array
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected static $staticSeeds = [];
-
-    /**
      * {@inheritdoc}
      *
      * @throws \Exception

@@ -26,6 +26,15 @@ trait InitMigrationAppTrait
     protected static $migration;
 
     /**
+     * Seeds list.
+     *
+     * @var array
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected static $staticSeeds = [];
+
+    /**
      * Setup migration class.
      *
      * @return void
