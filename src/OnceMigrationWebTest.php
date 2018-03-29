@@ -39,15 +39,6 @@ abstract class OnceMigrationWebTest extends WebTestCase
     }
 
     /**
-     * Get application instance.
-     *
-     * @return \Silex\Application
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    abstract public static function getApplication();
-
-    /**
      * {@inheritdoc}
      */
     public function createApplication()
