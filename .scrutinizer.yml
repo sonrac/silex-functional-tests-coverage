@@ -6,7 +6,7 @@ build:
           before:
               - composer require doctrine/migrations --prefer-dist --no-interaction
               - composer require silex/silex --prefer-dist --no-interaction
-              - composer require symfony/browser-kit:^4.4 --prefer-dist --no-interaction
+              - composer require symfony/browser-kit:^3.4 --prefer-dist --no-interaction
   tests:
     override:
       -
