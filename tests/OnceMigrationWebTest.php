@@ -100,6 +100,7 @@ class OnceMigrationWebTest extends TestCase
 class OnceMigrationWebTests extends BaseOnceMigrationWebTest
 {
     public static $appPath = 'app/app.php';
+
     /**
      * {@inheritdoc}
      */
