@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use sonrac\FCoverage\UnitTest;
 
 /**
- * Class TestUnitTest
+ * Class TestUnitTest.
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
@@ -35,7 +35,6 @@ class TestUnitTest extends TestCase
 
 trait Tester
 {
-
     public $a;
 
     protected function rollback()

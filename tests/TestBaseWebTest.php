@@ -8,7 +8,7 @@ namespace sonrac\FCoverage\Tests;
 use sonrac\FCoverage\BaseWebTest;
 
 /**
- * Class TestBaseWebTest
+ * Class TestBaseWebTest.
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
@@ -21,14 +21,15 @@ class TestBaseWebTest extends OnceMigrationWebTest
         $controller->setUp();
         $controller->get('/')
             ->seeJsonStructure([
-                'status' => 'OK'
+                'status' => 'OK',
             ])->seeStatusCode(200);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function testRunMigrations($class = BaseWeb::class) {
+    public function testRunMigrations($class = BaseWeb::class)
+    {
         parent::testRunMigrations($class);
     }
 }
@@ -44,7 +45,7 @@ class BaseWeb extends BaseWebTest
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function setUpMigration()
     {
