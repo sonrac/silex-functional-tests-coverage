@@ -329,7 +329,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             return $response;
         }
 
-        /** @var \Silex\Route $route */
+        /** @var \Silex\Route|null $route */
         $route = $this->application['routes']->get($index);
 
         if (!$route) { // Fix match route
@@ -347,7 +347,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
                                $this->request->getMethod(),
                                $_route->getMethods()
                            );
-                if ($_route->getPath() === $uri || $matched) {
+                if ($_route->getPath() === $uri || ($matched !== false)) {
                     $route = $_route;
                     break;
                 }
