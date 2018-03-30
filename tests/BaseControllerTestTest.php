@@ -271,6 +271,8 @@ class BaseControllerTestTest extends TestCase
 
 class ControllerTest extends BaseControllerTest
 {
+    public static $appPath = 'app/app.php';
+
     public static function setUpMigration()
     {
         static::$migration->setBinDir(__DIR__.'/app/bin')
@@ -326,8 +328,8 @@ class ControllerTest extends BaseControllerTest
         return $this->application = static::getApplication();
     }
 
-    public static function getApplication()
+    public static function getApplication($dir = __DIR__)
     {
-        return require __DIR__.'/app/app.php';
+        return parent::getApplication($dir);
     }
 }

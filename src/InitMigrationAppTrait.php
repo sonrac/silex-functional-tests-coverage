@@ -8,6 +8,15 @@ namespace sonrac\FCoverage;
 trait InitMigrationAppTrait
 {
     /**
+     * Path to application init script.
+     *
+     * @var string
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public static $appPath;
+
+    /**
      * Run migration if true or does not run otherwise.
      *
      * @var bool
@@ -48,11 +57,15 @@ trait InitMigrationAppTrait
     /**
      * Get application instance.
      *
+     * @param string $dir Base directory
+     *
      * @return \Silex\Application
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    abstract public static function getApplication();
+    public static function getApplication($dir = null) {
+        return require (($dir ? $dir.'/' : '') . static::$appPath);
+    }
 
     /**
      * Init migration trait.
