@@ -3,6 +3,10 @@
     "description": "Add unit tests for functional tests for best coverage",
     "type": "library",
     "require": {
+        "kurl/silex-doctrine-migrations-provider": "^0.3.0",
+        "doctrine/migrations": "^1.6",
+        "silex/silex": "^2.2",
+        "symfony/browser-kit": "^4.0"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.7",
