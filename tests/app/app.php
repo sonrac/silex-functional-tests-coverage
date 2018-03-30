@@ -2,7 +2,6 @@
 /**
  * @author Donii Sergii <s.doniy@infomir.com>.
  */
-
 require_once __DIR__.'/../../vendor/autoload.php';
 
 use Silex\Application;
@@ -57,7 +56,7 @@ $app->post('/create-user/{username}/{password}', function (Application $app, $us
     ]);
 });
 
-/** @var \Doctrine\DBAL\Connection $db */
+/* @var \Doctrine\DBAL\Connection $db */
 //$db = $app['db'];
 //$user = new Table('users');
 //$user->addColumn('id', Type::INTEGER)

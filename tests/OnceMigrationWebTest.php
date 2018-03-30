@@ -98,7 +98,7 @@ class OnceMigrationWebTest extends TestCase
 class OnceMigrationWebTests extends BaseOnceMigrationWebTest
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getApplication()
     {
