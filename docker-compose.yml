@@ -14,6 +14,13 @@ services:
     environment:
       - PROJECT_DIR_ROOT=/home/infomir/site
     working_dir: /home/infomir/site
+  hhvm:
+    image: hhvm/hhvm
+    volumes:
+      - "./:/home/infomir/site"
+    environment:
+      - PROJECT_DIR_ROOT=/home/infomir/site
+    working_dir: /home/infomir/site
 networks:
   default:
     external:
