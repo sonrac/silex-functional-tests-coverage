@@ -43,7 +43,8 @@ class OnceMigrationWebTest extends TestCase
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    public function testRunMigrations() {
+    public function testRunMigrations()
+    {
         OnceMigrationWebTests::setUpBeforeClass();
 
         $app = OnceMigrationWebTests::getMigration()->getApp();
@@ -68,9 +69,10 @@ class OnceMigrationWebTest extends TestCase
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    private function getTable(Connection $db) {
+    private function getTable(Connection $db)
+    {
         try {
-            return (bool)$db->createQueryBuilder()
+            return (bool) $db->createQueryBuilder()
                 ->select('name')
                 ->from('sqlite_master')
                 ->where('type = :type AND name = :table_name')
@@ -98,7 +100,7 @@ class OnceMigrationWebTest extends TestCase
 class OnceMigrationWebTests extends BaseOnceMigrationWebTest
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public static function getApplication()
     {
@@ -120,7 +122,8 @@ class OnceMigrationWebTests extends BaseOnceMigrationWebTest
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    public static function getMigration() {
+    public static function getMigration()
+    {
         return static::$migration;
     }
 }

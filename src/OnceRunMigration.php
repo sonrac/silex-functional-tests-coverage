@@ -71,6 +71,7 @@ class OnceRunMigration
     public function setApp($app)
     {
         $this->app = $app;
+
         return $this;
     }
 
@@ -96,6 +97,7 @@ class OnceRunMigration
     public function setSeeds($seeds)
     {
         $this->seeds = $seeds;
+
         return $this;
     }
 }
