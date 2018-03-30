@@ -19,8 +19,9 @@ class MigrationTraitTest extends TestCase
     /**
      * Test boot trait.
      *
-     * @return \sonrac\FCoverage\Tests\Migration
      * @throws \ReflectionException
+     *
+     * @return \sonrac\FCoverage\Tests\Migration
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */

@@ -8,7 +8,7 @@ namespace sonrac\FCoverage\Tests\app;
 use sonrac\FCoverage\BaseControllerTest;
 
 /**
- * Class FullCoverageTest
+ * Class FullCoverageTest.
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
@@ -27,13 +27,15 @@ class FullCoverageTest extends BaseControllerTest
         static::$migration->setBinDir(__DIR__.'/app/bin');
     }
 
-    public function testIndexPage() {
+    public function testIndexPage()
+    {
         $this->get('/')
             ->seeJsonStructure(['status'])
             ->seeStatusCode(200);
     }
 
-    public function testUpdateItem() {
+    public function testUpdateItem()
+    {
         $this->put('/item/4')
             ->seeJsonStructure(['status' => 'OK_PUT4'])
             ->seeStatusCode(200);

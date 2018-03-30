@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace TestMigrations;
 
@@ -27,7 +29,6 @@ class Version20180330081803 extends AbstractMigration
             ->setLength(2000)
             ->setDefault('')
             ->setNotnull(true);
-
     }
 
     public function down(Schema $schema)
