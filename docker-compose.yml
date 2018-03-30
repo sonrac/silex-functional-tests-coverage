@@ -3,21 +3,21 @@ services:
   fpm5:
     image: sonrac/infomir-php:php-fpm-5.5.9
     volumes:
-      - "./:/home/infomir/site"
+      - "./:/home/site"
     environment:
       - PROJECT_DIR_ROOT=/home/infomir/site
     working_dir: /home/infomir/site
   fpm:
     image: sonrac/infomir-php:php-fpm-7.1
     volumes:
-      - "./:/home/infomir/site"
+      - "./:/home/site"
     environment:
       - PROJECT_DIR_ROOT=/home/infomir/site
     working_dir: /home/infomir/site
   hhvm:
     image: hhvm/hhvm
     volumes:
-      - "./:/home/infomir/site"
+      - "./:/home/site"
     environment:
       - PROJECT_DIR_ROOT=/home/infomir/site
     working_dir: /home/infomir/site
