@@ -46,7 +46,7 @@ abstract class OnceMigrationWebTest extends WebTestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    abstract public static function setUpMigration();
+    public static function setUpMigration() {}
 
     /**
      * {@inheritdoc}
