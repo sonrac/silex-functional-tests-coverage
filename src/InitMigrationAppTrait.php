@@ -65,7 +65,7 @@ trait InitMigrationAppTrait
      */
     public static function getApplication($dir = null)
     {
-        return require ($dir ? $dir.'/' : '').static::$appPath;
+        return require($dir ? $dir.'/' : '').static::$appPath;
     }
 
     /**
