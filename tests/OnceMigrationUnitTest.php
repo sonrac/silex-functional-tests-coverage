@@ -7,16 +7,15 @@ namespace sonrac\FCoverage\Tests;
 
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
-use Silex\Application;
-use sonrac\FCoverage\OnceMigrationWebTest as BaseOnceMigrationWebTest;
+use sonrac\FCoverage\OnceMigrationUnitTest as BaseOnceMigrationUnitTest;
 
 /**
- * Class OnceMigrationWebTest
+ * Class OnceMigrationUnitTest
  * Once migration controller tester.
  *
  * @author Donii Sergii <doniysa@gmail.com>
  */
-class OnceMigrationWebTest extends TestCase
+class OnceMigrationUnitTest extends TestCase
 {
     /**
      * Database file path.
@@ -39,24 +38,25 @@ class OnceMigrationWebTest extends TestCase
     /**
      * Test run migrations.
      *
+     * @param string|null $class
+     *
      * @throws \Exception
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    public function testRunMigrations() {
-        OnceMigrationWebTests::setUpBeforeClass();
+    public function testRunMigrations($class = null) {
+        $class = $class ?: OnceMigrationTests::class;
+        $class::setUpBeforeClass();
 
-        $app = OnceMigrationWebTests::getMigration()->getApp();
+        $app = OnceMigrationTests::getMigration()->getApp();
         /** @var \Doctrine\DBAL\Connection $db */
         $db = $app['db'];
 
         static::assertTrue((bool) $this->getTable($db));
 
-        OnceMigrationWebTests::tearDownAfterClass();
+        $class::tearDownAfterClass();
 
         static::assertFalse((bool) $this->getTable($db));
-
-        $this->assertInstanceOf(Application::class, (new OnceMigrationWebTests())->createApplication());
     }
 
     /**
@@ -95,7 +95,7 @@ class OnceMigrationWebTest extends TestCase
     }
 }
 
-class OnceMigrationWebTests extends BaseOnceMigrationWebTest
+class OnceMigrationTests extends BaseOnceMigrationUnitTest
 {
     /**
      * @inheritDoc

@@ -83,8 +83,6 @@ abstract class BaseWebTest extends OnceMigrationWebTest
     {
         parent::tearDown();
 
-        if (method_exists($this, '_down')) {
-            $this->_down();
-        }
+        $this->_unBoot();
     }
 }

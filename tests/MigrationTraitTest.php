@@ -16,6 +16,14 @@ use sonrac\FCoverage\MigrationsTrait;
  */
 class MigrationTraitTest extends TestCase
 {
+    /**
+     * Test boot trait.
+     *
+     * @return \sonrac\FCoverage\Tests\Migration
+     * @throws \ReflectionException
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
     public function testBoot()
     {
         $migration = new Migration();
@@ -55,9 +63,16 @@ class MigrationTraitTest extends TestCase
         $this->assertFalse($migration->rollback());
     }
 
+    /**
+     * Test boot with seeds.
+     *
+     * @throws \ReflectionException
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
     public function testBootWithSeeds()
     {
-        $migration = new MigrationWithSeeds();
+        new MigrationWithSeeds();
 
         foreach ([1, 2, 3] as $item) {
             $this->assertFileExists(__DIR__.'/'.$item);
@@ -127,7 +142,9 @@ class MigrationWithSeeds extends Migration
     protected function getMigrationsList()
     {
         return [
-            '1', '2', '3',
+            '1',
+            '2',
+            '3',
         ];
     }
 }

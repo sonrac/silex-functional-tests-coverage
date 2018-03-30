@@ -33,9 +33,9 @@ abstract class OnceMigrationUnitTest extends TestCase
     public static function setUpBeforeClass(
     )/* The :void return type declaration that should be here would cause a BC issue */
     {
-        parent::setUpBeforeClass();
-
         static::initInitMigrationAppTrait();
+
+        parent::setUpBeforeClass();
     }
 
     /**

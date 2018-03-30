@@ -510,14 +510,25 @@ trait MigrationsTrait
     protected function getMigrationsList()
     {
         /**
-         * @var \Doctrine\DBAL\Query\QueryBuilder
+         * @var \Doctrine\DBAL\Query\QueryBuilder $builder
          */
         $builder = $this->app['db']->createQueryBuilder();
 
-        return $builder->select(['version'])
+        $migrations = $builder->select(['version'])
             ->from('migration_versions')
             ->orderBy('version', 'desc')
-            ->execute()->fetchColumn();
+            ->execute()
+            ->fetchAll();
+
+        if (!$migrations) {
+            return false;
+        }
+
+        foreach ($migrations as &$migration) {
+            $migration = $migration['version'];
+        }
+
+        return $migrations;
     }
 
     /**

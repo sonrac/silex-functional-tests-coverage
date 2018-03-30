@@ -12,36 +12,30 @@ $db = $app['db'];
 $db->getDatabasePlatform()
     ->registerDoctrineTypeMapping('enum', 'string');
 
-$helperSet = new Symfony\Component\Console\Helper\HelperSet([
-    'connection' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($app['db']),
-//    'dialog' => new \Symfony\Component\Console\Helper\QuestionHelper(),
-]);
-//
-$cli->setHelperSet($helperSet);
-
 $app->register(
     new \Kurl\Silex\Provider\DoctrineMigrationsProvider($cli),
-    array(
-        'migrations.directory' => __DIR__ . '/../resources/migrations',
-        'migrations.name' => 'Tests Migrations',
-        'migrations.namespace' => 'Migrations',
+    [
+        'migrations.directory'  => __DIR__.'/../resources/migrations',
+        'migrations.name'       => 'Tests Migrations',
+        'migrations.namespace'  => 'Migrations',
         'migrations.table_name' => 'test_migrations',
-    )
+    ]
 );
 
-var_dump($app['migrations.configuration']);
+$helperSet = new Symfony\Component\Console\Helper\HelperSet([
+    'connection' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($app['db']),
+    'dialog'     => new \Symfony\Component\Console\Helper\QuestionHelper(),
+]);
+$cli->setHelperSet($helperSet);
 
-$app['migrations.configuration'];
-var_dump($app['migrations.command_names']);
-
-//$cli->addCommands(array(
-//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand(),
-//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand(),
-//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand(),
-//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
-//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
-//    new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand()
-//));
+$cli->addCommands([
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand()
+]);
 
 $app->boot();
 

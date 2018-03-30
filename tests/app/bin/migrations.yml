@@ -1,0 +1,4 @@
+name: Tests Migrations
+migrations_namespace: TestMigrations
+table_name: migration_versions
+migrations_directory: ./../resources/migrations

@@ -23,11 +23,19 @@ use ReflectionClass;
  *          parent::setUp();
  *          $this->_boot();
  *      }
+ *      public function tearDown() {
+ *          parent::tearDown();
+ *          $this->_unBoot();
+ *      }
  * }
  *
  * class CustomTrait {
  *      public function bootCustomTrait() {
  *          // some run
+ *      }
+ *
+ *      public function unBootCustomTrait() {
+ *          // some run rollback boot changes
  *      }
  * }
  * </code>
@@ -43,6 +51,32 @@ trait BootTraits
      */
     protected function _boot()
     {
+        $this->checkTraits('boot');
+    }
+
+    /**
+     * Find and un-boot traits.
+     *
+     * @throws \ReflectionException
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    protected function _unBoot()
+    {
+        $this->checkTraits('unBoot');
+    }
+
+    /**
+     * Check method exists in trait and call it.
+     *
+     * @param string $prefix Method name prefix
+     *
+     * @throws \ReflectionException
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    protected function checkTraits($prefix = '')
+    {
         $reflection = new ReflectionClass(static::class);
 
         $traits = $reflection->getTraitNames();
@@ -50,8 +84,9 @@ trait BootTraits
         foreach ($traits as $trait) {
             $parts = explode('\\', $trait);
             $name = $parts[count($parts) - 1];
-            if (method_exists($this, 'boot'.ucfirst($name))) {
-                $this->{'boot'.$name}();
+            $methodName = $prefix.ucfirst($name);
+            if (method_exists($this, $methodName)) {
+                $this->{$methodName}();
             }
         }
     }

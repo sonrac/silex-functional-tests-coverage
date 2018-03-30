@@ -15,7 +15,13 @@ use sonrac\FCoverage\UnitTest;
  */
 class TestUnitTest extends TestCase
 {
-    public function testBootTraits() {
+    /**
+     * Test traits boot.
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function testBootTraits()
+    {
         $controller = new UnitTester();
         $this->assertNull($controller->a);
 
@@ -27,27 +33,33 @@ class TestUnitTest extends TestCase
     }
 }
 
-class UnitTester extends UnitTest {
-    use Tester;
+trait Tester
+{
 
-    public function setupRun() {
-        $this->setUp();
-    }
+    public $a;
 
-    public function downRun() {
-        $this->tearDown();
-    }
-}
-
-trait Tester {
-
-    public  $a;
-
-    protected function rollback() {
+    protected function rollback()
+    {
         $this->a = null;
     }
 
-    protected function bootTester() {
+    protected function bootTester()
+    {
         $this->a = 123;
+    }
+}
+
+class UnitTester extends UnitTest
+{
+    use Tester;
+
+    public function setupRun()
+    {
+        $this->setUp();
+    }
+
+    public function downRun()
+    {
+        $this->tearDown();
     }
 }

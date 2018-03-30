@@ -42,7 +42,7 @@ $app->get('/circle-redirect', function (Application $app) {
 
 $app->register(new \Silex\Provider\DoctrineServiceProvider(), [
     'db.options' => [
-        'path'   => __DIR__.'/out/db.sqlite',
+        'path'   => __DIR__.'/../out/db.sqlite',
         'driver' => 'pdo_sqlite',
     ],
 ]);

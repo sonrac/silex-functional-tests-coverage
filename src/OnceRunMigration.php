@@ -46,4 +46,56 @@ class OnceRunMigration
         $this->app = $application;
         $this->seeds = $seeds;
     }
+
+    /**
+     * Get application.
+     *
+     * @return \Silex\Application
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function getApp()
+    {
+        return $this->app;
+    }
+
+    /**
+     * Set application.
+     *
+     * @param \Silex\Application $app
+     *
+     * @return \sonrac\FCoverage\OnceRunMigration
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function setApp($app)
+    {
+        $this->app = $app;
+        return $this;
+    }
+
+    /**
+     * Get seeds.
+     *
+     * @return array
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function getSeeds()
+    {
+        return $this->seeds;
+    }
+
+    /**
+     * @param array $seeds
+     *
+     * @return OnceRunMigration
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function setSeeds($seeds)
+    {
+        $this->seeds = $seeds;
+        return $this;
+    }
 }

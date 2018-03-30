@@ -5,11 +5,8 @@
 
 namespace sonrac\FCoverage\Tests;
 
-use Doctrine\DBAL\Schema\Table;
-use Doctrine\DBAL\Types\Type;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
-use Silex\Provider\DoctrineServiceProvider;
 use sonrac\FCoverage\BaseControllerTest;
 use sonrac\FCoverage\MaxRedirectException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -40,20 +37,6 @@ class BaseControllerTestTest extends TestCase
      * @author Donii Sergii <doniysa@gmail.com>
      */
     private $controller;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        if (!is_file(__DIR__.'/'.$this->dbFile)) {
-            file_put_contents(__DIR__.'/'.$this->dbFile, '');
-        }
-
-        $this->controller = new ControllerTest();
-    }
 
     /**
      * Test create application.
@@ -259,9 +242,26 @@ class BaseControllerTestTest extends TestCase
     /**
      * {@inheritdoc}
      */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        if (!is_file(__DIR__.'/'.$this->dbFile)) {
+            file_put_contents(__DIR__.'/'.$this->dbFile, '');
+        }
+
+        $this->controller = new ControllerTest();
+        $this->controller->setUpBeforeClass();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function tearDown()
     {
         parent::tearDown();
+
+        $this->controller->tearDownAfterClass();
 
         if (is_file(__DIR__.'/'.$this->dbFile)) {
             unlink(__DIR__.'/'.$this->dbFile);
@@ -271,17 +271,10 @@ class BaseControllerTestTest extends TestCase
 
 class ControllerTest extends BaseControllerTest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function createApplication()
+    public static function setUpMigration()
     {
-        return $this->application = static::getApplication();
-    }
-
-    public static function getApplication()
-    {
-        return require __DIR__.'/app/app.php';
+        static::$migration->setBinDir(__DIR__.'/app/bin')
+            ->setConsoleCommand('console');
     }
 
     /**
@@ -323,5 +316,18 @@ class ControllerTest extends BaseControllerTest
     public function enableRedirect($count = 1)
     {
         $this->setAllowRedirect($count);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function createApplication()
+    {
+        return $this->application = static::getApplication();
+    }
+
+    public static function getApplication()
+    {
+        return require __DIR__.'/app/app.php';
     }
 }
