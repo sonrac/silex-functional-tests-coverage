@@ -98,7 +98,7 @@ class OnceMigrationUnitTest extends TestCase
 class OnceMigrationTests extends BaseOnceMigrationUnitTest
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function getApplication()
     {

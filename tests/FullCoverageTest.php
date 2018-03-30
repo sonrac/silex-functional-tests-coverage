@@ -15,7 +15,7 @@ use sonrac\FCoverage\BaseControllerTest;
 class FullCoverageTest extends BaseControllerTest
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function getApplication()
     {

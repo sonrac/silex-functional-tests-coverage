@@ -44,7 +44,7 @@ class BaseWeb extends BaseWebTest
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public static function setUpMigration()
     {
