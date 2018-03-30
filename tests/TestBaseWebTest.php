@@ -37,6 +37,7 @@ class TestBaseWebTest extends OnceMigrationWebTest
 class BaseWeb extends BaseWebTest
 {
     public static $appPath = 'app/app.php';
+
     /**
      * {@inheritdoc}
      */
