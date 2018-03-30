@@ -59,7 +59,7 @@ trait BootTraits
      *
      * @throws \ReflectionException
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function _unBoot()
     {
@@ -73,7 +73,7 @@ trait BootTraits
      *
      * @throws \ReflectionException
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function checkTraits($prefix = '')
     {

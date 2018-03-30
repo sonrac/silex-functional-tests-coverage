@@ -52,7 +52,7 @@ class OnceRunMigration
      *
      * @return \Silex\Application
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getApp()
     {
@@ -66,7 +66,7 @@ class OnceRunMigration
      *
      * @return \sonrac\FCoverage\OnceRunMigration
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setApp($app)
     {
@@ -80,7 +80,7 @@ class OnceRunMigration
      *
      * @return array
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getSeeds()
     {
@@ -92,7 +92,7 @@ class OnceRunMigration
      *
      * @return OnceRunMigration
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setSeeds($seeds)
     {

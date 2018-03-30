@@ -41,7 +41,7 @@ class OnceMigrationWebTest extends TestCase
      *
      * @throws \Exception
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function testRunMigrations()
     {
@@ -67,7 +67,7 @@ class OnceMigrationWebTest extends TestCase
      *
      * @return bool
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private function getTable(Connection $db)
     {
@@ -122,7 +122,7 @@ class OnceMigrationWebTests extends BaseOnceMigrationWebTest
      *
      * @return \sonrac\FCoverage\OnceRunMigration
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public static function getMigration()
     {

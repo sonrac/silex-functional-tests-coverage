@@ -10,7 +10,7 @@ use sonrac\FCoverage\BaseWebTest;
 /**
  * Class TestBaseWebTest.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class TestBaseWebTest extends OnceMigrationWebTest
 {

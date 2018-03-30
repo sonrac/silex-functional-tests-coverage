@@ -11,14 +11,14 @@ use sonrac\FCoverage\UnitTest;
 /**
  * Class TestUnitTest.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class TestUnitTest extends TestCase
 {
     /**
      * Test traits boot.
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function testBootTraits()
     {

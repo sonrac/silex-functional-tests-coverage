@@ -12,7 +12,7 @@ trait InitMigrationAppTrait
      *
      * @var string
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public static $appPath;
 

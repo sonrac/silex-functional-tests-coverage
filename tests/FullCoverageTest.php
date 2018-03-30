@@ -10,7 +10,7 @@ use sonrac\FCoverage\BaseControllerTest;
 /**
  * Class FullCoverageTest.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class FullCoverageTest extends BaseControllerTest
 {

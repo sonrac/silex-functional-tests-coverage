@@ -23,7 +23,7 @@ class MigrationTraitTest extends TestCase
      *
      * @return \sonrac\FCoverage\Tests\Migration
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function testBoot()
     {
@@ -69,7 +69,7 @@ class MigrationTraitTest extends TestCase
      *
      * @throws \ReflectionException
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function testBootWithSeeds()
     {
