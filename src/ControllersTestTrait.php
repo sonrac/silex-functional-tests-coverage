@@ -297,13 +297,13 @@ trait ControllersTestTrait
     {
         $data = $data ?: json_decode(trim($this->response->getContent()), true);
 
-        static::assertInternalType('array', $data);
+        static::assertInternalType('array', $data, 'Error get response. Not data given');
         foreach ($struct as $name => $value) {
             $withValue = !is_numeric($name);
             $_name = $withValue ? $name : $value;
 
             if (is_string($_name)) {
-                static::assertArrayHasKey($_name, $data);
+                static::assertArrayHasKey($_name, $data, 'Error response has key');
             } else {
                 $value = $_name;
             }
@@ -312,7 +312,7 @@ trait ControllersTestTrait
                 if (is_array($value)) {
                     $this->seeJsonStructure($value, $data[$_name]);
                 } else {
-                    static::assertEquals($value, $data[$_name]);
+                    static::assertEquals($value, $data[$_name], 'Error equals value of response item');
                 }
             }
         }
