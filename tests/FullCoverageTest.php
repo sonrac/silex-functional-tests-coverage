@@ -14,14 +14,12 @@ use sonrac\FCoverage\BaseControllerTest;
  */
 class FullCoverageTest extends BaseControllerTest
 {
-    public static $appPath = 'app/app.php';
-
     /**
      * {@inheritdoc}
      */
-    public static function getApplication($dir = __DIR__)
+    public function getApplication()
     {
-        return parent::getApplication($dir);
+        return require __DIR__.'/app/app.php';
     }
 
     public static function setUpMigration()

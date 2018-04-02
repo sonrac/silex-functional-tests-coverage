@@ -104,9 +104,9 @@ class OnceMigrationWebTests extends BaseOnceMigrationWebTest
     /**
      * {@inheritdoc}
      */
-    public static function getApplication($dir = __DIR__)
+    public function getApplication()
     {
-        return parent::getApplication($dir);
+        return require __DIR__.'/app/app.php';
     }
 
     /**

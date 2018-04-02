@@ -50,7 +50,7 @@ class OnceRunMigration
     /**
      * Get application.
      *
-     * @return \Silex\Application
+     * @return object
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */

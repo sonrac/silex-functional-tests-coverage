@@ -1,6 +1,6 @@
 <?php
 
-namespace TestMigrations;
+namespace sonrac\FCoverage\TestMigrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;

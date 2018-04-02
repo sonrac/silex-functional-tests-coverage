@@ -1,4 +1,4 @@
 name: Tests Migrations
-migrations_namespace: TestMigrations
+migrations_namespace: sonrac\FCoverage\TestMigrations;
 table_name: migration_versions
 migrations_directory: ./../resources/migrations

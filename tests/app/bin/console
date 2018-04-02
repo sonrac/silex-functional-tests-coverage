@@ -17,8 +17,8 @@ $app->register(
     [
         'migrations.directory'  => __DIR__.'/../resources/migrations',
         'migrations.name'       => 'Tests Migrations',
-        'migrations.namespace'  => 'Migrations',
-        'migrations.table_name' => 'test_migrations',
+        'migrations.namespace'  => 'sonrac\FCoverage\TestMigrations',
+        'migrations.table_name' => 'migration_versions',
     ]
 );
 
@@ -34,7 +34,8 @@ $cli->addCommands([
     new \Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand(),
     new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
     new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
-    new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand()
+    new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand(),
+    new \sonrac\SimpleSeed\SeedCommand(null, $app)
 ]);
 
 $app->boot();
