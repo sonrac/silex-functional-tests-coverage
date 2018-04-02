@@ -6,7 +6,7 @@
 namespace sonrac\FCoverage;
 
 /**
- * Class TestApplication
+ * Class TestApplication.
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
@@ -102,6 +102,7 @@ abstract class TestApplication
     public function setApplication($application)
     {
         $this->application = $application;
+
         return $this;
     }
 
@@ -157,6 +158,7 @@ abstract class TestApplication
     public function setMigration($migration)
     {
         $this->migration = $migration;
+
         return $this;
     }
 
@@ -169,7 +171,7 @@ abstract class TestApplication
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    public function setInstance(TestApplication $application)
+    public function setInstance(self $application)
     {
         return static::$instance = $application;
     }
@@ -224,6 +226,7 @@ abstract class TestApplication
     public function setRunMigration($runMigration)
     {
         $this->runMigration = $runMigration;
+
         return $this;
     }
 }

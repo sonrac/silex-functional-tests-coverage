@@ -2,7 +2,6 @@
 /**
  * @author Donii Sergii <s.doniy@infomir.com>.
  */
-
 $file = __DIR__.'/out/db.sqlite';
 
 if (is_file($file)) {
@@ -13,14 +12,14 @@ require __DIR__.'/../vendor/autoload.php';
 
 /**
  * Class TApp
- * Test application
+ * Test application.
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
 class TApp extends \sonrac\FCoverage\TestApplication
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function createApplication()
     {
@@ -28,7 +27,7 @@ class TApp extends \sonrac\FCoverage\TestApplication
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setUpMigration()
     {

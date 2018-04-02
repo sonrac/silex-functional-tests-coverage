@@ -8,7 +8,7 @@ namespace sonrac\FCoverage\Tests;
 use sonrac\FCoverage\BaseControllerTest;
 
 /**
- * Class RealApplicationUnitTest
+ * Class RealApplicationUnitTest.
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
@@ -29,7 +29,7 @@ class RealApplicationUnitTest extends BaseControllerTest
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAppClass()
     {
@@ -48,9 +48,8 @@ class RealApplicationUnitTest extends BaseControllerTest
             ->seeJsonStructure([
                 'status' => 'OK',
                 'items'  => [
-                    ['id', 'user']
-                ]
+                    ['id', 'user'],
+                ],
             ]);
     }
-
 }

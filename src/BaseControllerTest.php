@@ -72,6 +72,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
 
     /**
      * {@inheritdoc}
+     *
      * @throws \Throwable
      */
     protected function request(
@@ -308,6 +309,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     protected function createApplication()
     {
         $class = static::getAppClass();
+
         return $class::getInstance()
             ->getApplication();
     }
@@ -410,7 +412,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             $this->incrementCountRedirects();
 
             if ($this->getCountRedirects() > $this->getAllowRedirect()) {
-                if ($this->isThrowExceptionOnRedirect() && ((int)$this->getAllowRedirect() !== 0)) {
+                if ($this->isThrowExceptionOnRedirect() && ((int) $this->getAllowRedirect() !== 0)) {
                     $exception = new MaxRedirectException();
                     $exception->setCountRedirects($this->__countRedirects);
 

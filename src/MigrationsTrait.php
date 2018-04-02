@@ -162,7 +162,7 @@ trait MigrationsTrait
         exec($command, $out, $code);
         ob_end_clean();
 
-        if ((int)$code !== 0 && !$this->continueOnFailure) {
+        if ((int) $code !== 0 && !$this->continueOnFailure) {
             throw new \Exception(
                 "Command \n {$command} \n run with code {$code} with out: \n ".
                 implode(PHP_EOL, $out)
@@ -542,7 +542,7 @@ trait MigrationsTrait
     protected function getMigrationsList()
     {
         /**
-         * @var \Doctrine\DBAL\Connection $connection
+         * @var \Doctrine\DBAL\Connection
          */
         $connection = $this->app['db'];
         $builder = $connection->createQueryBuilder();
