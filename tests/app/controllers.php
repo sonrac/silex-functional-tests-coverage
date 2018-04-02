@@ -2,6 +2,7 @@
 /**
  * @author Donii Sergii <s.doniy@infomir.com>.
  */
+
 use Silex\Application;
 
 $app->get('/', function () use ($app) {
@@ -42,6 +43,20 @@ $app->register(new \Silex\Provider\DoctrineServiceProvider(), [
         'driver' => 'pdo_sqlite',
     ],
 ]);
+
+$app->get('/users/list', function (
+    Application $application,
+    \Symfony\Component\HttpFoundation\Request $request
+) {
+    $items = $application['db']->createQueryBuilder()
+        ->from('users')
+        ->select('id', 'username')->execute()->fetchAll();
+
+    return $application->json([
+        'status' => 'OK',
+        'items'  => $items
+    ]);
+});
 
 $app->post('/create-user/{username}/{password}', function (Application $app, $username, $password) {
     /** @var \Doctrine\DBAL\Connection $db */

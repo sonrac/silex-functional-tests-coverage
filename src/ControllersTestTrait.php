@@ -62,6 +62,22 @@ trait ControllersTestTrait
     }
 
     /**
+     * Get is need clear count redirects.
+     *
+     * @param bool $clear
+     *
+     * @return $this
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setClearCountRedirects($clear)
+    {
+        $this->__clearCountRedirects = $clear;
+
+        return $this;
+    }
+
+    /**
      * @return bool|int
      *
      * @author Donii Sergii <doniysa@gmail.com>
@@ -137,22 +153,6 @@ trait ControllersTestTrait
     public function incrementCountRedirects()
     {
         $this->__countRedirects++;
-    }
-
-    /**
-     * Get is need clear count redirects.
-     *
-     * @param bool $clear
-     *
-     * @return $this
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function setClearCountRedirects($clear)
-    {
-        $this->__clearCountRedirects = $clear;
-
-        return $this;
     }
 
     /**
@@ -302,7 +302,11 @@ trait ControllersTestTrait
             $withValue = !is_numeric($name);
             $_name = $withValue ? $name : $value;
 
-            static::assertArrayHasKey($_name, $data);
+            if (is_string($_name)) {
+                static::assertArrayHasKey($_name, $data);
+            } else {
+                $value = $_name;
+            }
 
             if ($withValue) {
                 if (is_array($value)) {
@@ -386,7 +390,7 @@ trait ControllersTestTrait
 
         $query->where($where);
 
-        $results = (int) $query->execute()->fetchColumn();
+        $results = (int)$query->execute()->fetchColumn();
 
         static::assertTrue($results > 0);
     }

@@ -78,6 +78,8 @@ abstract class BaseWebTest extends OnceMigrationWebTest
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \ReflectionException
      */
     protected function tearDown()/* The :void return type declaration that should be here would cause a BC issue */
     {

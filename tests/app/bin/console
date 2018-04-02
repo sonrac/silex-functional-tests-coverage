@@ -35,7 +35,7 @@ $cli->addCommands([
     new \Doctrine\DBAL\Migrations\Tools\Console\Command\MigrateCommand(),
     new \Doctrine\DBAL\Migrations\Tools\Console\Command\StatusCommand(),
     new \Doctrine\DBAL\Migrations\Tools\Console\Command\VersionCommand(),
-    new \sonrac\SimpleSeed\SeedCommand(null, $app)
+    new \sonrac\SimpleSeed\SeedCommand(null, $app['db'])
 ]);
 
 $app->boot();

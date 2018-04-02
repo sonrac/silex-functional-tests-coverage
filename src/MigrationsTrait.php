@@ -147,41 +147,55 @@ trait MigrationsTrait
     }
 
     /**
-     * Run seed.
+     * Run command.
      *
-     * @param string $seed
+     * @param string $command
      *
      * @throws \Exception
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected function runSeed($seed)
+    private function runCommand($command)
     {
-        $class = class_exists($seed) ? $seed : $this->getSeedNamespace().ucfirst($seed).
-                                               ($this->seedClassEnding ?: '');
-        $this->runCommand($this->getSeedCommand().$class);
+        $command = PHP_EOL.$this->getPreCommand().
+                   "; cd {$this->getBinDir()}; {$this->getPhpExecutor()} {$this->getConsoleCommand()} {$command}".PHP_EOL;
+
+        ob_start();
+        exec($command, $out, $code);
+        ob_end_clean();
+
+        if ((int)$code !== 0 && !$this->continueOnFailure) {
+            throw new \Exception(
+                "Command \n {$command} \n run with code {$code} with out: \n ".
+                implode(PHP_EOL, $out)
+            );
+        }
     }
 
     /**
-     * Rollback all migrations.
+     * Get command which will be running before. By default is `'export APP_ENV=testing'`.
      *
-     * @throws \Exception
-     *
-     * @return null|false
+     * @return string
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function rollback()
+    public function getPreCommand()
     {
-        $migrations = $this->getMigrationsList();
+        return $this->preCommand;
+    }
 
-        if (empty($migrations) || !is_array($migrations)) {
-            return false;
-        }
+    /**
+     * Set command which will be running before. By default is `'export APP_ENV=testing'`.
+     *
+     * @param string $preCommand
+     *
+     * @return MigrationsTrait
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setPreCommand($preCommand)
+    {
+        $this->preCommand = $preCommand;
 
-        foreach ($migrations as $migration) {
-            $this->runCommand("{$this->getRollbackMigrationCommand()} {$migration}");
-        }
+        return $this;
     }
 
     /**
@@ -269,6 +283,66 @@ trait MigrationsTrait
     }
 
     /**
+     * Get migration command name. By default is `migrations:migrate --no-interaction`.
+     *
+     * @return string
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getMigrationCommand()
+    {
+        return $this->migrationCommand;
+    }
+
+    /**
+     * Set migration command name. By default is `migrations:migrate --no-interaction`.
+     *
+     * @param string $migrationCommand
+     *
+     * @return MigrationsTrait
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setMigrationCommand($migrationCommand)
+    {
+        $this->migrationCommand = $migrationCommand;
+
+        return $this;
+    }
+
+    /**
+     * Get seeds.
+     *
+     * @return array
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getSeeds()
+    {
+        if (property_exists($this, 'seeds')) {
+            return $this::$seeds ?: [];
+        }
+
+        return [];
+    }
+
+    /**
+     * Run seed.
+     *
+     * @param string $seed
+     *
+     * @throws \Exception
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected function runSeed($seed)
+    {
+        $class = class_exists($seed) ? $seed : $this->getSeedNamespace().ucfirst($seed).
+                                               ($this->seedClassEnding ?: '');
+        $this->runCommand($this->getSeedCommand().$class);
+    }
+
+    /**
      * Get seeds classes namespace.
      *
      * @return null|string
@@ -292,6 +366,84 @@ trait MigrationsTrait
     public function setSeedNamespace($seedNamespace)
     {
         $this->seedNamespace = $seedNamespace;
+
+        return $this;
+    }
+
+    /**
+     * Get seed command. By default is `seed:run --class=` from package `sonrac/symfony-seed-command`.
+     *
+     * @return string
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getSeedCommand()
+    {
+        return $this->seedCommand;
+    }
+
+    /**
+     * Set seed command. By default is `seed:run --class=` from package `sonrac/symfony-seed-command`.
+     *
+     * @param string $seedCommand
+     *
+     * @return MigrationsTrait
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setSeedCommand($seedCommand)
+    {
+        $this->seedCommand = $seedCommand;
+
+        return $this;
+    }
+
+    /**
+     * Rollback all migrations.
+     *
+     * @throws \Exception
+     *
+     * @return null|false
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function rollback()
+    {
+        $migrations = $this->getMigrationsList();
+
+        if (empty($migrations) || !is_array($migrations)) {
+            return false;
+        }
+
+        foreach ($migrations as $migration) {
+            $this->runCommand("{$this->getRollbackMigrationCommand()} {$migration}");
+        }
+    }
+
+    /**
+     * Get rollback migration command name. By default is `migrations:execute --down --no-interaction`.
+     *
+     * @return string
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getRollbackMigrationCommand()
+    {
+        return $this->rollbackMigrationCommand;
+    }
+
+    /**
+     * Set rollback migration command name. By default is `migrations:execute --down --no-interaction`.
+     *
+     * @param string $rollbackMigrationCommand
+     *
+     * @return MigrationsTrait
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setRollbackMigrationCommand($rollbackMigrationCommand)
+    {
+        $this->rollbackMigrationCommand = $rollbackMigrationCommand;
 
         return $this;
     }
@@ -353,90 +505,6 @@ trait MigrationsTrait
     }
 
     /**
-     * Get migration command name. By default is `migrations:migrate --no-interaction`.
-     *
-     * @return string
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getMigrationCommand()
-    {
-        return $this->migrationCommand;
-    }
-
-    /**
-     * Set migration command name. By default is `migrations:migrate --no-interaction`.
-     *
-     * @param string $migrationCommand
-     *
-     * @return MigrationsTrait
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function setMigrationCommand($migrationCommand)
-    {
-        $this->migrationCommand = $migrationCommand;
-
-        return $this;
-    }
-
-    /**
-     * Get rollback migration command name. By default is `migrations:execute --down --no-interaction`.
-     *
-     * @return string
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getRollbackMigrationCommand()
-    {
-        return $this->rollbackMigrationCommand;
-    }
-
-    /**
-     * Set rollback migration command name. By default is `migrations:execute --down --no-interaction`.
-     *
-     * @param string $rollbackMigrationCommand
-     *
-     * @return MigrationsTrait
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function setRollbackMigrationCommand($rollbackMigrationCommand)
-    {
-        $this->rollbackMigrationCommand = $rollbackMigrationCommand;
-
-        return $this;
-    }
-
-    /**
-     * Get command which will be running before. By default is `'export APP_ENV=testing'`.
-     *
-     * @return string
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getPreCommand()
-    {
-        return $this->preCommand;
-    }
-
-    /**
-     * Set command which will be running before. By default is `'export APP_ENV=testing'`.
-     *
-     * @param string $preCommand
-     *
-     * @return MigrationsTrait
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function setPreCommand($preCommand)
-    {
-        $this->preCommand = $preCommand;
-
-        return $this;
-    }
-
-    /**
      * Check flag continue on command execute failure status.
      *
      * @return bool
@@ -460,34 +528,6 @@ trait MigrationsTrait
     public function setContinueOnFailure($continueOnFailure)
     {
         $this->continueOnFailure = $continueOnFailure;
-
-        return $this;
-    }
-
-    /**
-     * Get seed command. By default is `seed:run --class=` from package `sonrac/symfony-seed-command`.
-     *
-     * @return string
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getSeedCommand()
-    {
-        return $this->seedCommand;
-    }
-
-    /**
-     * Set seed command. By default is `seed:run --class=` from package `sonrac/symfony-seed-command`.
-     *
-     * @param string $seedCommand
-     *
-     * @return MigrationsTrait
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function setSeedCommand($seedCommand)
-    {
-        $this->seedCommand = $seedCommand;
 
         return $this;
     }
@@ -522,46 +562,5 @@ trait MigrationsTrait
         }
 
         return $migrations;
-    }
-
-
-    /**
-     * Get seeds.
-     *
-     * @return array
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getSeeds()
-    {
-        if (property_exists($this, 'seeds')) {
-            return $this::$seeds ? : [];
-        }
-
-        return [];
-    }
-
-    /**
-     * Run command.
-     *
-     * @param string $command
-     *
-     * @throws \Exception
-     */
-    private function runCommand($command)
-    {
-        $command = PHP_EOL.$this->getPreCommand().
-                   "; cd {$this->getBinDir()}; {$this->getPhpExecutor()} {$this->getConsoleCommand()} {$command}".PHP_EOL;
-
-        ob_start();
-        exec($command, $out, $code);
-        ob_end_clean();
-
-        if ((int) $code !== 0 && !$this->continueOnFailure) {
-            throw new \Exception(
-                "Command \n {$command} \n run with code {$code} with out: \n ".
-                implode(PHP_EOL, $out)
-            );
-        }
     }
 }

@@ -26,15 +26,6 @@ trait InitMigrationAppTrait
     protected static $seeds = [];
 
     /**
-     * Get test application instance.
-     *
-     * @return \sonrac\FCoverage\TestApplication
-     *
-     * @author Donii Sergii <s.donii@infomir.com>
-     */
-    abstract public function getAppClass();
-
-    /**
      * Init migration trait.
      *
      * @throws \Exception
@@ -46,13 +37,33 @@ trait InitMigrationAppTrait
         if (true === static::$runMigration) {
             $instance = new static();
             $class = $instance->getAppClass();
-            $class::getInstance()
+            $class::newInstance()
                 ->setRunMigration(static::$runMigration)
                 ->getMigration()
                 ->setSeeds($instance::$seeds);
+            static::prepareMigrations();
             $class::getInstance()
                 ->runMigration();
         }
+    }
+
+    /**
+     * Get test application instance.
+     *
+     * @return \sonrac\FCoverage\TestApplication
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    abstract public function getAppClass();
+
+    /**
+     * Prepare migrations before run.
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public static function prepareMigrations()
+    {
+
     }
 
     /**

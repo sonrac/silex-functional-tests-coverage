@@ -31,17 +31,6 @@ abstract class OnceMigrationWebTest extends WebTestCase
 
     /**
      * {@inheritdoc}
-     */
-    public function createApplication()
-    {
-        $class = $this->getAppClass();
-
-        return $class::getInstance()
-            ->getApplication();
-    }
-
-    /**
-     * {@inheritdoc}
      *
      * @throws \Exception
      */
@@ -51,5 +40,16 @@ abstract class OnceMigrationWebTest extends WebTestCase
         parent::tearDownAfterClass();
 
         static::downMigrationTrait();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createApplication()
+    {
+        $class = $this->getAppClass();
+
+        return $class::getInstance()
+            ->getApplication();
     }
 }

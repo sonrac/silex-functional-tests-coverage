@@ -16,15 +16,6 @@ class OnceRunMigration
     use MigrationsTrait, BootTraits;
 
     /**
-     * Application instance.
-     *
-     * @var object
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected $app;
-
-    /**
      * Seeds list.
      *
      * @var array
@@ -32,6 +23,14 @@ class OnceRunMigration
      * @author Donii Sergii <doniysa@gmail.com>
      */
     protected static $seeds = [];
+    /**
+     * Application instance.
+     *
+     * @var object
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected $app;
 
     /**
      * OnceRunMigration constructor.

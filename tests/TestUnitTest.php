@@ -8,6 +8,21 @@ namespace sonrac\FCoverage\Tests;
 use PHPUnit\Framework\TestCase;
 use sonrac\FCoverage\UnitTest;
 
+trait Tester
+{
+    public $a;
+
+    protected function rollback()
+    {
+        $this->a = null;
+    }
+
+    protected function bootTester()
+    {
+        $this->a = 123;
+    }
+}
+
 /**
  * Class TestUnitTest.
  *
@@ -30,21 +45,6 @@ class TestUnitTest extends TestCase
         $this->assertEquals(123, $controller->a);
         $controller->downRun();
         $this->assertNull($controller->a);
-    }
-}
-
-trait Tester
-{
-    public $a;
-
-    protected function rollback()
-    {
-        $this->a = null;
-    }
-
-    protected function bootTester()
-    {
-        $this->a = 123;
     }
 }
 

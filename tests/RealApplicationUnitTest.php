@@ -14,7 +14,19 @@ use sonrac\FCoverage\BaseControllerTest;
  */
 class RealApplicationUnitTest extends BaseControllerTest
 {
-    protected static $seeds = [];
+    protected static $seeds = ['users'];
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function prepareMigrations()
+    {
+        $class = (new static())->getAppClass();
+        $class::getInstance()
+            ->getMigration()
+            ->setSeedClassEnding('Seeds')
+            ->setSeedNamespace('sonrac\\\\FCoverage\\\\Tests\\\\Seeds\\\\');
+    }
 
     /**
      * @inheritDoc
@@ -22,6 +34,23 @@ class RealApplicationUnitTest extends BaseControllerTest
     public function getAppClass()
     {
         return \TApp::class;
+    }
+
+    /**
+     * Test get users list.
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function testGetUsers()
+    {
+        $data = $this->get('/users/list')
+            ->seeStatusCode(200)
+            ->seeJsonStructure([
+                'status' => 'OK',
+                'items'  => [
+                    ['id', 'user']
+                ]
+            ]);
     }
 
 }

@@ -71,43 +71,6 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     }
 
     /**
-     * Get response object.
-     *
-     * @return \Symfony\Component\HttpFoundation\Response|null
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getResponseObject()
-    {
-        return $this->response;
-    }
-
-    /**
-     * Get application.
-     *
-     * @return \Silex\Application
-     *
-     * @author Donii Sergii <s.donii@infomir.com>
-     */
-    public function getApplication() {
-        return $this->application ? : $this->application = $this->createApplication();
-    }
-
-    /**
-     * Create application.
-     *
-     * @return \Silex\Application
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected function createApplication()
-    {
-        $class = static::getAppClass();
-        return $class::getInstance()
-            ->getApplication();
-    }
-
-    /**
      * {@inheritdoc}
      * @throws \Throwable
      */
@@ -204,93 +167,29 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     }
 
     /**
-     * Get response from closure callback.
+     * Prepare server variables.
      *
-     * @param \Closure $callback Closure for run
-     *
-     * @throws \InvalidArgumentException
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-     * @throws \Throwable
-     *
-     * @return mixed|\Symfony\Component\HttpFoundation\Response
+     * @param array $options
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected function getResponse($callback)
+    protected function prepareServerVariables($options)
     {
-        $this->setClearCountRedirects(false);
-        /* Resolve arguments and run controller action. */
-        $controllerResolver = new ControllerResolver();
-        /* Resolve controller name */
-        $controller = $controllerResolver->getController($this->request);
-        /* Resolve arguments */
-        $this->application = $this->getApplication();
-        $argumentResolver = new ArgumentResolver($this->application['argument_metadata_factory'],
-            $this->application['argument_value_resolvers']);
-        $arguments = $argumentResolver->getArguments($this->request, $controller);
+        $_SERVER['REQUEST_URI'] = $options['uri'];
+        $_SERVER['REQUEST_METHOD'] = strtoupper($options['method']);
+        $_SERVER = array_merge($_SERVER, $options['server']);
 
-        /* Call controller */
-        try {
-            $response = call_user_func_array($callback, $arguments);
-        } catch (HttpException $httpException) {
-            return $this->returnResponseFromHttpException($httpException);
-        }
-
-        /* Allow redirect in unit tests */
-        if ($response instanceof RedirectResponse && $this->getAllowRedirect() !== false) {
-            $this->incrementCountRedirects();
-
-            if ($this->getCountRedirects() > $this->getAllowRedirect()) {
-                if ($this->isThrowExceptionOnRedirect() && ((int) $this->getAllowRedirect() !== 0)) {
-                    $exception = new MaxRedirectException();
-                    $exception->setCountRedirects($this->__countRedirects);
-
-                    throw $exception;
-                }
-
-                $this->response = $response;
-            } else {
-                $url = $response->getTargetUrl();
-                $headers = $response->headers->all();
-                $_SERVER = array_merge($this->originServerVars, $this->getPredefinedServerVars());
-
-                $_SERVER['REQUEST_URI'] = $url;
-
-                foreach ($headers as $header => $value) {
-                    $_SERVER['HTTP_'.strtoupper($header)] = $value;
-                }
-
-                $this->request('GET', $url, [], [], $_SERVER, $response->getContent(), true);
-                $response = $this->getResponseObject();
-            }
-        }
-
-        if ($response) {
-            /* Trigger after middleware */
-            $this->triggerKernelEvent(
-                KernelEvents::RESPONSE,
-                new FilterResponseEvent(
-                    $this->getApplication(),
-                    $this->request,
-                    HttpKernelInterface::MASTER_REQUEST,
-                    $response
-                )
+        if ($options['body']) {
+            $this->request = Request::create(
+                $options['uri'],
+                $_SERVER['REQUEST_METHOD'],
+                $options['parameters'],
+                $_COOKIE,
+                $options['files'],
+                $_SERVER,
+                $options['body']
             );
         }
-
-        return $response;
-    }
-
-    /**
-     * Get predefined server vars.
-     *
-     * @return array
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected function getPredefinedServerVars()
-    {
-        return [];
     }
 
     /**
@@ -368,22 +267,49 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     }
 
     /**
-     * Return response object from \Symfony\Component\HttpKernel\Exception\HttpException exception.
+     * Snack case.
      *
-     * @param \Symfony\Component\HttpKernel\Exception\HttpException $httpException
+     * @param string $input
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return string
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected function returnResponseFromHttpException(HttpException $httpException)
+    private function shackCase($input)
     {
-        $response = new Response();
-        $response->setContent($httpException->getMessage());
-        $response->setStatusCode($httpException->getStatusCode());
-        $response->headers->add($httpException->getHeaders());
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $parts = $matches[0];
+        foreach ($parts as &$match) {
+            $match = $match === strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
 
-        return $response;
+        return implode('_', $parts);
+    }
+
+    /**
+     * Get application.
+     *
+     * @return \Silex\Application
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function getApplication()
+    {
+        return $this->application ?: $this->application = $this->createApplication();
+    }
+
+    /**
+     * Create application.
+     *
+     * @return \Silex\Application
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected function createApplication()
+    {
+        $class = static::getAppClass();
+        return $class::getInstance()
+            ->getApplication();
     }
 
     /**
@@ -428,48 +354,123 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     }
 
     /**
-     * Prepare server variables.
+     * Return response object from \Symfony\Component\HttpKernel\Exception\HttpException exception.
      *
-     * @param array $options
+     * @param \Symfony\Component\HttpKernel\Exception\HttpException $httpException
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected function prepareServerVariables($options)
+    protected function returnResponseFromHttpException(HttpException $httpException)
     {
-        $_SERVER['REQUEST_URI'] = $options['uri'];
-        $_SERVER['REQUEST_METHOD'] = strtoupper($options['method']);
-        $_SERVER = array_merge($_SERVER, $options['server']);
+        $response = new Response();
+        $response->setContent($httpException->getMessage());
+        $response->setStatusCode($httpException->getStatusCode());
+        $response->headers->add($httpException->getHeaders());
 
-        if ($options['body']) {
-            $this->request = Request::create(
-                $options['uri'],
-                $_SERVER['REQUEST_METHOD'],
-                $options['parameters'],
-                $_COOKIE,
-                $options['files'],
-                $_SERVER,
-                $options['body']
-            );
-        }
+        return $response;
     }
 
     /**
-     * Snack case.
+     * Get response from closure callback.
      *
-     * @param string $input
+     * @param \Closure $callback Closure for run
      *
-     * @return string
+     * @throws \InvalidArgumentException
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * @throws \Throwable
+     *
+     * @return mixed|\Symfony\Component\HttpFoundation\Response
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    private function shackCase($input)
+    protected function getResponse($callback)
     {
-        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
-        $parts = $matches[0];
-        foreach ($parts as &$match) {
-            $match = $match === strtoupper($match) ? strtolower($match) : lcfirst($match);
+        $this->setClearCountRedirects(false);
+        /* Resolve arguments and run controller action. */
+        $controllerResolver = new ControllerResolver();
+        /* Resolve controller name */
+        $controller = $controllerResolver->getController($this->request);
+        /* Resolve arguments */
+        $this->application = $this->getApplication();
+        $argumentResolver = new ArgumentResolver($this->application['argument_metadata_factory'],
+            $this->application['argument_value_resolvers']);
+        $arguments = $argumentResolver->getArguments($this->request, $controller);
+
+        /* Call controller */
+        try {
+            $response = call_user_func_array($callback, $arguments);
+        } catch (HttpException $httpException) {
+            return $this->returnResponseFromHttpException($httpException);
         }
 
-        return implode('_', $parts);
+        /* Allow redirect in unit tests */
+        if ($response instanceof RedirectResponse && $this->getAllowRedirect() !== false) {
+            $this->incrementCountRedirects();
+
+            if ($this->getCountRedirects() > $this->getAllowRedirect()) {
+                if ($this->isThrowExceptionOnRedirect() && ((int)$this->getAllowRedirect() !== 0)) {
+                    $exception = new MaxRedirectException();
+                    $exception->setCountRedirects($this->__countRedirects);
+
+                    throw $exception;
+                }
+
+                $this->response = $response;
+            } else {
+                $url = $response->getTargetUrl();
+                $headers = $response->headers->all();
+                $_SERVER = array_merge($this->originServerVars, $this->getPredefinedServerVars());
+
+                $_SERVER['REQUEST_URI'] = $url;
+
+                foreach ($headers as $header => $value) {
+                    $_SERVER['HTTP_'.strtoupper($header)] = $value;
+                }
+
+                $this->request('GET', $url, [], [], $_SERVER, $response->getContent(), true);
+                $response = $this->getResponseObject();
+            }
+        }
+
+        if ($response) {
+            /* Trigger after middleware */
+            $this->triggerKernelEvent(
+                KernelEvents::RESPONSE,
+                new FilterResponseEvent(
+                    $this->getApplication(),
+                    $this->request,
+                    HttpKernelInterface::MASTER_REQUEST,
+                    $response
+                )
+            );
+        }
+
+        return $response;
+    }
+
+    /**
+     * Get predefined server vars.
+     *
+     * @return array
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected function getPredefinedServerVars()
+    {
+        return [];
+    }
+
+    /**
+     * Get response object.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|null
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getResponseObject()
+    {
+        return $this->response;
     }
 }

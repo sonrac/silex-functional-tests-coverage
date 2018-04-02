@@ -55,18 +55,6 @@ trait BootTraits
     }
 
     /**
-     * Find and un-boot traits.
-     *
-     * @throws \ReflectionException
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected function _unBoot()
-    {
-        $this->checkTraits('unBoot');
-    }
-
-    /**
      * Check method exists in trait and call it.
      *
      * @param string $prefix Method name prefix
@@ -89,5 +77,17 @@ trait BootTraits
                 $this->{$methodName}();
             }
         }
+    }
+
+    /**
+     * Find and un-boot traits.
+     *
+     * @throws \ReflectionException
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected function _unBoot()
+    {
+        $this->checkTraits('unBoot');
     }
 }

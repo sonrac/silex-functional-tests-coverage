@@ -260,22 +260,17 @@ class BaseControllerTestTest extends TestCase
     {
         parent::tearDown();
 
+        $this->controller->tearDown();
+        $this->controller->tearDownAfterClass();
+
         if (is_file(__DIR__.'/'.$this->dbFile)) {
             unlink(__DIR__.'/'.$this->dbFile);
         }
-
-        $this->controller->tearDown();
-        $this->controller->tearDownAfterClass();
     }
 }
 
 class ControllerTest extends BaseControllerTest
 {
-   public function getAppClass()
-   {
-       return \TApp::class;
-   }
-
     /**
      * {@inheritdoc}
      */
@@ -283,6 +278,11 @@ class ControllerTest extends BaseControllerTest
     {
         $class = $this->getAppClass();
         return $class::getInstance()->getApplication();
+    }
+
+    public function getAppClass()
+    {
+        return \TApp::class;
     }
 
     public function setResponse(Response $response)

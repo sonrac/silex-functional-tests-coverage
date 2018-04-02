@@ -13,6 +13,14 @@ namespace sonrac\FCoverage;
 abstract class TestApplication
 {
     /**
+     * Application singleton instance.
+     *
+     * @var null|\sonrac\FCoverage\TestApplication
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    protected static $instance;
+    /**
      * Application instance.
      *
      * @var \Silex\Application
@@ -20,7 +28,6 @@ abstract class TestApplication
      * @author Donii Sergii <s.donii@infomir.com>
      */
     private $application;
-
     /**
      * Migration instance.
      *
@@ -29,7 +36,6 @@ abstract class TestApplication
      * @author Donii Sergii <s.donii@infomir.com>
      */
     private $migration;
-
     /**
      * Allow/deny run migration.
      *
@@ -38,15 +44,6 @@ abstract class TestApplication
      * @author Donii Sergii <s.donii@infomir.com>
      */
     private $runMigration = true;
-
-    /**
-     * Application singleton instance.
-     *
-     * @var null|\sonrac\FCoverage\TestApplication
-     *
-     * @author Donii Sergii <s.donii@infomir.com>
-     */
-    protected static $instance;
 
     /**
      * TestApplication constructor.
@@ -75,6 +72,13 @@ abstract class TestApplication
     abstract public function createApplication();
 
     /**
+     * Setup migrations.
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    abstract public function setUpMigration();
+
+    /**
      * Get silex application.
      *
      * @return \Silex\Application
@@ -99,6 +103,34 @@ abstract class TestApplication
     {
         $this->application = $application;
         return $this;
+    }
+
+    /**
+     * @param array                                   $seeds
+     * @param null|\sonrac\FCoverage\OnceRunMigration $migration
+     *
+     * @return \sonrac\FCoverage\TestApplication
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public static function getInstance($seeds = [], $migration = null)
+    {
+        return static::$instance ?: static::$instance = new static($seeds, $migration);
+    }
+
+    /**
+     * Get new application instance.
+     *
+     * @param array $seeds
+     * @param null  $migration
+     *
+     * @return \sonrac\FCoverage\TestApplication
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public static function newInstance($seeds = [], $migration = null)
+    {
+        return static::$instance = new static($seeds, $migration);
     }
 
     /**
@@ -129,33 +161,6 @@ abstract class TestApplication
     }
 
     /**
-     * @param array                                   $seeds
-     * @param null|\sonrac\FCoverage\OnceRunMigration $migration
-     *
-     * @return \sonrac\FCoverage\TestApplication
-     *
-     * @author Donii Sergii <s.donii@infomir.com>
-     */
-    public static function getInstance($seeds = [], $migration = null)
-    {
-        return static::$instance ? : static::$instance = new static($seeds, $migration);
-    }
-
-    /**
-     * Get new application instance.
-     *
-     * @param array $seeds
-     * @param null  $migration
-     *
-     * @return \sonrac\FCoverage\TestApplication
-     *
-     * @author Donii Sergii <s.donii@infomir.com>
-     */
-    public static function newInstance($seeds = [], $migration = null) {
-        return static::$instance = new static($seeds, $migration);
-    }
-
-    /**
      * Set application instance.
      *
      * @param \sonrac\FCoverage\TestApplication $application
@@ -164,16 +169,10 @@ abstract class TestApplication
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    public function setInstance(TestApplication $application) {
+    public function setInstance(TestApplication $application)
+    {
         return static::$instance = $application;
     }
-
-    /**
-     * Setup migrations.
-     *
-     * @author Donii Sergii <s.donii@infomir.com>
-     */
-    abstract public function setUpMigration();
 
     /**
      * Setup migrations.

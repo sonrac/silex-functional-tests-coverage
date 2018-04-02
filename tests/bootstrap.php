@@ -17,7 +17,8 @@ require __DIR__.'/../vendor/autoload.php';
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
-class TApp extends \sonrac\FCoverage\TestApplication {
+class TApp extends \sonrac\FCoverage\TestApplication
+{
     /**
      * @inheritDoc
      */

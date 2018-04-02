@@ -28,15 +28,6 @@ class OnceMigrationWebTest extends TestCase
     private $dbFile = 'out/db.sqlite';
 
     /**
-     * {@inheritdoc}
-     */
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
-    {
-        parent::setUp();
-        file_put_contents(__DIR__.'/'.$this->dbFile, '');
-    }
-
-    /**
      * Test run migrations.
      *
      * @throws \Exception
@@ -51,11 +42,11 @@ class OnceMigrationWebTest extends TestCase
         /** @var \Doctrine\DBAL\Connection $db */
         $db = $app['db'];
 
-        static::assertTrue((bool) $this->getTable($db));
+        static::assertTrue((bool)$this->getTable($db));
 
         OnceMigrationWebTests::tearDownAfterClass();
 
-        static::assertFalse((bool) $this->getTable($db));
+        static::assertFalse((bool)$this->getTable($db));
 
         $this->assertInstanceOf(Application::class, (new OnceMigrationWebTests())->createApplication());
     }
@@ -72,7 +63,7 @@ class OnceMigrationWebTest extends TestCase
     private function getTable(Connection $db)
     {
         try {
-            return (bool) $db->createQueryBuilder()
+            return (bool)$db->createQueryBuilder()
                 ->select('name')
                 ->from('sqlite_master')
                 ->where('type = :type AND name = :table_name')
@@ -83,6 +74,15 @@ class OnceMigrationWebTest extends TestCase
         } catch (\Exception $exception) {
             return false;
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    {
+        parent::setUp();
+        file_put_contents(__DIR__.'/'.$this->dbFile, '');
     }
 
     /**
@@ -100,14 +100,6 @@ class OnceMigrationWebTest extends TestCase
 class OnceMigrationWebTests extends BaseOnceMigrationWebTest
 {
     /**
-     * @inheritDoc
-     */
-    public function getAppClass()
-    {
-        return \TApp::class;
-    }
-
-    /**
      * Get migration object.
      *
      * @return \sonrac\FCoverage\OnceRunMigration
@@ -119,5 +111,13 @@ class OnceMigrationWebTests extends BaseOnceMigrationWebTest
         $class = (new static())->getAppClass();
         return $class::getInstance()
             ->getMigration();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAppClass()
+    {
+        return \TApp::class;
     }
 }
