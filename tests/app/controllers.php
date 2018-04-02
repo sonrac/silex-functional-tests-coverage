@@ -2,7 +2,6 @@
 /**
  * @author Donii Sergii <s.doniy@infomir.com>.
  */
-
 use Silex\Application;
 
 $app->get('/', function () use ($app) {
