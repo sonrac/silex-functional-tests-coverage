@@ -42,11 +42,11 @@ class OnceMigrationWebTest extends TestCase
         /** @var \Doctrine\DBAL\Connection $db */
         $db = $app['db'];
 
-        static::assertTrue((bool)$this->getTable($db));
+        static::assertTrue((bool) $this->getTable($db));
 
         OnceMigrationWebTests::tearDownAfterClass();
 
-        static::assertFalse((bool)$this->getTable($db));
+        static::assertFalse((bool) $this->getTable($db));
 
         $this->assertInstanceOf(Application::class, (new OnceMigrationWebTests())->createApplication());
     }
@@ -63,7 +63,7 @@ class OnceMigrationWebTest extends TestCase
     private function getTable(Connection $db)
     {
         try {
-            return (bool)$db->createQueryBuilder()
+            return (bool) $db->createQueryBuilder()
                 ->select('name')
                 ->from('sqlite_master')
                 ->where('type = :type AND name = :table_name')
@@ -109,12 +109,13 @@ class OnceMigrationWebTests extends BaseOnceMigrationWebTest
     public static function getMigration()
     {
         $class = (new static())->getAppClass();
+
         return $class::getInstance()
             ->getMigration();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAppClass()
     {

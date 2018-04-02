@@ -44,13 +44,12 @@ class TestBaseWebTest extends OnceMigrationWebTest
 class BaseWeb extends BaseWebTest
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getAppClass()
     {
         return \TApp::class;
     }
-
 
     public function __call($name, $arguments)
     {

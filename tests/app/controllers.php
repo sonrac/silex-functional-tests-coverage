@@ -2,7 +2,6 @@
 /**
  * @author Donii Sergii <s.doniy@infomir.com>.
  */
-
 use Silex\Application;
 
 $app->get('/', function () use ($app) {
@@ -54,7 +53,7 @@ $app->get('/users/list', function (
 
     return $application->json([
         'status' => 'OK',
-        'items'  => $items
+        'items'  => $items,
     ]);
 });
 

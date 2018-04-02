@@ -8,14 +8,14 @@ namespace sonrac\FCoverage\Tests\Seeds;
 use sonrac\SimpleSeed\SimpleSeedWithCheckExists;
 
 /**
- * Class UsersSeeds
+ * Class UsersSeeds.
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
 class UsersSeeds extends SimpleSeedWithCheckExists
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getTable()
     {
@@ -23,7 +23,7 @@ class UsersSeeds extends SimpleSeedWithCheckExists
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getData()
     {
@@ -31,17 +31,16 @@ class UsersSeeds extends SimpleSeedWithCheckExists
             [
                 'id'       => 10000,
                 'username' => 'user',
-                'password' => 'user'
-            ]
+                'password' => 'user',
+            ],
         ];
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function getWhereForRow($data)
     {
         return ['id' => $data['id']];
     }
-
 }

@@ -277,6 +277,7 @@ class ControllerTest extends BaseControllerTest
     public function getClientApplication()
     {
         $class = $this->getAppClass();
+
         return $class::getInstance()->getApplication();
     }
 

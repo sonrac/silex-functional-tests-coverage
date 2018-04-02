@@ -63,7 +63,6 @@ trait InitMigrationAppTrait
      */
     public static function prepareMigrations()
     {
-
     }
 
     /**
