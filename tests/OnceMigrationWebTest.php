@@ -99,22 +99,12 @@ class OnceMigrationWebTest extends TestCase
 
 class OnceMigrationWebTests extends BaseOnceMigrationWebTest
 {
-    public static $appPath = 'app/app.php';
-
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getApplication()
+    public function getAppClass()
     {
-        return require __DIR__.'/app/app.php';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function setUpMigration()
-    {
-        static::$migration->setBinDir(__DIR__.'/app/bin');
+        return \TApp::class;
     }
 
     /**
@@ -126,6 +116,8 @@ class OnceMigrationWebTests extends BaseOnceMigrationWebTest
      */
     public static function getMigration()
     {
-        return static::$migration;
+        $class = (new static())->getAppClass();
+        return $class::getInstance()
+            ->getMigration();
     }
 }

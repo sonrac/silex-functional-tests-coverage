@@ -34,24 +34,16 @@ abstract class OnceMigrationWebTest extends WebTestCase
      */
     public function createApplication()
     {
-        if (method_exists(static::class, 'getApplication')) {
-            return static::getApplication();
-        }
-    }
+        $class = $this->getAppClass();
 
-    /**
-     * Setup migration class.
-     *
-     * @return void
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public static function setUpMigration()
-    {
+        return $class::getInstance()
+            ->getApplication();
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public static function tearDownAfterClass(
     )/* The :void return type declaration that should be here would cause a BC issue */

@@ -246,11 +246,10 @@ class BaseControllerTestTest extends TestCase
     {
         parent::setUp();
 
-        if (!is_file(__DIR__.'/'.$this->dbFile)) {
-            file_put_contents(__DIR__.'/'.$this->dbFile, '');
-        }
+        file_put_contents(__DIR__.'/'.$this->dbFile, '');
 
         $this->controller = new ControllerTest();
+        $this->controller->setUp();
         $this->controller->setUpBeforeClass();
     }
 
@@ -261,32 +260,29 @@ class BaseControllerTestTest extends TestCase
     {
         parent::tearDown();
 
-        $this->controller->tearDownAfterClass();
-
         if (is_file(__DIR__.'/'.$this->dbFile)) {
             unlink(__DIR__.'/'.$this->dbFile);
         }
+
+        $this->controller->tearDown();
+        $this->controller->tearDownAfterClass();
     }
 }
 
 class ControllerTest extends BaseControllerTest
 {
-    public static function setUpMigration()
-    {
-        static::$migration->setBinDir(__DIR__.'/app/bin')
-            ->setConsoleCommand('console');
-    }
+   public function getAppClass()
+   {
+       return \TApp::class;
+   }
 
     /**
      * {@inheritdoc}
      */
     public function getClientApplication()
     {
-        if (!$this->application) {
-            return $this->application = (new static())->getApplication();
-        }
-
-        return $this->application;
+        $class = $this->getAppClass();
+        return $class::getInstance()->getApplication();
     }
 
     public function setResponse(Response $response)
@@ -306,28 +302,11 @@ class ControllerTest extends BaseControllerTest
      */
     public function __call($name, $arguments)
     {
-        if (method_exists($this, $name)) {
-            return call_user_func_array([$this, $name], $arguments);
-        }
-
-        return $this->{$name}($arguments);
+        return call_user_func_array([$this, $name], $arguments);
     }
 
     public function enableRedirect($count = 1)
     {
         $this->setAllowRedirect($count);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function createApplication()
-    {
-        return $this->application = (new static())->getApplication();
-    }
-
-    public function getApplication()
-    {
-        return require __DIR__.'/app/app.php';
     }
 }

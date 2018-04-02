@@ -14,6 +14,13 @@ use sonrac\FCoverage\BaseWebTest;
  */
 class TestBaseWebTest extends OnceMigrationWebTest
 {
+    /**
+     * Test send request.
+     *
+     * @throws \ReflectionException
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
     public function testRequestSend()
     {
         /** @var \sonrac\FCoverage\Tests\BaseWeb $controller */
@@ -36,23 +43,14 @@ class TestBaseWebTest extends OnceMigrationWebTest
 
 class BaseWeb extends BaseWebTest
 {
-    public static $appPath = 'app/app.php';
-
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
-    public function getApplication()
+    public function getAppClass()
     {
-        return require __DIR__.'/app/app.php';
+        return \TApp::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function setUpMigration()
-    {
-        static::$migration->setBinDir(__DIR__.'/app/bin');
-    }
 
     public function __call($name, $arguments)
     {

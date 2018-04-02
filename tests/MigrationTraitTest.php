@@ -5,7 +5,7 @@
 
 namespace sonrac\FCoverage\Tests;
 
-use Phpunit\Framework\TestCase;
+use PHPUnit\Framework\TestCase;
 use sonrac\FCoverage\BootTraits;
 use sonrac\FCoverage\MigrationsTrait;
 
@@ -121,7 +121,7 @@ class MigrationWithSeeds extends Migration
 {
     use MigrationsTrait, BootTraits;
 
-    protected $seeds = [1, 2, 3];
+    protected static $seeds = [1, 2, 3];
 
     /**
      * MigrationWithSeeds constructor.

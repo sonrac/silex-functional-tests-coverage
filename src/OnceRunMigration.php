@@ -31,7 +31,7 @@ class OnceRunMigration
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected $seeds = [];
+    protected static $seeds = [];
 
     /**
      * OnceRunMigration constructor.
@@ -44,7 +44,7 @@ class OnceRunMigration
     public function __construct($application, $seeds = [])
     {
         $this->app = $application;
-        $this->seeds = $seeds;
+        static::$seeds = $seeds;
     }
 
     /**
@@ -76,18 +76,6 @@ class OnceRunMigration
     }
 
     /**
-     * Get seeds.
-     *
-     * @return array
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getSeeds()
-    {
-        return $this->seeds;
-    }
-
-    /**
      * @param array $seeds
      *
      * @return OnceRunMigration
@@ -96,7 +84,7 @@ class OnceRunMigration
      */
     public function setSeeds($seeds)
     {
-        $this->seeds = $seeds;
+        static::$seeds = $seeds;
 
         return $this;
     }

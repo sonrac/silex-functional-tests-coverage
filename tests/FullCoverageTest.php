@@ -17,14 +17,9 @@ class FullCoverageTest extends BaseControllerTest
     /**
      * {@inheritdoc}
      */
-    public function getApplication()
+    public function getAppClass()
     {
-        return require __DIR__.'/app/app.php';
-    }
-
-    public static function setUpMigration()
-    {
-        static::$migration->setBinDir(__DIR__.'/app/bin');
+        return \TApp::class;
     }
 
     public function testIndexPage()

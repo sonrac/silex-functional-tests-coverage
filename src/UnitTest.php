@@ -16,6 +16,8 @@ abstract class UnitTest extends TestCase
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \ReflectionException
      */
     protected function setUp()
     {

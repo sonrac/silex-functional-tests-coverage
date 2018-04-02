@@ -17,15 +17,6 @@ abstract class OnceMigrationUnitTest extends TestCase
     use InitMigrationAppTrait;
 
     /**
-     * Seeds list.
-     *
-     * @var array
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected static $seeds = [];
-
-    /**
      * {@inheritdoc}
      *
      * @throws \Exception
@@ -33,19 +24,19 @@ abstract class OnceMigrationUnitTest extends TestCase
     public static function setUpBeforeClass(
     )/* The :void return type declaration that should be here would cause a BC issue */
     {
-        static::initInitMigrationAppTrait();
-
         parent::setUpBeforeClass();
+        static::initInitMigrationAppTrait();
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @throws \Exception
      */
     public static function tearDownAfterClass(
     )/* The :void return type declaration that should be here would cause a BC issue */
     {
         parent::tearDownAfterClass();
-
         static::downMigrationTrait();
     }
 }

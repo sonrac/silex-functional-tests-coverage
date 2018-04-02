@@ -11,7 +11,7 @@ namespace sonrac\FCoverage;
  * Property is list seed classes.
  *
  * @example
- * All staticSeeds located by namespace `Tests\Seeds` and ending with TableSeeder
+ * All seeds located by namespace `Tests\Seeds` and ending with TableSeeder
  * Seeds List are:
  * - Tests\Seeds\UsersTableSeeder
  * - Tests\Seeds\RolesTableSeeder
@@ -25,7 +25,7 @@ namespace sonrac\FCoverage;
  *          $this->setSeedsNamespace('Tests\\Seeds')
  *          $this->setSeedClassEnding('TableSeeder')->_boot();
  *      }
- *      protected $seeds = ['users', 'roles']
+ *      protected static $seeds = ['users', 'roles']
  * }
  * </code>
  *
@@ -141,16 +141,8 @@ trait MigrationsTrait
     {
         $this->runCommand($this->getMigrationCommand());
 
-        if (property_exists(static::class, 'staticSeeds')) {
-            foreach (static::$staticSeeds as $seed) {
-                $this->runSeed($seed);
-            }
-        }
-
-        if (property_exists($this, 'seeds')) {
-            foreach ($this->seeds as $seed) {
-                $this->runSeed($seed);
-            }
+        foreach ($this->getSeeds() as $seed) {
+            $this->runSeed($seed);
         }
     }
 
@@ -277,7 +269,7 @@ trait MigrationsTrait
     }
 
     /**
-     * Get staticSeeds classes namespace.
+     * Get seeds classes namespace.
      *
      * @return null|string
      *
@@ -510,9 +502,10 @@ trait MigrationsTrait
     protected function getMigrationsList()
     {
         /**
-         * @var \Doctrine\DBAL\Query\QueryBuilder
+         * @var \Doctrine\DBAL\Connection $connection
          */
-        $builder = $this->app['db']->createQueryBuilder();
+        $connection = $this->app['db'];
+        $builder = $connection->createQueryBuilder();
 
         $migrations = $builder->select(['version'])
             ->from('migration_versions')
@@ -529,6 +522,23 @@ trait MigrationsTrait
         }
 
         return $migrations;
+    }
+
+
+    /**
+     * Get seeds.
+     *
+     * @return array
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getSeeds()
+    {
+        if (property_exists($this, 'seeds')) {
+            return $this::$seeds ? : [];
+        }
+
+        return [];
     }
 
     /**

@@ -17,42 +17,22 @@ trait InitMigrationAppTrait
     protected static $runMigration = true;
 
     /**
-     * Migration runner class.
-     *
-     * @var \sonrac\FCoverage\OnceRunMigration
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected static $migration;
-
-    /**
      * Seeds list.
      *
      * @var array
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected static $staticSeeds = [];
+    protected static $seeds = [];
 
     /**
-     * Setup migration class.
+     * Get test application instance.
      *
-     * @return void
+     * @return \sonrac\FCoverage\TestApplication
      *
-     * @author Donii Sergii <doniysa@gmail.com>
+     * @author Donii Sergii <s.donii@infomir.com>
      */
-    public static function setUpMigration()
-    {
-    }
-
-    /**
-     * Get application instance.
-     *
-     * @return \Silex\Application
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    abstract public function getApplication();
+    abstract public function getAppClass();
 
     /**
      * Init migration trait.
@@ -64,11 +44,14 @@ trait InitMigrationAppTrait
     protected static function initInitMigrationAppTrait()
     {
         if (true === static::$runMigration) {
-            $app = (new static())->getApplication();
-            $app->boot();
-            static::$migration = new OnceRunMigration($app, static::$staticSeeds);
-            static::setUpMigration();
-            static::$migration->bootMigrationsTrait();
+            $instance = new static();
+            $class = $instance->getAppClass();
+            $class::getInstance()
+                ->setRunMigration(static::$runMigration)
+                ->getMigration()
+                ->setSeeds($instance::$seeds);
+            $class::getInstance()
+                ->runMigration();
         }
     }
 
@@ -81,8 +64,9 @@ trait InitMigrationAppTrait
      */
     protected static function downMigrationTrait()
     {
-        if (true === static::$runMigration && static::$migration) {
-            static::$migration->rollback();
+        if (true === static::$runMigration) {
+            $class = (new static())->getAppClass();
+            $class::getInstance()->rollbackMigrations();
         }
     }
 }

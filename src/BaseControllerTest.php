@@ -71,17 +71,6 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function setUp()
-    {
-        $this->application = $this->createApplication();
-        parent::setUp();
-    }
-
-    /**
      * Get response object.
      *
      * @return \Symfony\Component\HttpFoundation\Response|null
@@ -94,6 +83,17 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     }
 
     /**
+     * Get application.
+     *
+     * @return \Silex\Application
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function getApplication() {
+        return $this->application ? : $this->application = $this->createApplication();
+    }
+
+    /**
      * Create application.
      *
      * @return \Silex\Application
@@ -102,13 +102,14 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      */
     protected function createApplication()
     {
-        if (method_exists(static::class, 'getApplication')) {
-            return static::getApplication();
-        }
+        $class = static::getAppClass();
+        return $class::getInstance()
+            ->getApplication();
     }
 
     /**
      * {@inheritdoc}
+     * @throws \Throwable
      */
     protected function request(
         $method,
@@ -223,6 +224,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         /* Resolve controller name */
         $controller = $controllerResolver->getController($this->request);
         /* Resolve arguments */
+        $this->application = $this->getApplication();
         $argumentResolver = new ArgumentResolver($this->application['argument_metadata_factory'],
             $this->application['argument_value_resolvers']);
         $arguments = $argumentResolver->getArguments($this->request, $controller);
@@ -268,7 +270,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             $this->triggerKernelEvent(
                 KernelEvents::RESPONSE,
                 new FilterResponseEvent(
-                    $this->application,
+                    $this->getApplication(),
                     $this->request,
                     HttpKernelInterface::MASTER_REQUEST,
                     $response
@@ -313,12 +315,13 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         if (!$this->request) {
             $this->request = Request::createFromGlobals();
         }
+        $this->application = $this->getApplication();
         $this->application->handle($this->request);
 
         $response = $this->triggerKernelEvent(
             KernelEvents::REQUEST,
             new GetResponseEvent(
-                $this->application,
+                $this->getApplication(),
                 $this->request,
                 HttpKernelInterface::MASTER_REQUEST
             )
@@ -338,7 +341,9 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         }
 
         if (!$route) {
-            foreach ($this->application['routes'] as $_route) { // Find by path. Index not found
+            /** @var \Symfony\Component\Routing\RouteCollection $routes */
+            $routes = $this->application['routes'];
+            foreach ($routes as $_route) { // Find by path. Index not found
                 /** @var \Silex\Route $_route */
                 $compileRoute = RouteCompiler::compile($_route);
 
@@ -347,7 +352,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
                                $this->request->getMethod(),
                                $_route->getMethods()
                            );
-                if ($_route->getPath() === $uri || ($matched !== false)) {
+                if (($_route->getPath() === $uri) || $matched) {
                     $route = $_route;
                     break;
                 }
@@ -397,6 +402,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      */
     protected function triggerKernelEvent($eventName, $class = null)
     {
+        $this->application = $this->getApplication();
         /** @var \Symfony\Component\EventDispatcher\EventDispatcher $dispatcher */
         $dispatcher = $this->application['dispatcher'];
 
