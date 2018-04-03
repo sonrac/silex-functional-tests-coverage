@@ -21,6 +21,12 @@
 
 Functional tests mechanism concatenation with emulation is called in unit tests. All function tests located in trait and include in functional and unit as trait
 
+## Installation
+
+```bash
+composer require sonrac/silex-functional-tests-coverage
+```
+
 ## Class description
 
 | Class | Description |
