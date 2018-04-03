@@ -28,7 +28,10 @@ Functional tests mechanism concatenation with emulation is called in unit tests.
 | BaseControllerTest | Base controllers test for unit testing |
 | BaseWebTest | Base functional test controller |
 | OnceMigrationUnitTest | Run functional test with running migration on test beginning and rollback after test finished |
-| OnceMigrationUnitTest | Run functional test with running migration on test beginning and rollback after test finished |
+| OnceMigrationUnitTest | Run unit test with running migration on test beginning and rollback after test finished |
+| OnceMigrationWebTest | Run functional test with running migration on test beginning and rollback after test finished |
+| OnceRunMigration | Class for run migration and seeds |
+| TestApplication | Abstract class for init application instance |
 | UnitTest | Base unit test with bases traits (BootTraits, MigrationTrait) |   
 
 ## Traits description
@@ -37,6 +40,15 @@ Functional tests mechanism concatenation with emulation is called in unit tests.
 | ----- | ----------- |
 | BootTraits | Boot trait in class |
 | InitMigrationTestTrait | Using for once run migration in unit or functional tests |
+| ControllersTestTrait | Using for additional helper functions in functional tests |
 | MigrationsTrait | Trait for run migrations |
 
+## Exceptions
+
+| Exception | Description |
+| --------- | ----------- |
+| MaxRedirectException | Maximum redirect execution exception |
+
 ## Class api
+
+[Docs](https://sonrac.github.io/docs/silex-functional-tests)

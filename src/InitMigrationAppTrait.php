@@ -5,6 +5,12 @@
 
 namespace sonrac\FCoverage;
 
+/**
+ * Trait InitMigrationAppTrait
+ * Run migrations with seeds trait.
+ *
+ * @author Donii Sergii <s.donii@infomir.com>
+ */
 trait InitMigrationAppTrait
 {
     /**
