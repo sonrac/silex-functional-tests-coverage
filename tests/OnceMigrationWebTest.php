@@ -100,6 +100,11 @@ class OnceMigrationWebTest extends TestCase
 class OnceMigrationWebTests extends BaseOnceMigrationWebTest
 {
     /**
+     * {@inheritdoc}
+     */
+    protected static $runMigration = true;
+
+    /**
      * Get migration object.
      *
      * @return \sonrac\FCoverage\OnceRunMigration

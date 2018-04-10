@@ -274,6 +274,11 @@ class ControllerTest extends BaseControllerTest
     /**
      * {@inheritdoc}
      */
+    protected static $runMigration = true;
+
+    /**
+     * {@inheritdoc}
+     */
     public function getClientApplication()
     {
         $class = $this->getAppClass();

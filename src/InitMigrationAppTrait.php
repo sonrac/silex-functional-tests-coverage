@@ -20,7 +20,7 @@ trait InitMigrationAppTrait
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected static $runMigration = true;
+    protected static $runMigration = false;
 
     /**
      * Seeds list.
@@ -40,17 +40,22 @@ trait InitMigrationAppTrait
      */
     protected static function initInitMigrationAppTrait()
     {
+        $instance = new static();
+        $class = $instance->getAppClass();
+        $class::newInstance()
+            ->setRunMigration(static::$runMigration)
+            ->getMigration()
+            ->setSeeds($instance::$seeds);
+        static::prepareMigrations();
+
         if (true === static::$runMigration) {
-            $instance = new static();
-            $class = $instance->getAppClass();
-            $class::newInstance()
-                ->setRunMigration(static::$runMigration)
-                ->getMigration()
-                ->setSeeds($instance::$seeds);
-            static::prepareMigrations();
             $class::getInstance()
                 ->runMigration();
         }
+
+        $class::getInstance()
+            ->getMigration()
+            ->runSeeds();
     }
 
     /**

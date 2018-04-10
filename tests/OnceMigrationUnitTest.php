@@ -100,6 +100,11 @@ class OnceMigrationUnitTest extends TestCase
 class OnceMigrationTests extends BaseOnceMigrationUnitTest
 {
     /**
+     * {@inheritdoc}
+     */
+    protected static $runMigration = true;
+
+    /**
      * Get migration object.
      *
      * @return \sonrac\FCoverage\OnceRunMigration

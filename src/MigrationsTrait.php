@@ -139,8 +139,31 @@ trait MigrationsTrait
      */
     public function bootMigrationsTrait()
     {
-        $this->runCommand($this->getMigrationCommand());
+        $this->runMigration();
+        $this->runSeeds();
+    }
 
+    /**
+     * Run migrations.
+     *
+     * @throws \Exception
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function runMigration()
+    {
+        $this->runCommand($this->getMigrationCommand());
+    }
+
+    /**
+     * Run seeds.
+     *
+     * @throws \Exception
+     *
+     * @author Donii Sergii <s.donii@infomir.com>
+     */
+    public function runSeeds()
+    {
         foreach ($this->getSeeds() as $seed) {
             $this->runSeed($seed);
         }
@@ -159,13 +182,14 @@ trait MigrationsTrait
                    "; cd {$this->getBinDir()}; {$this->getPhpExecutor()} {$this->getConsoleCommand()} {$command}".PHP_EOL;
 
         ob_start();
-        exec($command, $out, $code);
+        $first = exec($command, $out, $code);
+        $content = ob_get_contents();
         ob_end_clean();
 
-        if ((int) $code !== 0 && !$this->continueOnFailure) {
+        if ((int)$code !== 0 && !$this->continueOnFailure) {
             throw new \Exception(
                 "Command \n {$command} \n run with code {$code} with out: \n ".
-                implode(PHP_EOL, $out)
+                $first.' '.$content.PHP_EOL.implode(PHP_EOL, $out)
             );
         }
     }

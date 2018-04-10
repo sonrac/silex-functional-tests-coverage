@@ -5,19 +5,17 @@
 
 namespace sonrac\FCoverage\Tests;
 
-use sonrac\FCoverage\BaseControllerTest;
-
 /**
- * Class RealApplicationUnitTest.
+ * Class RunRealApplicationWithOneRunMigration
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
-class RealApplicationUnitTest extends BaseControllerTest
+class RunRealApplicationWithOneRunMigration extends RealApplicationUnitTest
 {
     /**
      * {@inheritdoc}
      */
-    protected static $runMigration = true;
+    protected static $runMigration = false;
 
     protected static $seeds = ['users'];
 
@@ -38,23 +36,6 @@ class RealApplicationUnitTest extends BaseControllerTest
      */
     public function getAppClass()
     {
-        return \TApp::class;
-    }
-
-    /**
-     * Test get users list.
-     *
-     * @author Donii Sergii <s.donii@infomir.com>
-     */
-    public function testGetUsers()
-    {
-        $data = $this->get('/users/list')
-            ->seeStatusCode(200)
-            ->seeJsonStructure([
-                'status' => 'OK',
-                'items'  => [
-                    ['id', 'user'],
-                ],
-            ]);
+        return \TAppOnce::class;
     }
 }
