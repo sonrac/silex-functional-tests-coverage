@@ -6,7 +6,7 @@
 namespace sonrac\FCoverage\Tests;
 
 /**
- * Class RunRealApplicationWithOneRunMigration
+ * Class RunRealApplicationWithOneRunMigration.
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */

@@ -36,7 +36,8 @@ class TApp extends \sonrac\FCoverage\TestApplication
     }
 }
 
-class TAppOnce extends TApp {
+class TAppOnce extends TApp
+{
     protected $isRegistered = false;
 
     /**
@@ -58,13 +59,12 @@ class TAppOnce extends TApp {
 
                 try {
                     $driver = \Doctrine\DBAL\DriverManager::getConnection([
-                        'url' => 'sqlite:'.__DIR__.'/out/db.sqlite'
+                        'url' => 'sqlite:'.__DIR__.'/out/db.sqlite',
                     ]);
                     if (true === $driver->getSchemaManager()->tablesExist('users')) {
                         $exists = true;
                     }
                 } catch (\Exception $e) {
-
                 }
 
                 if ($exists) {
@@ -79,6 +79,7 @@ class TAppOnce extends TApp {
             $this->setUpMigration();
             $this->runMigration();
         }
+
         return require __DIR__.'/app/app.php';
     }
 
