@@ -186,7 +186,7 @@ trait MigrationsTrait
         $content = ob_get_contents();
         ob_end_clean();
 
-        if ((int)$code !== 0 && !$this->continueOnFailure) {
+        if ((int) $code !== 0 && !$this->continueOnFailure) {
             throw new \Exception(
                 "Command \n {$command} \n run with code {$code} with out: \n ".
                 $first.' '.$content.PHP_EOL.implode(PHP_EOL, $out)
