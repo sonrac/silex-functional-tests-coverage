@@ -298,7 +298,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     {
         return $this->app ?: $this->app = $this->createApplication();
     }
-    
+
     /**
      * Set application.
      *
@@ -306,10 +306,11 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function setApplication($app) {
+    public function setApplication($app)
+    {
         $this->app = $app;
     }
-    
+
     /**
      * Create application.
      *

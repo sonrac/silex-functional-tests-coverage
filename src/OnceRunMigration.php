@@ -35,8 +35,8 @@ class OnceRunMigration
     /**
      * OnceRunMigration constructor.
      *
-     * @param object $app Application instance
-     * @param array  $seeds       Seeds list
+     * @param object $app   Application instance
+     * @param array  $seeds Seeds list
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */

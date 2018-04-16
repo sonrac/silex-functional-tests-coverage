@@ -89,7 +89,7 @@ abstract class TestApplication
     {
         return $this->app;
     }
-    
+
     /**
      * Set application instance.
      *

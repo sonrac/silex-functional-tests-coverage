@@ -16,7 +16,7 @@ class RunRealApplicationWithOneRunMigrationTest extends RealApplicationUnitTest
      * {@inheritdoc}
      */
     protected static $runMigration = false;
-    
+
     /**
      * {@inheritdoc}
      */
