@@ -75,7 +75,7 @@ abstract class BaseWebTest extends OnceMigrationWebTest
 
         return $this;
     }
-    
+
     /**
      * Set application.
      *
@@ -87,7 +87,7 @@ abstract class BaseWebTest extends OnceMigrationWebTest
     {
         $this->app = $app;
     }
-    
+
     /**
      * {@inheritdoc}
      *
