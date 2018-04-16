@@ -43,7 +43,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected $application;
+    protected $app;
 
     /**
      * Response object.
@@ -215,8 +215,8 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         if (!$this->request) {
             $this->request = Request::createFromGlobals();
         }
-        $this->application = $this->getApplication();
-        $this->application->handle($this->request);
+        $this->setApplication($this->getApplication());
+        $this->app->handle($this->request);
 
         $response = $this->triggerKernelEvent(
             KernelEvents::REQUEST,
@@ -233,16 +233,16 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         }
 
         /** @var \Silex\Route|null $route */
-        $route = $this->application['routes']->get($index);
+        $route = $this->app['routes']->get($index);
 
         if (!$route) { // Fix match route
             $index = str_replace($method, '', $index);
-            $route = $this->application['routes']->get($index);
+            $route = $this->app['routes']->get($index);
         }
 
         if (!$route) {
             /** @var \Symfony\Component\Routing\RouteCollection $routes */
-            $routes = $this->application['routes'];
+            $routes = $this->app['routes'];
             foreach ($routes as $_route) { // Find by path. Index not found
                 /** @var \Silex\Route $_route */
                 $compileRoute = RouteCompiler::compile($_route);
@@ -296,9 +296,20 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      */
     public function getApplication()
     {
-        return $this->application ?: $this->application = $this->createApplication();
+        return $this->app ?: $this->app = $this->createApplication();
     }
-
+    
+    /**
+     * Set application.
+     *
+     * @param \Silex\Application $app
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setApplication($app) {
+        $this->app = $app;
+    }
+    
     /**
      * Create application.
      *
@@ -330,9 +341,9 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      */
     protected function triggerKernelEvent($eventName, $class = null)
     {
-        $this->application = $this->getApplication();
+        $this->setApplication($this->getApplication());
         /** @var \Symfony\Component\EventDispatcher\EventDispatcher $dispatcher */
-        $dispatcher = $this->application['dispatcher'];
+        $dispatcher = $this->app['dispatcher'];
 
         /* Emulate request event for prepare middleware & other providers initialization */
         ob_start();
@@ -395,9 +406,9 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         /* Resolve controller name */
         $controller = $controllerResolver->getController($this->request);
         /* Resolve arguments */
-        $this->application = $this->getApplication();
-        $argumentResolver = new ArgumentResolver($this->application['argument_metadata_factory'],
-            $this->application['argument_value_resolvers']);
+        $this->setApplication($this->getApplication());
+        $argumentResolver = new ArgumentResolver($this->app['argument_metadata_factory'],
+            $this->app['argument_value_resolvers']);
         $arguments = $argumentResolver->getArguments($this->request, $controller);
 
         /* Call controller */

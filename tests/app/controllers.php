@@ -44,14 +44,14 @@ $app->register(new \Silex\Provider\DoctrineServiceProvider(), [
 ]);
 
 $app->get('/users/list', function (
-    Application $application,
+    Application $app,
     \Symfony\Component\HttpFoundation\Request $request
 ) {
-    $items = $application['db']->createQueryBuilder()
+    $items = $app['db']->createQueryBuilder()
         ->from('users')
         ->select('id', 'username')->execute()->fetchAll();
 
-    return $application->json([
+    return $app->json([
         'status' => 'OK',
         'items'  => $items,
     ]);

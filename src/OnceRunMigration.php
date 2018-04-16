@@ -35,14 +35,14 @@ class OnceRunMigration
     /**
      * OnceRunMigration constructor.
      *
-     * @param object $application Application instance
+     * @param object $app Application instance
      * @param array  $seeds       Seeds list
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function __construct($application, $seeds = [])
+    public function __construct($app, $seeds = [])
     {
-        $this->app = $application;
+        $this->app = $app;
         static::$seeds = $seeds;
     }
 

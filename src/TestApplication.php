@@ -27,7 +27,7 @@ abstract class TestApplication
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    private $application;
+    private $app;
     /**
      * Migration instance.
      *
@@ -58,7 +58,7 @@ abstract class TestApplication
         $this->migration = $migration ?: new OnceRunMigration($this->createApplication(), $seeds);
         $this->setUpMigration();
 
-        $this->application = $this->createApplication();
+        $this->app = $this->createApplication();
         $this->getApplication()->boot();
     }
 
@@ -87,21 +87,21 @@ abstract class TestApplication
      */
     public function getApplication()
     {
-        return $this->application;
+        return $this->app;
     }
-
+    
     /**
      * Set application instance.
      *
-     * @param string $application
+     * @param string $app
      *
      * @return TestApplication
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    public function setApplication($application)
+    public function setApplication($app)
     {
-        $this->application = $application;
+        $this->app = $app;
 
         return $this;
     }
@@ -165,15 +165,15 @@ abstract class TestApplication
     /**
      * Set application instance.
      *
-     * @param \sonrac\FCoverage\TestApplication $application
+     * @param \sonrac\FCoverage\TestApplication $app
      *
      * @return \sonrac\FCoverage\TestApplication
      *
      * @author Donii Sergii <s.donii@infomir.com>
      */
-    public function setInstance(self $application)
+    public function setInstance(self $app)
     {
-        return static::$instance = $application;
+        return static::$instance = $app;
     }
 
     /**

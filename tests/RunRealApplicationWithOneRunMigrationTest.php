@@ -10,13 +10,16 @@ namespace sonrac\FCoverage\Tests;
  *
  * @author Donii Sergii <s.donii@infomir.com>
  */
-class RunRealApplicationWithOneRunMigration extends RealApplicationUnitTest
+class RunRealApplicationWithOneRunMigrationTest extends RealApplicationUnitTest
 {
     /**
      * {@inheritdoc}
      */
     protected static $runMigration = false;
-
+    
+    /**
+     * {@inheritdoc}
+     */
     protected static $seeds = ['users'];
 
     /**

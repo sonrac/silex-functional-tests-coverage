@@ -12,21 +12,22 @@
 >
     <testsuites>
         <testsuite name="Unit Tests">
-            <directory>./tests/</directory>
+            <file>tests/RunRealApplicationWithOneRunMigrationTest.php</file>
+            <file>tests/BootTraitsTest.php</file>
+            <file>tests/MigrationTraitTest.php</file>
+            <file>tests/TestBaseWebTest.php</file>
+            <file>tests/TestUnitTest.php</file>
+            <file>tests/BaseControllerTestTest.php</file>
+            <file>tests/OnceMigrationUnitTest.php</file>
+            <file>tests/OnceMigrationWebTest.php</file>
+            <file>tests/RealApplicationUnitTest.php</file>
+            <file>tests/FullCoverageTest.php</file>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">src/</directory>
             <exclude>
-                <!--<file>./src/UnitTest.php</file>-->
-                <!--<file>./src/OnceRunMigration.php</file>-->
-                <!--<file>./src/OnceRunMigrationUnitTest.php</file>-->
-                <!--<file>./src/OnceMigrationUnitTest.php</file>-->
-                <!--<file>./src/BaseWebTest.php</file>-->
-                <!--<file>./src/MaxRedirectException.php</file>-->
-                <!--<file>./src/OnceMigrationWebTest.php</file>-->
-                <!--<file>./src/InitMigrationAppTrait.php</file>-->
             </exclude>
         </whitelist>
     </filter>

@@ -371,7 +371,7 @@ trait ControllersTestTrait
     protected function seeInDatabase($table, $condition)
     {
         /** @var \Doctrine\DBAL\Connection $db */
-        $db = $this->application['db'];
+        $db = $this->app['db'];
 
         $query = $db->createQueryBuilder()
             ->select('count(*)')
