@@ -150,7 +150,10 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         $this->response = $this->getResponse($controller);
 
         $this->crawler = new Crawler();
-        $this->crawler->addHtmlContent($this->response->getContent());
+
+        if ($this->response) {
+            $this->crawler->addHtmlContent($this->response->getContent());
+        }
 
         return $this;
     }
