@@ -361,8 +361,8 @@ trait MigrationsTrait
      */
     protected function runSeed($seed)
     {
-        $class = class_exists($seed) ? $seed : $this->getSeedNamespace().ucfirst($seed).
-                                               ($this->seedClassEnding ?: '');
+        $class = class_exists($seed) ? str_replace('\\', '\\\\', $seed)
+            : $this->getSeedNamespace().ucfirst($seed).($this->seedClassEnding ?: '');
         $this->runCommand($this->getSeedCommand().$class);
     }
 
