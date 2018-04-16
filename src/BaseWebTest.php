@@ -75,7 +75,19 @@ abstract class BaseWebTest extends OnceMigrationWebTest
 
         return $this;
     }
-
+    
+    /**
+     * Set application.
+     *
+     * @param \Silex\Application $app
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function setApplication($app)
+    {
+        $this->app = $app;
+    }
+    
     /**
      * {@inheritdoc}
      *
