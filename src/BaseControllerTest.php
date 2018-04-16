@@ -512,16 +512,4 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     {
         return $this->response;
     }
-
-    /**
-     * Get crawler.
-     *
-     * @return \Symfony\Component\DomCrawler\Crawler
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getCrawler()
-    {
-        return $this->crawler;
-    }
 }
