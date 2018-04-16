@@ -81,6 +81,18 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     }
     
     /**
+     * Get crawler.
+     *
+     * @return \Symfony\Component\DomCrawler\Crawler
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getCrawler()
+    {
+        return $this->crawler;
+    }
+    
+    /**
      * {@inheritdoc}
      *
      * @throws \Throwable
@@ -499,16 +511,5 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     public function getResponseObject()
     {
         return $this->response;
-    }
-    
-    /**
-     * Get crawler.
-     *
-     * @return \Symfony\Component\DomCrawler\Crawler
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getCrawler() {
-        return $this->crawler;
     }
 }
