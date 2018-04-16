@@ -21,7 +21,7 @@ trait ControllersTestTrait
      * @author Donii Sergii <doniysa@gmail.com>
      */
     private $allowRedirect = false;
-    
+
     /**
      * If true generate exception when count redirects more than `allowRedirect` value.
      *
@@ -30,7 +30,7 @@ trait ControllersTestTrait
      * @author Donii Sergii <doniysa@gmail.com>
      */
     private $throwExceptionOnRedirect = true;
-    
+
     /**
      * Clear redirects count.
      *
@@ -39,7 +39,7 @@ trait ControllersTestTrait
      * @author Donii Sergii <doniysa@gmail.com>
      */
     private $__clearCountRedirects = false;
-    
+
     /**
      * Current count redirects.
      *
@@ -48,7 +48,7 @@ trait ControllersTestTrait
      * @author Donii Sergii <doniysa@gmail.com>
      */
     private $__countRedirects = 0;
-    
+
     /**
      * Get is need clear count redirects.
      *
@@ -60,7 +60,7 @@ trait ControllersTestTrait
     {
         return $this->__clearCountRedirects;
     }
-    
+
     /**
      * Get is need clear count redirects.
      *
@@ -73,10 +73,10 @@ trait ControllersTestTrait
     public function setClearCountRedirects($clear)
     {
         $this->__clearCountRedirects = $clear;
-        
+
         return $this;
     }
-    
+
     /**
      * @return bool|int
      *
@@ -86,7 +86,7 @@ trait ControllersTestTrait
     {
         return $this->allowRedirect;
     }
-    
+
     /**
      * @param bool|int $allowRedirect
      *
@@ -96,7 +96,7 @@ trait ControllersTestTrait
     {
         $this->allowRedirect = $allowRedirect;
     }
-    
+
     /**
      * Check is thrown exception on redirect.
      *
@@ -108,7 +108,7 @@ trait ControllersTestTrait
     {
         return $this->throwExceptionOnRedirect;
     }
-    
+
     /**
      * Set thrown exception on redirect.
      *
@@ -120,7 +120,7 @@ trait ControllersTestTrait
     {
         $this->throwExceptionOnRedirect = $throwExceptionOnRedirect;
     }
-    
+
     /**
      * Get count redirects.
      *
@@ -132,7 +132,7 @@ trait ControllersTestTrait
     {
         return $this->__countRedirects;
     }
-    
+
     /**
      * Set count redirects.
      *
@@ -144,7 +144,7 @@ trait ControllersTestTrait
     {
         $this->__countRedirects = $_countRedirects;
     }
-    
+
     /**
      * Increment count redirects.
      *
@@ -154,7 +154,7 @@ trait ControllersTestTrait
     {
         $this->__countRedirects++;
     }
-    
+
     /**
      * Calls a GET URI.
      *
@@ -177,10 +177,10 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
-        
+
         return $this->request('GET', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
-    
+
     /**
      * Calls a PUT URI.
      *
@@ -203,10 +203,10 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
-        
+
         return $this->request('PUT', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
-    
+
     /**
      * Calls a POST URI.
      *
@@ -229,10 +229,10 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
-        
+
         return $this->request('POST', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
-    
+
     /**
      * Calls a DELETE URI.
      *
@@ -255,10 +255,10 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
-        
+
         return $this->request('DELETE', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
-    
+
     /**
      * Calls a PATCH URI.
      *
@@ -281,10 +281,10 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
-        
+
         return $this->request('PATCH', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
-    
+
     /**
      * See json structure.
      *
@@ -296,12 +296,12 @@ trait ControllersTestTrait
     protected function seeJsonStructure($struct, $data = null)
     {
         $data = $data ?: json_decode(trim($this->response->getContent()), true);
-        
+
         static::assertInternalType('array', $data, 'Error get response. Not data given');
         foreach ($struct as $name => $value) {
             $withValue = !is_numeric($name);
             $_name = $withValue ? $name : $value;
-            
+
             if (is_string($_name)) {
                 try {
                     static::assertArrayHasKey($_name, $data, 'Error response has key');
@@ -310,14 +310,14 @@ trait ControllersTestTrait
                         foreach ($data as $datum) {
                             $this->seeJsonStructure($struct, $datum);
                         }
-                        
+
                         continue;
                     }
                 }
             } else {
                 $value = $_name;
             }
-            
+
             if ($withValue) {
                 if (is_array($value)) {
                     $this->seeJsonStructure($value, $data[$_name]);
@@ -326,10 +326,10 @@ trait ControllersTestTrait
                 }
             }
         }
-        
+
         return $this;
     }
-    
+
     /**
      * See header in response.
      *
@@ -342,16 +342,16 @@ trait ControllersTestTrait
     {
         /** @var array $headers */
         $headers = $this->response->headers->all();
-        
+
         static::assertArrayHasKey(strtolower($header), $headers, 'Header '.$header.'is missing');
         if ($value !== null) {
             static::assertEquals(strtolower($value), strtolower($headers[strtolower($header)][0]),
                 'Header value not match');
         }
-        
+
         return $this;
     }
-    
+
     /**
      * See status code in response.
      *
@@ -364,10 +364,10 @@ trait ControllersTestTrait
     protected function seeStatusCode($statusCode)
     {
         static::assertEquals($statusCode, $this->response->getStatusCode());
-        
+
         return $this;
     }
-    
+
     /**
      * See in database.
      *
@@ -382,13 +382,13 @@ trait ControllersTestTrait
     {
         /** @var \Doctrine\DBAL\Connection $db */
         $db = $this->app['db'];
-        
+
         $query = $db->createQueryBuilder()
             ->select('count(*)')
             ->from($table);
-        
+
         $where = '';
-        
+
         if (is_array($condition)) {
             foreach ($condition as $name => $value) {
                 $where .= (strlen($where) > 0 ? ' AND ' : '')." `{$name}` = :{$name} ";
@@ -397,14 +397,14 @@ trait ControllersTestTrait
         } else {
             $where = $condition;
         }
-        
+
         $query->where($where);
-        
-        $results = (int)$query->execute()->fetchColumn();
-        
+
+        $results = (int) $query->execute()->fetchColumn();
+
         static::assertTrue($results > 0);
     }
-    
+
     /**
      * Calls a URI.
      *
