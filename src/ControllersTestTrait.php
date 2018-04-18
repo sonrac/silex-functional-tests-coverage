@@ -429,7 +429,6 @@ trait ControllersTestTrait
         $changeHistory = true
     );
 
-
     /**
      * Get response object.
      *
