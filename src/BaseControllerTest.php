@@ -244,7 +244,11 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             $this->request = Request::createFromGlobals();
         }
         $this->setApplication($this->getApplication());
-        $this->app->handle($this->request);
+        $response = $this->app->handle($this->request);
+
+        if ($response instanceof Response) {
+            return $response;
+        }
 
         $response = $this->triggerKernelEvent(
             KernelEvents::REQUEST,
@@ -502,17 +506,5 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     protected function getPredefinedServerVars()
     {
         return [];
-    }
-
-    /**
-     * Get response object.
-     *
-     * @return \Symfony\Component\HttpFoundation\Response|null
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getResponseObject()
-    {
-        return $this->response;
     }
 }

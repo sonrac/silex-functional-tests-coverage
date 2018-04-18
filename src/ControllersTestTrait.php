@@ -428,4 +428,17 @@ trait ControllersTestTrait
         $content = null,
         $changeHistory = true
     );
+
+
+    /**
+     * Get response object.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|null
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getResponseObject()
+    {
+        return $this->response;
+    }
 }
