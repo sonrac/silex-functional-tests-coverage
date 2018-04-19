@@ -12,16 +12,16 @@
 >
     <testsuites>
         <testsuite name="Unit Tests">
-            <file>tests/RunRealApplicationWithOneRunMigrationTest.php</file>
+            <file>tests/BaseControllerTestTest.php</file>
+            <file>tests/RealApplicationUnitTest.php</file>
+            <!--<file>tests/RunRealApplicationWithOneRunMigrationTest.php</file>-->
             <file>tests/HelpersTest.php</file>
             <file>tests/BootTraitsTest.php</file>
             <file>tests/MigrationTraitTest.php</file>
             <file>tests/TestBaseWebTest.php</file>
             <file>tests/TestUnitTest.php</file>
-            <file>tests/BaseControllerTestTest.php</file>
             <file>tests/OnceMigrationUnitTest.php</file>
             <file>tests/OnceMigrationWebTest.php</file>
-            <file>tests/RealApplicationUnitTest.php</file>
             <file>tests/FullCoverageTest.php</file>
         </testsuite>
     </testsuites>

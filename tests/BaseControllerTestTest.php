@@ -172,8 +172,8 @@ class BaseControllerTestTest extends TestCase
     public function testRouteNotFound()
     {
         $this->controller->getClientApplication();
-        $this->assertEquals(
-            'No route found for "GET /not_found"',
+        $this->assertContains(
+            'the page you are looking for could not be found',
             $this->controller->get('/not_found')->getResponseObject()->getContent()
         );
         $this->controller->seeStatusCode(404);

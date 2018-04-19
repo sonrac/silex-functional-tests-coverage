@@ -104,9 +104,10 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         array $files = [],
         array $server = [],
         $content = null,
-        $changeHistory = true
+        $changeHistory = true,
+        $forward = false
     ) {
-        if ($this->isClearCountRedirects()) {
+        if ($this->isClearCountRedirects() && !$forward) {
             $this->setCountRedirects(0);
         }
 
@@ -245,6 +246,10 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         }
         $this->setApplication($this->getApplication());
         $response = $this->app->handle($this->request);
+
+        if ($response instanceof RedirectResponse) {
+            $response = $this->detectRedirectResponse($response);
+        }
 
         if ($response instanceof Response) {
             return $response;
@@ -451,34 +456,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             return $this->returnResponseFromHttpException($httpException);
         }
 
-        /* Allow redirect in unit tests */
-        if ($response instanceof RedirectResponse && $this->getAllowRedirect() !== false) {
-            $this->incrementCountRedirects();
-
-            if ($this->getCountRedirects() > $this->getAllowRedirect()) {
-                if ($this->isThrowExceptionOnRedirect() && ((int) $this->getAllowRedirect() !== 0)) {
-                    $exception = new MaxRedirectException();
-                    $exception->setCountRedirects($this->__countRedirects);
-
-                    throw $exception;
-                }
-
-                $this->response = $response;
-            } else {
-                $url = $response->getTargetUrl();
-                $headers = $response->headers->all();
-                $_SERVER = array_merge($this->originServerVars, $this->getPredefinedServerVars());
-
-                $_SERVER['REQUEST_URI'] = $url;
-
-                foreach ($headers as $header => $value) {
-                    $_SERVER['HTTP_'.strtoupper($header)] = $value;
-                }
-
-                $this->request('GET', $url, [], [], $_SERVER, $response->getContent(), true);
-                $response = $this->getResponseObject();
-            }
-        }
+        $response = $this->detectRedirectResponse($response);
 
         if ($response) {
             /* Trigger after middleware */
@@ -506,5 +484,60 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     protected function getPredefinedServerVars()
     {
         return [];
+    }
+
+    /**
+     * Detect redirect and redirect.
+     *
+     * @param \Symfony\Component\HttpFoundation\Response|string|null $response
+     *
+     * @return null|\Symfony\Component\HttpFoundation\Response
+     * @throws \Throwable
+     * @throws \sonrac\FCoverage\MaxRedirectException
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected function detectRedirectResponse($response)
+    {
+        /* Allow redirect in unit tests */
+        if ($response instanceof RedirectResponse && $this->getAllowRedirect() !== false) {
+            $this->incrementCountRedirects();
+
+            if ($this->getCountRedirects() > $this->getAllowRedirect()) {
+                if ($this->isThrowExceptionOnRedirect() && ((int) $this->getAllowRedirect() !== 0)) {
+                    $exception = new MaxRedirectException();
+                    $exception->setCountRedirects($this->__countRedirects);
+
+                    throw $exception;
+                }
+
+                $this->response = $response;
+            } else {
+                $url = $response->getTargetUrl();
+                $headers = $response->headers->all();
+                $_SERVER = array_merge($this->originServerVars, $this->getPredefinedServerVars());
+
+                $_SERVER['REQUEST_URI'] = $url;
+
+                foreach ($headers as $header => $value) {
+                    $_SERVER['HTTP_'.strtoupper($header)] = $value;
+                }
+
+                $this->request(
+                    'GET',
+                    $url,
+                    [],
+                    [],
+                    $_SERVER,
+                    $response->getContent(),
+                    true,
+                    true
+                );
+
+                return $this->getResponseObject();
+            }
+        }
+
+        return $response;
     }
 }
