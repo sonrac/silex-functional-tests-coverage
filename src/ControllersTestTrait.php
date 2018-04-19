@@ -308,7 +308,7 @@ trait ControllersTestTrait
                 } catch (\Exception $exception) {
                     if (is_array($data)) {
                         foreach ($data as $datum) {
-                            $this->seeJsonStructure($struct, $datum);
+                            $this->seeJsonStructure($value, $datum);
                         }
 
                         continue;

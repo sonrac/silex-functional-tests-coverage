@@ -13,6 +13,7 @@
     <testsuites>
         <testsuite name="Unit Tests">
             <file>tests/RunRealApplicationWithOneRunMigrationTest.php</file>
+            <file>tests/HelpersTest.php</file>
             <file>tests/BootTraitsTest.php</file>
             <file>tests/MigrationTraitTest.php</file>
             <file>tests/TestBaseWebTest.php</file>
