@@ -98,7 +98,7 @@ class HelpersTest extends TestCase
         $this->seeJsonStructure([
             'status' => true,
             'message',
-            'items' => ['test', 'b']
+            'items'  => ['test', 'b'],
         ]);
     }
 
@@ -118,7 +118,7 @@ class HelpersTest extends TestCase
         $this->seeJsonStructure([
             'status' => true,
             'message',
-            'items' => ['test', 'b']
+            'items'  => ['test', 'b'],
         ]);
     }
 
