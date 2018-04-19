@@ -10,7 +10,7 @@ use sonrac\FCoverage\ControllersTestTrait;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class HelpersTest
+ * Class HelpersTest.
  *
  * @author Donii Sergii <doniysa@gmail.com>
  */
@@ -31,7 +31,7 @@ class HelpersTest extends TestCase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @param Response $method
      */
@@ -98,7 +98,7 @@ class HelpersTest extends TestCase
         $this->seeJsonStructure([
             'status' => true,
             'message',
-            'items' => ['test', 'b']
+            'items' => ['test', 'b'],
         ]);
     }
 
@@ -118,8 +118,7 @@ class HelpersTest extends TestCase
         $this->seeJsonStructure([
             'status' => true,
             'message',
-            'items' => ['test', 'b']
+            'items' => ['test', 'b'],
         ]);
     }
-
 }
