@@ -491,9 +491,10 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @param \Symfony\Component\HttpFoundation\Response|string|null $response
      *
-     * @return null|\Symfony\Component\HttpFoundation\Response
      * @throws \Throwable
      * @throws \sonrac\FCoverage\MaxRedirectException
+     *
+     * @return null|\Symfony\Component\HttpFoundation\Response
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
