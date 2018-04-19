@@ -306,8 +306,10 @@ trait ControllersTestTrait
                 try {
                     static::assertArrayHasKey($_name, $data, 'Error response has key');
                 } catch (\Exception $exception) {
-                    if (is_array($data)) {
-                        foreach ($data as $datum) {
+                    if (is_array($value)) {
+                        static::assertInternalType('array', $data[$_name]);
+                        foreach ($data[$_name] as $datum) {
+
                             $this->seeJsonStructure($value, $datum);
                         }
 
