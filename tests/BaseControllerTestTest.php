@@ -85,7 +85,9 @@ class BaseControllerTestTest extends TestCase
         $this->controller->post('/create-user/123/123')
             ->seeInDatabase('users', [
                 'username' => 123,
-            ]);
+            ])->seeCountInTable('users', 1)
+            ->seeCountInTable('users', 1, [])
+            ->seeCountInTable('users', 1, ['username' => 123]);
         $this->controller->post('/create-user/222/222')
             ->seeInDatabase('users', 'username = \'222\'');
     }
@@ -184,8 +186,7 @@ class BaseControllerTestTest extends TestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function testRedirectResponseWithDisableRedirects()
-    {
+    public function testRedirectResponseWithDisableRedirects(){
         $this->controller->getClientApplication();
         $this->assertInstanceOf(
             RedirectResponse::class,

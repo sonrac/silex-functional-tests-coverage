@@ -155,6 +155,36 @@ trait ControllersTestTrait
         $this->__countRedirects++;
     }
 
+
+    /**
+     * See in table count records.
+     *
+     * @param string     $table
+     * @param int        $count
+     * @param array|null $params
+     *
+     * @return $this
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function seeCountInTable($table, $count, $params = null)
+    {
+        $params = $params ?: [];
+        $connection = $this->getConnection();
+        $builder = $connection->createQueryBuilder()
+            ->select(['count(*) as cnt'])
+            ->from($table, $table);
+
+        foreach ($params as $param => $value) {
+            $builder->setParameter($param, $value, \PDO::PARAM_STR)
+                ->andWhere("$param = :{$param}");
+        }
+
+        static::assertEquals($count, $builder->execute()->fetchColumn());
+
+        return $this;
+    }
+
     /**
      * Calls a GET URI.
      *
@@ -332,6 +362,18 @@ trait ControllersTestTrait
     }
 
     /**
+     * Get database connection.
+     *
+     * @return \Doctrine\DBAL\Connection
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected function getConnection()
+    {
+        return $this->app['db'];
+    }
+
+    /**
      * See header in response.
      *
      * @param string $header
@@ -377,6 +419,8 @@ trait ControllersTestTrait
      *
      * @throws \PHPUnit\Framework\AssertionFailedError
      *
+     * @return $this
+     *
      * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function seeInDatabase($table, $condition)
@@ -404,6 +448,8 @@ trait ControllersTestTrait
         $results = (int) $query->execute()->fetchColumn();
 
         static::assertTrue($results > 0);
+
+        return $this;
     }
 
     /**
