@@ -186,7 +186,8 @@ class BaseControllerTestTest extends TestCase
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function testRedirectResponseWithDisableRedirects(){
+    public function testRedirectResponseWithDisableRedirects()
+    {
         $this->controller->getClientApplication();
         $this->assertInstanceOf(
             RedirectResponse::class,

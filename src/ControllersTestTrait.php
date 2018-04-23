@@ -155,7 +155,6 @@ trait ControllersTestTrait
         $this->__countRedirects++;
     }
 
-
     /**
      * See in table count records.
      *
