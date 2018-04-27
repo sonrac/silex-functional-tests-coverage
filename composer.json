@@ -8,11 +8,9 @@
     "require-dev": {
         "fzaninotto/faker": "^1.7",
         "phpunit/phpunit": ">=4.0",
-        "kurl/silex-doctrine-migrations-provider": "^0.3.1",
         "sonrac/symfony-seed-command": "^0.6.0",
         "symfony/browser-kit": "^4.0",
         "doctrine/migrations": "^1.6",
-        "silex/silex": "^2.2"
     },
     "license": "MIT",
     "suggest": {
