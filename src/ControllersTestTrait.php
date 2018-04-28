@@ -461,7 +461,7 @@ trait ControllersTestTrait
 
         $query->where($where);
 
-        $results = (int)$query->execute()->fetchColumn();
+        $results = (int) $query->execute()->fetchColumn();
 
         static::assertTrue($results > 0);
 
