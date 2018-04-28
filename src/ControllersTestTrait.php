@@ -185,6 +185,30 @@ trait ControllersTestTrait
     }
 
     /**
+     * Get database connection.
+     *
+     * @return \Doctrine\DBAL\Connection
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    protected function getConnection()
+    {
+        return $this->app['db'];
+    }
+
+    /**
+     * Get response object.
+     *
+     * @return \Symfony\Component\HttpFoundation\Response|null
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function getResponseObject()
+    {
+        return $this->response;
+    }
+
+    /**
      * Calls a GET URI.
      *
      * @param string $uri           The URI to fetch
@@ -206,6 +230,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+        $this->clear();
 
         return $this->request('GET', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
@@ -232,6 +257,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+        $this->clear();
 
         return $this->request('PUT', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
@@ -258,6 +284,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+        $this->clear();
 
         return $this->request('POST', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
@@ -284,6 +311,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+        $this->clear();
 
         return $this->request('DELETE', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
@@ -310,6 +338,7 @@ trait ControllersTestTrait
         $changeHistory = true
     ) {
         $this->setClearCountRedirects(true);
+        $this->clear();
 
         return $this->request('PATCH', $uri, $parameters, $files, $server, $content, $changeHistory);
     }
@@ -358,18 +387,6 @@ trait ControllersTestTrait
         }
 
         return $this;
-    }
-
-    /**
-     * Get database connection.
-     *
-     * @return \Doctrine\DBAL\Connection
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    protected function getConnection()
-    {
-        return $this->app['db'];
     }
 
     /**
@@ -444,11 +461,21 @@ trait ControllersTestTrait
 
         $query->where($where);
 
-        $results = (int) $query->execute()->fetchColumn();
+        $results = (int)$query->execute()->fetchColumn();
 
         static::assertTrue($results > 0);
 
         return $this;
+    }
+
+    /**
+     * Clear global arrays.
+     */
+    protected function clear()
+    {
+        $_REQUEST = [];
+        $_GET = [];
+        $_POST = [];
     }
 
     /**
@@ -474,16 +501,4 @@ trait ControllersTestTrait
         $content = null,
         $changeHistory = true
     );
-
-    /**
-     * Get response object.
-     *
-     * @return \Symfony\Component\HttpFoundation\Response|null
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function getResponseObject()
-    {
-        return $this->response;
-    }
 }
