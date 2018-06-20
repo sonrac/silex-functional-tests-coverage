@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/sonrac/silex-functional-tests-coverage.svg?branch=master)](https://travis-ci.org/sonrac/silex-functional-tests-coverage) 
-[![StyleCI](https://styleci.io/repos/126492798/shield?branch=master&style=flat)](https://styleci.io/repos/126492798)
+[![StyleCI](https://styleci.io/repos/138038395/shield?branch=master&style=flat)](https://styleci.io/repos/138038395)
 
 [![codecov](https://codecov.io/gh/sonrac/silex-functional-tests-coverage/branch/master/graph/badge.svg)](https://codecov.io/gh/sonrac/silex-functional-tests-coverage)
 
