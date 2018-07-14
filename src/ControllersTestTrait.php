@@ -175,8 +175,12 @@ trait ControllersTestTrait
             ->from($table, $table);
 
         foreach ($params as $param => $value) {
-            $builder->setParameter($param, $value, \PDO::PARAM_STR)
-                ->andWhere("$param = :{$param}");
+            if (empty($value)) {
+                $builder->andWhere("$param = '' OR $param IS NULL");
+            } else {
+                $builder->setParameter($param, $value, \PDO::PARAM_STR)
+                    ->andWhere("$param = :{$param}");
+            }
         }
 
         static::assertEquals($count, $builder->execute()->fetchColumn());
