@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests\Seeds;
@@ -10,7 +10,7 @@ use sonrac\SimpleSeed\SimpleSeedWithCheckExists;
 /**
  * Class UsersSeeds.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class UsersSeeds extends SimpleSeedWithCheckExists
 {

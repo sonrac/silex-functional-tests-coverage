@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage;
@@ -9,7 +9,7 @@ namespace sonrac\FCoverage;
  * Trait InitMigrationAppTrait
  * Run migrations with seeds trait.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 trait InitMigrationAppTrait
 {
@@ -41,7 +41,7 @@ trait InitMigrationAppTrait
     protected static function initInitMigrationAppTrait()
     {
         $instance = new static();
-        $class = $instance->getAppClass();
+        $class    = $instance->getAppClass();
         $class::newInstance()
             ->setRunMigration(static::$runMigration)
             ->getMigration()
@@ -63,14 +63,14 @@ trait InitMigrationAppTrait
      *
      * @return \sonrac\FCoverage\TestApplication
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     abstract public function getAppClass();
 
     /**
      * Prepare migrations before run.
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public static function prepareMigrations()
     {

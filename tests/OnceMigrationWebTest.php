@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests;
@@ -8,7 +8,7 @@ namespace sonrac\FCoverage\Tests;
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
-use sonrac\FCoverage\OnceMigrationWebTest as BaseOnceMigrationWebTest;
+use sonrac\FCoverage\Tests\Stubs\OnceMigrationWeb;
 
 /**
  * Class OnceMigrationWebTest
@@ -36,19 +36,19 @@ class OnceMigrationWebTest extends TestCase
      */
     public function testRunMigrations()
     {
-        OnceMigrationWebTests::setUpBeforeClass();
+        OnceMigrationWeb::setUpBeforeClass();
 
-        $app = OnceMigrationWebTests::getMigration()->getApp();
+        $app = OnceMigrationWeb::getMigration()->getApp();
         /** @var \Doctrine\DBAL\Connection $db */
         $db = $app['db'];
 
         static::assertTrue((bool) $this->getTable($db));
 
-        OnceMigrationWebTests::tearDownAfterClass();
+        OnceMigrationWeb::tearDownAfterClass();
 
         static::assertFalse((bool) $this->getTable($db));
 
-        $this->assertInstanceOf(Application::class, (new OnceMigrationWebTests())->createApplication());
+        $this->assertInstanceOf(Application::class, (new OnceMigrationWeb())->createApplication());
     }
 
     /**
@@ -94,36 +94,5 @@ class OnceMigrationWebTest extends TestCase
         if (file_exists(__DIR__.'/'.$this->dbFile)) {
             unlink(__DIR__.'/'.$this->dbFile);
         }
-    }
-}
-
-class OnceMigrationWebTests extends BaseOnceMigrationWebTest
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected static $runMigration = true;
-
-    /**
-     * Get migration object.
-     *
-     * @return \sonrac\FCoverage\OnceRunMigration
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public static function getMigration()
-    {
-        $class = (new static())->getAppClass();
-
-        return $class::getInstance()
-            ->getMigration();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAppClass()
-    {
-        return \TApp::class;
     }
 }

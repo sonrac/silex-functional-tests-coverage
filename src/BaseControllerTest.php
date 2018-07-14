@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage;
@@ -116,7 +116,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
 
         // Parse get parameters
         $routeURL = parse_url($uri);
-        $query = !empty($routeURL['query']) ? $routeURL['query'] : [];
+        $query    = !empty($routeURL['query']) ? $routeURL['query'] : [];
 
         // Set server variables and fill $_POST/$_GET
         $body = $this->prepareParams($method, $parameters, $query);
@@ -175,7 +175,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         switch (strtolower($method)) {
             case 'post':
                 $_POST = array_merge($_POST, $data);
-                $get = [];
+                $get   = [];
                 if (is_string($query) && !empty($query)) {
                     parse_str($query, $get);
                 }
@@ -205,9 +205,9 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      */
     protected function prepareServerVariables($options)
     {
-        $_SERVER['REQUEST_URI'] = $options['uri'];
+        $_SERVER['REQUEST_URI']    = $options['uri'];
         $_SERVER['REQUEST_METHOD'] = strtoupper($options['method']);
-        $_SERVER = array_merge($_SERVER, $options['server']);
+        $_SERVER                   = array_merge($_SERVER, $options['server']);
 
         if ($options['body']) {
             $this->request = Request::create(
@@ -240,7 +240,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     protected function getControllerActionFromRouteConfig($method, $uri)
     {
         $method = strtoupper($method);
-        $index = $method.'_'.$this->shackCase($uri);
+        $index  = $method.'_'.$this->shackCase($uri);
         if (!$this->request) {
             $this->request = Request::createFromGlobals();
         }
@@ -341,7 +341,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @return \Silex\Application
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getApplication()
     {
@@ -445,8 +445,10 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         $controller = $controllerResolver->getController($this->request);
         /* Resolve arguments */
         $this->setApplication($this->getApplication());
-        $argumentResolver = new ArgumentResolver($this->app['argument_metadata_factory'],
-            $this->app['argument_value_resolvers']);
+        $argumentResolver = new ArgumentResolver(
+            $this->app['argument_metadata_factory'],
+            $this->app['argument_value_resolvers']
+        );
         $arguments = $argumentResolver->getArguments($this->request, $controller);
 
         /* Call controller */
@@ -507,14 +509,14 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             if ($this->getCountRedirects() > $this->getAllowRedirect()) {
                 if ($this->isThrowExceptionOnRedirect() && ((int) $this->getAllowRedirect() !== 0)) {
                     $exception = new MaxRedirectException();
-                    $exception->setCountRedirects($this->__countRedirects);
+                    $exception->setCountRedirects($this->countRedirects);
 
                     throw $exception;
                 }
 
                 $this->response = $response;
             } else {
-                $url = $response->getTargetUrl();
+                $url     = $response->getTargetUrl();
                 $headers = $response->headers->all();
                 $_SERVER = array_merge($this->originServerVars, $this->getPredefinedServerVars());
 

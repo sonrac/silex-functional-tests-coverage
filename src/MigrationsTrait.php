@@ -148,25 +148,11 @@ trait MigrationsTrait
      *
      * @throws \Exception
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function runMigration()
     {
         $this->runCommand($this->getMigrationCommand());
-    }
-
-    /**
-     * Run seeds.
-     *
-     * @throws \Exception
-     *
-     * @author Donii Sergii <s.donii@infomir.com>
-     */
-    public function runSeeds()
-    {
-        foreach ($this->getSeeds() as $seed) {
-            $this->runSeed($seed);
-        }
     }
 
     /**
@@ -179,10 +165,11 @@ trait MigrationsTrait
     private function runCommand($command)
     {
         $command = PHP_EOL.$this->getPreCommand().
-                   "; cd {$this->getBinDir()}; {$this->getPhpExecutor()} {$this->getConsoleCommand()} {$command}".PHP_EOL;
+            "; cd {$this->getBinDir()}; {$this->getPhpExecutor()} {$this->getConsoleCommand()} {$command}"
+            .PHP_EOL;
 
         ob_start();
-        $first = exec($command, $out, $code);
+        $first   = exec($command, $out, $code);
         $content = ob_get_contents();
         ob_end_clean();
 
@@ -332,6 +319,20 @@ trait MigrationsTrait
         $this->migrationCommand = $migrationCommand;
 
         return $this;
+    }
+
+    /**
+     * Run seeds.
+     *
+     * @throws \Exception
+     *
+     * @author Donii Sergii <doniysa@gmail.com>
+     */
+    public function runSeeds()
+    {
+        foreach ($this->getSeeds() as $seed) {
+            $this->runSeed($seed);
+        }
     }
 
     /**
@@ -569,7 +570,7 @@ trait MigrationsTrait
          * @var \Doctrine\DBAL\Connection
          */
         $connection = $this->app['db'];
-        $builder = $connection->createQueryBuilder();
+        $builder    = $connection->createQueryBuilder();
 
         $migrations = $builder->select(['version'])
             ->from('migration_versions')

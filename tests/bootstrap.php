@@ -1,6 +1,9 @@
 <?php
+
+//phpcs:disable
+
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 $file = __DIR__.'/out/db.sqlite';
 
@@ -14,7 +17,7 @@ require __DIR__.'/../vendor/autoload.php';
  * Class TApp
  * Test application.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class TApp extends \sonrac\FCoverage\TestApplication
 {
@@ -88,3 +91,5 @@ class TAppOnce extends TApp
         return parent::newInstance($seeds, $migration);
     }
 }
+
+// phpcs:enable

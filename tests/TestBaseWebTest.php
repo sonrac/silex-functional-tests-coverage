@@ -1,11 +1,11 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests;
 
-use sonrac\FCoverage\BaseWebTest;
+use sonrac\FCoverage\Tests\Stubs\BaseWeb;
 
 /**
  * Class TestBaseWebTest.
@@ -19,7 +19,7 @@ class TestBaseWebTest extends OnceMigrationWebTest
      *
      * @throws \ReflectionException
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function testRequestSend()
     {
@@ -38,21 +38,5 @@ class TestBaseWebTest extends OnceMigrationWebTest
     public function testRunMigrations($class = BaseWeb::class)
     {
         parent::testRunMigrations($class);
-    }
-}
-
-class BaseWeb extends BaseWebTest
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function getAppClass()
-    {
-        return \TApp::class;
-    }
-
-    public function __call($name, $arguments)
-    {
-        return call_user_func_array([$this, $name], $arguments);
     }
 }

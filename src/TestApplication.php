@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage;
@@ -8,7 +8,7 @@ namespace sonrac\FCoverage;
 /**
  * Class TestApplication.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 abstract class TestApplication
 {
@@ -17,7 +17,7 @@ abstract class TestApplication
      *
      * @var null|\sonrac\FCoverage\TestApplication
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     protected static $instance;
     /**
@@ -25,7 +25,7 @@ abstract class TestApplication
      *
      * @var \Silex\Application
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $app;
     /**
@@ -33,7 +33,7 @@ abstract class TestApplication
      *
      * @var \sonrac\FCoverage\OnceRunMigration
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $migration;
     /**
@@ -41,7 +41,7 @@ abstract class TestApplication
      *
      * @var bool
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     private $runMigration = true;
 
@@ -51,7 +51,7 @@ abstract class TestApplication
      * @param array                                   $seeds     Seeds list.
      * @param null|\sonrac\FCoverage\OnceRunMigration $migration Migration instance
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function __construct($seeds = [], $migration = null)
     {
@@ -67,14 +67,14 @@ abstract class TestApplication
      *
      * @return string|\Silex\Application
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     abstract public function createApplication();
 
     /**
      * Setup migrations.
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     abstract public function setUpMigration();
 
@@ -83,7 +83,7 @@ abstract class TestApplication
      *
      * @return \Silex\Application
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getApplication()
     {
@@ -97,7 +97,7 @@ abstract class TestApplication
      *
      * @return TestApplication
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setApplication($app)
     {
@@ -112,7 +112,7 @@ abstract class TestApplication
      *
      * @return \sonrac\FCoverage\TestApplication
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public static function getInstance($seeds = [], $migration = null)
     {
@@ -127,7 +127,7 @@ abstract class TestApplication
      *
      * @return \sonrac\FCoverage\TestApplication
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public static function newInstance($seeds = [], $migration = null)
     {
@@ -139,7 +139,7 @@ abstract class TestApplication
      *
      * @return \sonrac\FCoverage\OnceRunMigration
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function getMigration()
     {
@@ -153,7 +153,7 @@ abstract class TestApplication
      *
      * @return TestApplication
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setMigration($migration)
     {
@@ -169,7 +169,7 @@ abstract class TestApplication
      *
      * @return \sonrac\FCoverage\TestApplication
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setInstance(self $app)
     {
@@ -181,7 +181,7 @@ abstract class TestApplication
      *
      * @throws \Exception
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function runMigration()
     {
@@ -193,7 +193,7 @@ abstract class TestApplication
      *
      * @throws \Exception
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function rollbackMigrations()
     {
@@ -207,7 +207,7 @@ abstract class TestApplication
      *
      * @return bool
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function isRunMigration()
     {
@@ -221,7 +221,7 @@ abstract class TestApplication
      *
      * @return TestApplication
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function setRunMigration($runMigration)
     {

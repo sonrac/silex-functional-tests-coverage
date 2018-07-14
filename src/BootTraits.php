@@ -70,8 +70,8 @@ trait BootTraits
         $traits = $reflection->getTraitNames();
 
         foreach ($traits as $trait) {
-            $parts = explode('\\', $trait);
-            $name = $parts[count($parts) - 1];
+            $parts      = explode('\\', $trait);
+            $name       = $parts[count($parts) - 1];
             $methodName = $prefix.ucfirst($name);
             if (method_exists($this, $methodName)) {
                 $this->{$methodName}();

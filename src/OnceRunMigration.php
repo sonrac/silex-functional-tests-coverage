@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage;
@@ -42,7 +42,7 @@ class OnceRunMigration
      */
     public function __construct($app, $seeds = [])
     {
-        $this->app = $app;
+        $this->app     = $app;
         static::$seeds = $seeds;
     }
 

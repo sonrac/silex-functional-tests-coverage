@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests;
@@ -8,7 +8,7 @@ namespace sonrac\FCoverage\Tests;
 /**
  * Class RunRealApplicationWithOneRunMigration.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class RunRealApplicationWithOneRunMigrationTest extends RealApplicationUnitTest
 {

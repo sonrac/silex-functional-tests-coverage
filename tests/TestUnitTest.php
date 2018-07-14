@@ -1,27 +1,12 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests;
 
 use PHPUnit\Framework\TestCase;
-use sonrac\FCoverage\UnitTest;
-
-trait Tester
-{
-    public $a;
-
-    protected function rollback()
-    {
-        $this->a = null;
-    }
-
-    protected function bootTester()
-    {
-        $this->a = 123;
-    }
-}
+use sonrac\FCoverage\Tests\Stubs\UnitTstStub;
 
 /**
  * Class TestUnitTest.
@@ -37,7 +22,7 @@ class TestUnitTest extends TestCase
      */
     public function testBootTraits()
     {
-        $controller = new UnitTester();
+        $controller = new UnitTstStub();
         $this->assertNull($controller->a);
 
         $controller->setupRun();
@@ -45,20 +30,5 @@ class TestUnitTest extends TestCase
         $this->assertEquals(123, $controller->a);
         $controller->downRun();
         $this->assertNull($controller->a);
-    }
-}
-
-class UnitTester extends UnitTest
-{
-    use Tester;
-
-    public function setupRun()
-    {
-        $this->setUp();
-    }
-
-    public function downRun()
-    {
-        $this->tearDown();
     }
 }

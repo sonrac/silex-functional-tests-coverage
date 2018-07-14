@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage;
@@ -38,7 +38,7 @@ trait ControllersTestTrait
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    private $__clearCountRedirects = false;
+    private $clearCountRedirects = false;
 
     /**
      * Current count redirects.
@@ -47,7 +47,7 @@ trait ControllersTestTrait
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    private $__countRedirects = 0;
+    private $countRedirects = 0;
 
     /**
      * Get is need clear count redirects.
@@ -58,7 +58,7 @@ trait ControllersTestTrait
      */
     public function isClearCountRedirects()
     {
-        return $this->__clearCountRedirects;
+        return $this->clearCountRedirects;
     }
 
     /**
@@ -72,7 +72,7 @@ trait ControllersTestTrait
      */
     public function setClearCountRedirects($clear)
     {
-        $this->__clearCountRedirects = $clear;
+        $this->clearCountRedirects = $clear;
 
         return $this;
     }
@@ -130,7 +130,7 @@ trait ControllersTestTrait
      */
     public function getCountRedirects()
     {
-        return $this->__countRedirects;
+        return $this->countRedirects;
     }
 
     /**
@@ -142,7 +142,7 @@ trait ControllersTestTrait
      */
     public function setCountRedirects($_countRedirects)
     {
-        $this->__countRedirects = $_countRedirects;
+        $this->countRedirects = $_countRedirects;
     }
 
     /**
@@ -152,7 +152,7 @@ trait ControllersTestTrait
      */
     public function incrementCountRedirects()
     {
-        $this->__countRedirects++;
+        ++$this->countRedirects;
     }
 
     /**
@@ -168,9 +168,9 @@ trait ControllersTestTrait
      */
     public function seeCountInTable($table, $count, $params = null)
     {
-        $params = $params ?: [];
+        $params     = $params ?: [];
         $connection = $this->getConnection();
-        $builder = $connection->createQueryBuilder()
+        $builder    = $connection->createQueryBuilder()
             ->select(['count(*) as cnt'])
             ->from($table, $table);
 
@@ -362,7 +362,7 @@ trait ControllersTestTrait
         static::assertInternalType('array', $data, 'Error get response. Not data given');
         foreach ($struct as $name => $value) {
             $withValue = !is_numeric($name);
-            $_name = $withValue ? $name : $value;
+            $_name     = $withValue ? $name : $value;
 
             if (is_string($_name)) {
                 try {
@@ -408,8 +408,11 @@ trait ControllersTestTrait
 
         static::assertArrayHasKey(strtolower($header), $headers, 'Header '.$header.'is missing');
         if ($value !== null) {
-            static::assertEquals(strtolower($value), strtolower($headers[strtolower($header)][0]),
-                'Header value not match');
+            static::assertEquals(
+                strtolower($value),
+                strtolower($headers[strtolower($header)][0]),
+                'Header value not match'
+            );
         }
 
         return $this;
@@ -478,8 +481,8 @@ trait ControllersTestTrait
     protected function clear()
     {
         $_REQUEST = [];
-        $_GET = [];
-        $_POST = [];
+        $_GET     = [];
+        $_POST    = [];
     }
 
     /**

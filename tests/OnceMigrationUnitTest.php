@@ -1,13 +1,13 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests;
 
 use Doctrine\DBAL\Connection;
 use PHPUnit\Framework\TestCase;
-use sonrac\FCoverage\OnceMigrationUnitTest as BaseOnceMigrationUnitTest;
+use sonrac\FCoverage\Tests\Stubs\OnceMigration;
 
 /**
  * Class OnceMigrationUnitTest
@@ -37,10 +37,10 @@ class OnceMigrationUnitTest extends TestCase
      */
     public function testRunMigrations($class = null)
     {
-        $class = $class ?: OnceMigrationTests::class;
+        $class = $class ?: OnceMigration::class;
         $class::setUpBeforeClass();
 
-        $app = OnceMigrationTests::getMigration()->getApp();
+        $app = OnceMigration::getMigration()->getApp();
         /** @var \Doctrine\DBAL\Connection $db */
         $db = $app['db'];
 
@@ -94,35 +94,5 @@ class OnceMigrationUnitTest extends TestCase
         if (file_exists(__DIR__.'/'.$this->dbFile)) {
             unlink(__DIR__.'/'.$this->dbFile);
         }
-    }
-}
-
-class OnceMigrationTests extends BaseOnceMigrationUnitTest
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected static $runMigration = true;
-
-    /**
-     * Get migration object.
-     *
-     * @return \sonrac\FCoverage\OnceRunMigration
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public static function getMigration()
-    {
-        $class = (new static())->getAppClass();
-
-        return $class::getInstance()->getMigration();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAppClass()
-    {
-        return \TApp::class;
     }
 }

@@ -1,13 +1,12 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests;
 
 use PHPUnit\Framework\TestCase;
-use sonrac\FCoverage\BootTraits;
-use sonrac\FCoverage\MigrationsTrait;
+use sonrac\FCoverage\Tests\Stubs\MigrationWithSeeds;
 
 /**
  * Class MigrationTraitTest.
@@ -80,72 +79,5 @@ class MigrationTraitTest extends TestCase
             $this->assertEquals("123\n", file_get_contents(__DIR__.'/'.$item));
             unlink(__DIR__.'/'.$item);
         }
-    }
-}
-
-class Migration
-{
-    use MigrationsTrait, BootTraits;
-
-    /**
-     * MigrationTest constructor.
-     *
-     * @throws \ReflectionException
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function __construct()
-    {
-        $this->bootTrait();
-        $this->_boot();
-    }
-
-    protected function bootTrait()
-    {
-        $this->setBinDir('/bin')
-            ->setPhpExecutor('')
-            ->setConsoleCommand('echo')
-            ->setMigrationCommand('123 > /tmp/1.txt')
-            ->setRollbackMigrationCommand(' > /tmp/2.txt');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMigrationsList()
-    {
-    }
-}
-
-class MigrationWithSeeds extends Migration
-{
-    use MigrationsTrait, BootTraits;
-
-    protected static $seeds = [1, 2, 3];
-
-    /**
-     * MigrationWithSeeds constructor.
-     *
-     * @throws \ReflectionException
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function __construct()
-    {
-        $this->bootTrait();
-
-        $this->setBinDir(__DIR__)
-            ->setSeedCommand('123 > ');
-
-        $this->_boot();
-    }
-
-    protected function getMigrationsList()
-    {
-        return [
-            '1',
-            '2',
-            '3',
-        ];
     }
 }

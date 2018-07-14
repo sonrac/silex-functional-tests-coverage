@@ -1,14 +1,14 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Silex\Application;
-use sonrac\FCoverage\BaseControllerTest;
 use sonrac\FCoverage\MaxRedirectException;
+use sonrac\FCoverage\Tests\Stubs\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -250,7 +250,7 @@ class BaseControllerTestTest extends TestCase
 
         file_put_contents(__DIR__.'/'.$this->dbFile, '');
 
-        $this->controller = new ControllerTest();
+        $this->controller = new Controller();
         $this->controller->setUp();
         $this->controller->setUpBeforeClass();
     }
@@ -268,53 +268,5 @@ class BaseControllerTestTest extends TestCase
         if (is_file(__DIR__.'/'.$this->dbFile)) {
             unlink(__DIR__.'/'.$this->dbFile);
         }
-    }
-}
-
-class ControllerTest extends BaseControllerTest
-{
-    /**
-     * {@inheritdoc}
-     */
-    protected static $runMigration = true;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getClientApplication()
-    {
-        $class = $this->getAppClass();
-
-        return $class::getInstance()->getApplication();
-    }
-
-    public function getAppClass()
-    {
-        return \TApp::class;
-    }
-
-    public function setResponse(Response $response)
-    {
-        $this->response = $response;
-    }
-
-    /**
-     * Call protected methods.
-     *
-     * @param string $name      Method name.
-     * @param array  $arguments Arguments.
-     *
-     * @return mixed
-     *
-     * @author Donii Sergii <doniysa@gmail.com>
-     */
-    public function __call($name, $arguments)
-    {
-        return call_user_func_array([$this, $name], $arguments);
-    }
-
-    public function enableRedirect($count = 1)
-    {
-        $this->setAllowRedirect($count);
     }
 }

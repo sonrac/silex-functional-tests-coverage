@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests;
@@ -10,7 +10,7 @@ use sonrac\FCoverage\BaseControllerTest;
 /**
  * Class RealApplicationUnitTest.
  *
- * @author Donii Sergii <s.donii@infomir.com>
+ * @author Donii Sergii <doniysa@gmail.com>
  */
 class RealApplicationUnitTest extends BaseControllerTest
 {
@@ -44,7 +44,7 @@ class RealApplicationUnitTest extends BaseControllerTest
     /**
      * Test get users list.
      *
-     * @author Donii Sergii <s.donii@infomir.com>
+     * @author Donii Sergii <doniysa@gmail.com>
      */
     public function testGetUsers()
     {

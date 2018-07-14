@@ -1,32 +1,12 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage\Tests;
 
 use PHPUnit\Framework\TestCase;
-use sonrac\FCoverage\BootTraits;
-
-trait TFirst
-{
-    public $var;
-
-    protected function bootTFirst()
-    {
-        $this->var = 123;
-    }
-}
-
-trait TSecond
-{
-    public $var2;
-
-    protected function bootTSecond()
-    {
-        $this->var2 = 333;
-    }
-}
+use sonrac\FCoverage\Tests\Stubs\FirstBoot;
 
 /**
  * Class BootTraitsTest.
@@ -35,21 +15,16 @@ trait TSecond
  */
 class BootTraitsTest extends TestCase
 {
+    /**
+     * Test boot trait.
+     *
+     * @throws \ReflectionException
+     */
     public function testBoot()
     {
         $class = new FirstBoot();
 
         $this->assertEquals($class->var2, 333);
         $this->assertEquals($class->var, 123);
-    }
-}
-
-class FirstBoot
-{
-    use TSecond, TFirst, BootTraits;
-
-    public function __construct()
-    {
-        $this->_boot();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage;
@@ -21,8 +21,7 @@ abstract class OnceMigrationWebTest extends WebTestCase
      *
      * @throws \Exception
      */
-    public static function setUpBeforeClass(
-    )/* The :void return type declaration that should be here would cause a BC issue */
+    public static function setUpBeforeClass()
     {
         parent::setUpBeforeClass();
 
@@ -34,8 +33,7 @@ abstract class OnceMigrationWebTest extends WebTestCase
      *
      * @throws \Exception
      */
-    public static function tearDownAfterClass(
-    )/* The :void return type declaration that should be here would cause a BC issue */
+    public static function tearDownAfterClass()
     {
         parent::tearDownAfterClass();
 
