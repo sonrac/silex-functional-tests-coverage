@@ -25,7 +25,7 @@ class MigrationWithSeeds extends Migration
     {
         $this->bootTrait();
 
-        $this->setBinDir(__DIR__)
+        $this->setBinDir(__DIR__.'/..')
             ->setSeedCommand('123 > ');
 
         $this->_boot();

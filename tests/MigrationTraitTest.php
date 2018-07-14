@@ -6,6 +6,7 @@
 namespace sonrac\FCoverage\Tests;
 
 use PHPUnit\Framework\TestCase;
+use sonrac\FCoverage\Tests\Stubs\Migration;
 use sonrac\FCoverage\Tests\Stubs\MigrationWithSeeds;
 
 /**
@@ -20,7 +21,7 @@ class MigrationTraitTest extends TestCase
      *
      * @throws \ReflectionException
      *
-     * @return \sonrac\FCoverage\Tests\Migration
+     * @return \sonrac\FCoverage\Tests\Stubs\Migration
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
