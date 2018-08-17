@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <parser>
+        <target>../../docs/sonrac.github.io/docs/silex-functional-tests</target>
+    </parser>
+    <transformer>
+        <target>../../docs/sonrac.github.io/docs/silex-functional-tests</target>
+    </transformer>
+    <transformations>
+        <template name="responsive-twig" />
+    </transformations>
+    <files>
+        <directory>./src</directory>
+    </files>
+</phpdoc>

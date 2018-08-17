@@ -4,20 +4,28 @@ namespace sonrac\FCoverage;
 
 /**
  * Class BaseWebTest.
+ *
+ * Base class for web functional tests.
  */
 abstract class BaseWebTest extends OnceMigrationWebTest
 {
     use BootTraits, ControllersTestTrait;
 
     /**
+     * Http client object.
+     *
      * @var null|\Symfony\Component\HttpKernel\Client
      */
     protected $client;
     /**
+     * Response object.
+     *
      * @var null|\Symfony\Component\HttpFoundation\Response
      */
     protected $response;
     /**
+     * Crawler instance.
+     *
      * @var null|\Symfony\Component\DomCrawler\Crawler
      */
     protected $crawler;

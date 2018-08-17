@@ -7,6 +7,7 @@ namespace sonrac\FCoverage;
 
 /**
  * Trait ControllersTestTrait
+ *
  * Controllers test trait.
  *
  * @author Donii Sergii <doniysa@gmail.com>

@@ -45,6 +45,7 @@
         "test": "phpunit --coverage-text",
         "test-coverage": "phpunit --coverage-html coverage",
         "review": "phpcs src tests",
-        "fix-code": "php-cs-fixer fix src; php-cs-fixer fix tests"
+        "fix-code": "php-cs-fixer fix src; php-cs-fixer fix tests",
+        "gen-doc": "phpdoc -d ./src -t ./../docs/sonrac.github.io/docs/silex-functional-tests"
     }
 }

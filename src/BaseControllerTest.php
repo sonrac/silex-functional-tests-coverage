@@ -22,6 +22,8 @@ use Symfony\Component\Routing\RouteCompiler;
 /**
  * Class BaseControllerTest.
  *
+ * Base controller test.
+ *
  * @author Donii Sergii <doniysa@gmail.com>
  */
 abstract class BaseControllerTest extends OnceMigrationUnitTest

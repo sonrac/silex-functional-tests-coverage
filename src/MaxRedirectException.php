@@ -6,7 +6,8 @@
 namespace sonrac\FCoverage;
 
 /**
- * Class MaxRedirectException
+ * Class MaxRedirectException.
+ *
  * Maximum redirect exception.
  *
  * @author Donii Sergii <doniysa@gmail.com>

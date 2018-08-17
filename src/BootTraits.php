@@ -6,6 +6,7 @@ use ReflectionClass;
 
 /**
  * Trait BootTraits.
+ *
  * Boot traits in tests.
  *
  * For add new trait:

@@ -36,9 +36,9 @@ composer require sonrac/silex-functional-tests-coverage
 | OnceMigrationUnitTest | Run functional test with running migration on test beginning and rollback after test finished |
 | OnceMigrationUnitTest | Run unit test with running migration on test beginning and rollback after test finished |
 | OnceMigrationWebTest | Run functional test with running migration on test beginning and rollback after test finished |
-| OnceRunMigration | Class for run migration and seeds |
+| OnceRunMigration | Class for once run migration and seeds |
 | TestApplication | Abstract class for init application instance |
-| UnitTest | Base unit test with bases traits (BootTraits, MigrationTrait) |   
+| UnitTest | Base unit test with bases traits (BootTraits) |   
 
 ## Traits description
 
@@ -47,7 +47,8 @@ composer require sonrac/silex-functional-tests-coverage
 | BootTraits | Boot trait in class |
 | InitMigrationTestTrait | Using for once run migration in unit or functional tests |
 | ControllersTestTrait | Using for additional helper functions in functional tests |
-| MigrationsTrait | Trait for run migrations |
+| MigrationsTrait | Trait for build migration config |
+| InitMigrationAppTrait | Trait for init test app migration mechanism |
 
 ## Exceptions
 
@@ -58,3 +59,7 @@ composer require sonrac/silex-functional-tests-coverage
 ## Class api
 
 [Docs](https://sonrac.github.io/docs/silex-functional-tests)
+
+## Examples
+
+See [example project](https://github.com/sonrac/app-silex-functional-tests-coverage)
