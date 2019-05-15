@@ -5,8 +5,10 @@
 
 namespace sonrac\FCoverage;
 
+use Symfony\Component\DomCrawler\Crawler;
+
 /**
- * Trait ControllersTestTrait
+ * Trait ControllersTestTrait.
  *
  * Controllers test trait.
  *
@@ -167,7 +169,7 @@ trait ControllersTestTrait
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function seeCountInTable($table, $count, $params = null)
+    protected function seeCountInTable($table, $count, $params = null)
     {
         $params     = $params ?: [];
         $connection = $this->getConnection();
@@ -433,6 +435,79 @@ trait ControllersTestTrait
         static::assertEquals($statusCode, $this->response->getStatusCode());
 
         return $this;
+    }
+
+    /**
+     * See string in response.
+     *
+     * @param $string
+     */
+    protected function seeString($string)
+    {
+        self::assertContains($string, $this->getResponseObject()->getContent());
+    }
+
+    /**
+     * See html element.
+     *
+     * @param string $selector
+     */
+    protected function seeHtmlElement($selector)
+    {
+        $crawler = new Crawler();
+
+        $crawler->addContent($this->getResponseObject()->getContent());
+
+        self::assertTrue(
+            $crawler->filter($selector)->count() > 0
+        );
+    }
+
+    /**
+     * See html element.
+     *
+     * @param string $selector
+     * @param int    $count
+     */
+    protected function seeCountHtmlElement($selector, $count)
+    {
+        $crawler = new Crawler();
+
+        $crawler->addContent($this->getResponseObject()->getContent());
+
+        self::assertEquals(
+            $count,
+            $crawler->filter($selector)->count()
+        );
+    }
+
+    /**
+     * Delete data in table.
+     *
+     * @param string $table
+     * @param array  $where
+     */
+    protected function deleteInTable($table, $where)
+    {
+        $query = $this->getConnection()->createQueryBuilder()
+                                       ->delete($table);
+
+        foreach ($where as $column => $value) {
+            $query->andWhere("$column = :$column")
+                ->setParameter($column, $value);
+        }
+
+        $query->execute();
+    }
+
+    /**
+     * Delete all data from table.
+     *
+     * @param string $table
+     */
+    protected function deleteAllInTable($table)
+    {
+        $this->deleteInTable($table, []);
     }
 
     /**

@@ -18,6 +18,6 @@ class FirstBoot
      */
     public function __construct()
     {
-        $this->_boot();
+        $this->boot();
     }
 }

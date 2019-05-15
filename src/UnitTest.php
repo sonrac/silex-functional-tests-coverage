@@ -24,7 +24,7 @@ abstract class UnitTest extends TestCase
     {
         parent::setUp();
 
-        $this->_boot();
+        $this->boot();
     }
 
     /**

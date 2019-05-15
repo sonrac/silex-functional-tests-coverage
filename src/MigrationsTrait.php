@@ -23,7 +23,7 @@ namespace sonrac\FCoverage;
  *      protected function setUp() {
  *          parent::setUp();
  *          $this->setSeedsNamespace('Tests\\Seeds')
- *          $this->setSeedClassEnding('TableSeeder')->_boot();
+ *          $this->setSeedClassEnding('TableSeeder')->boot();
  *      }
  *      protected static $seeds = ['users', 'roles']
  * }

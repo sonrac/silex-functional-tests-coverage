@@ -90,6 +90,14 @@ class BaseControllerTestTest extends TestCase
             ->seeCountInTable('users', 1, ['username' => 123]);
         $this->controller->post('/create-user/222/222')
             ->seeInDatabase('users', 'username = \'222\'');
+
+        $this->controller->deleteAllInTable("users");
+        $this->controller->seeCountInTable("users", 0);
+
+        $this->controller->getResponseObject()->setContent("<span class=\"t\"></span><span class=\"t\"></span>");
+
+        $this->controller->seeCountHtmlElement(".t", 2);
+        $this->controller->seeHtmlElement(".t");
     }
 
     /**

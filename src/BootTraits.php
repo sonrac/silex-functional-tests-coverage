@@ -13,7 +13,7 @@ use ReflectionClass;
  * Create trait
  * Add method boot<TraitName>
  * Add to your test class BootTraits and custom trait
- * Add _boot() trait method call to test set-up
+ * Add boot() trait method call to test set-up
  *
  * @example
  * <code lang="php">
@@ -22,11 +22,11 @@ use ReflectionClass;
  *          Tests\CustomTrait;
  *      public function setUp() {
  *          parent::setUp();
- *          $this->_boot();
+ *          $this->boot();
  *      }
  *      public function tearDown() {
  *          parent::tearDown();
- *          $this->_unBoot();
+ *          $this->unBoot();
  *      }
  * }
  *
@@ -50,7 +50,7 @@ trait BootTraits
      *
      * @throws \ReflectionException
      */
-    protected function _boot()
+    protected function boot()
     {
         $this->checkTraits('boot');
     }
@@ -87,7 +87,7 @@ trait BootTraits
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    protected function _unBoot()
+    protected function unBoot()
     {
         $this->checkTraits('unBoot');
     }

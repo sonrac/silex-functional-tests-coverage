@@ -22,7 +22,7 @@ class Migration
     public function __construct()
     {
         $this->bootTrait();
-        $this->_boot();
+        $this->boot();
     }
 
     protected function bootTrait()

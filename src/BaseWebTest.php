@@ -42,7 +42,7 @@ abstract class BaseWebTest extends OnceMigrationWebTest
         $this->client   = null;
         $this->response = null;
 
-        $this->_boot();
+        $this->boot();
     }
 
     /**
@@ -105,6 +105,6 @@ abstract class BaseWebTest extends OnceMigrationWebTest
     {
         parent::tearDown();
 
-        $this->_unBoot();
+        $this->unBoot();
     }
 }
