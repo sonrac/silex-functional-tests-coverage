@@ -174,15 +174,15 @@ trait ControllersTestTrait
         $params     = $params ?: [];
         $connection = $this->getConnection();
         $builder    = $connection->createQueryBuilder()
-            ->select(['count(*) as cnt'])
-            ->from($table, $table);
+                                 ->select(['count(*) as cnt'])
+                                 ->from($table, $table);
 
         foreach ($params as $param => $value) {
             if (empty($value)) {
                 $builder->andWhere("$param = '' OR $param IS NULL");
             } else {
                 $builder->setParameter($param, $value, \PDO::PARAM_STR)
-                    ->andWhere("$param = :{$param}");
+                        ->andWhere("$param = :{$param}");
             }
         }
 
@@ -355,10 +355,11 @@ trait ControllersTestTrait
      *
      * @param array $struct
      * @param array $data
+     * @param bool  $skipUndefinedProperties
      *
      * @return $this
      */
-    protected function seeJsonStructure($struct, $data = null)
+    protected function seeJsonStructure($struct, $data = null, $skipUndefinedProperties = true)
     {
         $data = $data ?: json_decode(trim($this->response->getContent()), true);
 
@@ -378,6 +379,9 @@ trait ControllersTestTrait
                         }
 
                         continue;
+                    }
+                    if (!$skipUndefinedProperties) {
+                        throw $exception;
                     }
                 }
             } else {
@@ -490,11 +494,11 @@ trait ControllersTestTrait
     protected function deleteInTable($table, $where)
     {
         $query = $this->getConnection()->createQueryBuilder()
-                                       ->delete($table);
+                      ->delete($table);
 
         foreach ($where as $column => $value) {
             $query->andWhere("$column = :$column")
-                ->setParameter($column, $value);
+                  ->setParameter($column, $value);
         }
 
         $query->execute();
@@ -528,8 +532,8 @@ trait ControllersTestTrait
         $db = $this->app['db'];
 
         $query = $db->createQueryBuilder()
-            ->select('count(*)')
-            ->from($table);
+                    ->select('count(*)')
+                    ->from($table);
 
         $where = '';
 
