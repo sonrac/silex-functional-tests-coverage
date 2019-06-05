@@ -17,7 +17,7 @@ class UsersSeeds extends SimpleSeedWithCheckExists
     /**
      * {@inheritdoc}
      */
-    protected function getTable()
+    public function getTable()
     {
         return 'users';
     }
@@ -25,7 +25,7 @@ class UsersSeeds extends SimpleSeedWithCheckExists
     /**
      * {@inheritdoc}
      */
-    protected function getData()
+    public function getData()
     {
         return [
             [
