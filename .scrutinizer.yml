@@ -4,7 +4,7 @@ build:
             version: 7.1
   dependencies:
           before:
-              - composer require kurl/silex-doctrine-migrations-provider doctrine/migrations silex/silex symfony/browser-kit sonrac/symfony-seed-command --prefer-dist --no-interaction
+              - composer require kurl/silex-doctrine-migrations-provider "doctrine/migrations:^1.5" silex/silex "symfony/browser-kit:^3.0" sonrac/symfony-seed-command --prefer-dist --no-interaction
   tests:
     override:
       -
