@@ -31,6 +31,13 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     use ControllersTestTrait;
 
     /**
+     * Headers.
+     *
+     * @var array
+     */
+    protected $headers;
+
+    /**
      * Request object.
      *
      * @var \Symfony\Component\HttpFoundation\Request
@@ -230,13 +237,13 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      * @param string $method
      * @param string $uri
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * @return string|\Closure|\Symfony\Component\HttpFoundation\Response
+     *
      * @throws \Symfony\Component\Routing\Exception\RouteNotFoundException
      * @throws \Throwable
      * @throws \Exception
      *
-     * @return string|\Closure|\Symfony\Component\HttpFoundation\Response
-     *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function getControllerActionFromRouteConfig($method, $uri)
@@ -362,7 +369,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
         $class = static::getAppClass();
 
         return $class::getInstance()
-            ->getApplication();
+                     ->getApplication();
     }
 
     /**
@@ -371,12 +378,12 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      * @param string                                   $eventName Event name
      * @param \Symfony\Component\EventDispatcher\Event $class     Event class
      *
-     * @throws \Throwable
+     * @return null|Response
+     *
      * @throws \Exception
      * @throws \Symfony\Component\HttpKernel\Exception\HttpException
      *
-     * @return null|Response
-     *
+     * @throws \Throwable
      * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function triggerKernelEvent($eventName, $class = null)
@@ -428,14 +435,14 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
     /**
      * Get response from closure callback.
      *
-     * @param \Closure $callback Closure for run
-     *
-     * @throws \InvalidArgumentException
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-     * @throws \Throwable
+     * @param string|\Closure|\Symfony\Component\HttpFoundation\Response $callback Closure for run
      *
      * @return mixed|\Symfony\Component\HttpFoundation\Response
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * @throws \Throwable
+     *
+     * @throws \InvalidArgumentException
      * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function getResponse($callback)
@@ -451,7 +458,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             $this->app['argument_metadata_factory'],
             $this->app['argument_value_resolvers']
         );
-        $arguments = $argumentResolver->getArguments($this->request, $controller);
+        $arguments        = $argumentResolver->getArguments($this->request, $controller);
 
         /* Call controller */
         try {
@@ -495,11 +502,11 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      *
      * @param \Symfony\Component\HttpFoundation\Response|string|null $response
      *
-     * @throws \Throwable
-     * @throws \sonrac\FCoverage\MaxRedirectException
-     *
      * @return null|\Symfony\Component\HttpFoundation\Response
      *
+     * @throws \sonrac\FCoverage\MaxRedirectException
+     *
+     * @throws \Throwable
      * @author Donii Sergii <doniysa@gmail.com>
      */
     protected function detectRedirectResponse($response)
@@ -509,7 +516,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
             $this->incrementCountRedirects();
 
             if ($this->getCountRedirects() > $this->getAllowRedirect()) {
-                if ($this->isThrowExceptionOnRedirect() && ((int) $this->getAllowRedirect() !== 0)) {
+                if ($this->isThrowExceptionOnRedirect() && ((int)$this->getAllowRedirect() !== 0)) {
                     $exception = new MaxRedirectException();
                     $exception->setCountRedirects($this->countRedirects);
 

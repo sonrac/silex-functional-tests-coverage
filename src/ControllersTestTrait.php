@@ -398,11 +398,13 @@ trait ControllersTestTrait
                 } else {
                     static::assertEquals($value, $data[$_name], 'Error equals value of response item');
                 }
-            } else if (is_array($value)) {
-                if (\count($value) > 0) {
-                    $this->seeJsonStructure($value, $data[$name]);
-                } else {
-                    $this->assertInternalType("array", $data[$name]);
+            } else {
+                if (is_array($value)) {
+                    if (\count($value) > 0) {
+                        $this->seeJsonStructure($value, $data[$name]);
+                    } else {
+                        $this->assertInternalType("array", $data[$name]);
+                    }
                 }
             }
         }
@@ -414,7 +416,7 @@ trait ControllersTestTrait
      * See header in response.
      *
      * @param string $header
-     * @param null   $value
+     * @param mixed  $value
      *
      * @return $this
      */
@@ -440,9 +442,9 @@ trait ControllersTestTrait
      *
      * @param int $statusCode
      *
+     * @return $this
      * @throws \PHPUnit\Framework\AssertionFailedError
      *
-     * @return $this
      */
     protected function seeStatusCode($statusCode)
     {
@@ -530,9 +532,9 @@ trait ControllersTestTrait
      * @param string       $table     Table name.
      * @param array|string $condition Where condition.
      *
-     * @throws \PHPUnit\Framework\AssertionFailedError
-     *
      * @return $this
+     *
+     * @throws \PHPUnit\Framework\AssertionFailedError
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
@@ -558,7 +560,7 @@ trait ControllersTestTrait
 
         $query->where($where);
 
-        $results = (int) $query->execute()->fetchColumn();
+        $results = (int)$query->execute()->fetchColumn();
 
         static::assertTrue($results > 0);
 
