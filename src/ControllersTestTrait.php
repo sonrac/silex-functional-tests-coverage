@@ -370,7 +370,7 @@ trait ControllersTestTrait
 
             if (is_string($_name)) {
                 try {
-                    static::assertArrayHasKey($_name, $data, 'Error response has key');
+                    static::assertArrayHasKey($_name, $data, 'Error response has key '.$_name);
                 } catch (\Exception $exception) {
                     if (is_array($value)) {
                         static::assertInternalType('array', $data[$_name]);
@@ -381,7 +381,11 @@ trait ControllersTestTrait
                         continue;
                     }
                     if (!$skipUndefinedProperties) {
-                        throw $exception;
+                        try {
+                            static::assertArrayHasKey($value, $data, 'Error response has key '.$value);
+                        } catch (\Exception $e) {
+                            throw $exception;
+                        }
                     }
                 }
             } else {
@@ -393,6 +397,12 @@ trait ControllersTestTrait
                     $this->seeJsonStructure($value, $data[$_name]);
                 } else {
                     static::assertEquals($value, $data[$_name], 'Error equals value of response item');
+                }
+            } else if (is_array($value)) {
+                if (\count($value) > 0) {
+                    $this->seeJsonStructure($value, $data[$name]);
+                } else {
+                    $this->assertInternalType("array", $data[$name]);
                 }
             }
         }
