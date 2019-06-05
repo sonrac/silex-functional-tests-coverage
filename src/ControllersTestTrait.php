@@ -355,18 +355,18 @@ trait ControllersTestTrait
      *
      * @return $this
      */
-    protected function seeJsonStructure($struct, $data = null)
+    protected function seeJsonStructure($struct, $data = null, $skipUndefinedProperties = true)
     {
         $data = $data ?: json_decode(trim($this->response->getContent()), true);
 
         static::assertInternalType('array', $data, 'Error get response. Not data given');
         foreach ($struct as $name => $value) {
             $withValue = !is_numeric($name);
-            $_name = $withValue ? $name : $value;
+            $_name     = $withValue ? $name : $value;
 
             if (is_string($_name)) {
                 try {
-                    static::assertArrayHasKey($_name, $data, 'Error response has key');
+                    static::assertArrayHasKey($_name, $data, 'Error response has key '.$_name);
                 } catch (\Exception $exception) {
                     if (is_array($value)) {
                         static::assertInternalType('array', $data[$_name]);
@@ -375,6 +375,13 @@ trait ControllersTestTrait
                         }
 
                         continue;
+                    }
+                    if (!$skipUndefinedProperties) {
+                        try {
+                            static::assertArrayHasKey($value, $data, 'Error response has key '.$value);
+                        } catch (\Exception $e) {
+                            throw $exception;
+                        }
                     }
                 }
             } else {
@@ -386,6 +393,12 @@ trait ControllersTestTrait
                     $this->seeJsonStructure($value, $data[$_name]);
                 } else {
                     static::assertEquals($value, $data[$_name], 'Error equals value of response item');
+                }
+            } else if (is_array($value)) {
+                if (\count($value) > 0) {
+                    $this->seeJsonStructure($value, $data[$name]);
+                } else {
+                    $this->assertInternalType("array", $data[$name]);
                 }
             }
         }
