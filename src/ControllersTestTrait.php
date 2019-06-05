@@ -1,12 +1,15 @@
 <?php
 /**
- * @author Donii Sergii <s.doniy@infomir.com>.
+ * @author Donii Sergii <doniysa@gmail.com>.
  */
 
 namespace sonrac\FCoverage;
 
+use Symfony\Component\DomCrawler\Crawler;
+
 /**
- * Trait ControllersTestTrait
+ * Trait ControllersTestTrait.
+ *
  * Controllers test trait.
  *
  * @author Donii Sergii <doniysa@gmail.com>
@@ -38,7 +41,7 @@ trait ControllersTestTrait
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    private $__clearCountRedirects = false;
+    private $clearCountRedirects = false;
 
     /**
      * Current count redirects.
@@ -47,7 +50,7 @@ trait ControllersTestTrait
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    private $__countRedirects = 0;
+    private $countRedirects = 0;
 
     /**
      * Get is need clear count redirects.
@@ -58,7 +61,7 @@ trait ControllersTestTrait
      */
     public function isClearCountRedirects()
     {
-        return $this->__clearCountRedirects;
+        return $this->clearCountRedirects;
     }
 
     /**
@@ -72,7 +75,7 @@ trait ControllersTestTrait
      */
     public function setClearCountRedirects($clear)
     {
-        $this->__clearCountRedirects = $clear;
+        $this->clearCountRedirects = $clear;
 
         return $this;
     }
@@ -130,7 +133,7 @@ trait ControllersTestTrait
      */
     public function getCountRedirects()
     {
-        return $this->__countRedirects;
+        return $this->countRedirects;
     }
 
     /**
@@ -142,7 +145,7 @@ trait ControllersTestTrait
      */
     public function setCountRedirects($_countRedirects)
     {
-        $this->__countRedirects = $_countRedirects;
+        $this->countRedirects = $_countRedirects;
     }
 
     /**
@@ -152,7 +155,7 @@ trait ControllersTestTrait
      */
     public function incrementCountRedirects()
     {
-        $this->__countRedirects++;
+        ++$this->countRedirects;
     }
 
     /**
@@ -166,20 +169,20 @@ trait ControllersTestTrait
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    public function seeCountInTable($table, $count, $params = null)
+    protected function seeCountInTable($table, $count, $params = null)
     {
-        $params = $params ?: [];
+        $params     = $params ?: [];
         $connection = $this->getConnection();
-        $builder = $connection->createQueryBuilder()
-            ->select(['count(*) as cnt'])
-            ->from($table, $table);
+        $builder    = $connection->createQueryBuilder()
+                                 ->select(['count(*) as cnt'])
+                                 ->from($table, $table);
 
         foreach ($params as $param => $value) {
             if (empty($value)) {
                 $builder->andWhere("$param = '' OR $param IS NULL");
             } else {
                 $builder->setParameter($param, $value, \PDO::PARAM_STR)
-                    ->andWhere("$param = :{$param}");
+                        ->andWhere("$param = :{$param}");
             }
         }
 
@@ -352,6 +355,7 @@ trait ControllersTestTrait
      *
      * @param array $struct
      * @param array $data
+     * @param bool  $skipUndefinedProperties
      *
      * @return $this
      */
@@ -421,8 +425,11 @@ trait ControllersTestTrait
 
         static::assertArrayHasKey(strtolower($header), $headers, 'Header '.$header.'is missing');
         if ($value !== null) {
-            static::assertEquals(strtolower($value), strtolower($headers[strtolower($header)][0]),
-                'Header value not match');
+            static::assertEquals(
+                strtolower($value),
+                strtolower($headers[strtolower($header)][0]),
+                'Header value not match'
+            );
         }
 
         return $this;
@@ -445,6 +452,79 @@ trait ControllersTestTrait
     }
 
     /**
+     * See string in response.
+     *
+     * @param $string
+     */
+    protected function seeString($string)
+    {
+        self::assertContains($string, $this->getResponseObject()->getContent());
+    }
+
+    /**
+     * See html element.
+     *
+     * @param string $selector
+     */
+    protected function seeHtmlElement($selector)
+    {
+        $crawler = new Crawler();
+
+        $crawler->addContent($this->getResponseObject()->getContent());
+
+        self::assertTrue(
+            $crawler->filter($selector)->count() > 0
+        );
+    }
+
+    /**
+     * See html element.
+     *
+     * @param string $selector
+     * @param int    $count
+     */
+    protected function seeCountHtmlElement($selector, $count)
+    {
+        $crawler = new Crawler();
+
+        $crawler->addContent($this->getResponseObject()->getContent());
+
+        self::assertEquals(
+            $count,
+            $crawler->filter($selector)->count()
+        );
+    }
+
+    /**
+     * Delete data in table.
+     *
+     * @param string $table
+     * @param array  $where
+     */
+    protected function deleteInTable($table, $where)
+    {
+        $query = $this->getConnection()->createQueryBuilder()
+                      ->delete($table);
+
+        foreach ($where as $column => $value) {
+            $query->andWhere("$column = :$column")
+                  ->setParameter($column, $value);
+        }
+
+        $query->execute();
+    }
+
+    /**
+     * Delete all data from table.
+     *
+     * @param string $table
+     */
+    protected function deleteAllInTable($table)
+    {
+        $this->deleteInTable($table, []);
+    }
+
+    /**
      * See in database.
      *
      * @param string       $table     Table name.
@@ -462,8 +542,8 @@ trait ControllersTestTrait
         $db = $this->app['db'];
 
         $query = $db->createQueryBuilder()
-            ->select('count(*)')
-            ->from($table);
+                    ->select('count(*)')
+                    ->from($table);
 
         $where = '';
 
@@ -491,8 +571,8 @@ trait ControllersTestTrait
     protected function clear()
     {
         $_REQUEST = [];
-        $_GET = [];
-        $_POST = [];
+        $_GET     = [];
+        $_POST    = [];
     }
 
     /**
