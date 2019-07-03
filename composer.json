@@ -14,7 +14,7 @@
         "kurl/silex-doctrine-migrations-provider": "~0.3",
         "refinery29/php-cs-fixer-config": "^0.10.1",
         "symfony/browser-kit": "^3.4",
-        "symfony/css-selector": "^3.4",
+        "symfony/css-selector": "^3.4"
     },
     "license": "MIT",
     "suggest": {
