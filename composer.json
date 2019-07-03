@@ -3,8 +3,7 @@
     "description": "Add unit tests for functional tests for best coverage",
     "type": "library",
     "require": {
-        "doctrine/dbal": "^1.0|^2.2",
-        "silex/silex": "^2.2"
+        "doctrine/dbal": "^1.0|^2.2"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.7",
@@ -15,7 +14,8 @@
         "kurl/silex-doctrine-migrations-provider": "~0.3",
         "refinery29/php-cs-fixer-config": "^0.10.1",
         "symfony/browser-kit": "^3.4",
-        "symfony/css-selector": "^3.4"
+        "symfony/css-selector": "^3.4",
+        "silex/silex": "^2.2"
     },
     "license": "MIT",
     "suggest": {
