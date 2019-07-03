@@ -2,3 +2,5 @@ vendor/
 composer.lock
 .htaccess
 .idea/
+coverage/
+.php_cs.cache
