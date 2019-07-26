@@ -66,7 +66,7 @@ trait InitMigrationAppTrait
      *
      * @author Donii Sergii <doniysa@gmail.com>
      */
-    abstract public static function getAppClass();
+    abstract public function getAppClass();
 
     /**
      * Prepare migrations before run.

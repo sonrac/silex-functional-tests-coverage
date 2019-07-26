@@ -366,7 +366,7 @@ abstract class BaseControllerTest extends OnceMigrationUnitTest
      */
     protected function createApplication()
     {
-        $class = static::getAppClass();
+        $class = $this->getAppClass();
 
         return $class::getInstance()
                      ->getApplication();
